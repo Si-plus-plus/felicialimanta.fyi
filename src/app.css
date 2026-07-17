@@ -94,6 +94,7 @@ body {
 
 main {
 	flex: 1;
+	view-transition-name: main-content;
 }
 
 /* Base header layout settings */
@@ -116,6 +117,10 @@ main {
 	opacity: 0.8;
 	margin-bottom: 32px;
 	line-height: 1.6;
+}
+
+.random-article-btn {
+	view-transition-name: random-article;
 }
 
 .site-nav {
@@ -377,6 +382,12 @@ footer {
 		scroll-behavior: auto !important;
 		transition-duration: 0s !important;
 		transition-delay: 0s !important;
+	}
+
+	::view-transition-group(*),
+	::view-transition-old(*),
+	::view-transition-new(*) {
+		animation: none !important;
 	}
 }
 

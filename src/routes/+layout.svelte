@@ -6,9 +6,20 @@
 	import { onMount } from 'svelte';
 	import { SITE_NAME, SITE_BIO, SITE_FOOTER } from '$lib/constants';
 	import type { LayoutData } from './$types';
-	import { goto } from '$app/navigation';
+	import { goto, onNavigate } from '$app/navigation';
 
 	let { data, children } = $props<{ data: LayoutData; children: any }>();
+
+	onNavigate((navigation) => {
+		if (!document.startViewTransition) return;
+
+		return new Promise((resolve) => {
+			document.startViewTransition(async () => {
+				resolve();
+				await navigation.complete;
+			});
+		});
+	});
 
 	let theme = $state('light');
 	let fontSize = $state(16);
@@ -81,7 +92,7 @@
 			<h1 class="site-title"><a href="/">{SITE_NAME}</a></h1>
 			<p class="site-bio">{SITE_BIO}</p>
 			<nav class="site-nav">
-				<a href="/" onclick={goToRandomArticle}>Random Article</a>
+				<a href="/" class="random-article-btn" onclick={goToRandomArticle}>Random Article</a>
 			</nav>
 		</header>
 	{:else}
@@ -89,7 +100,7 @@
 			<h1 class="site-title"><a href="/">{SITE_NAME}</a></h1>
 			<nav class="site-nav">
 				<a href="/">Home</a>
-				<a href="/" onclick={goToRandomArticle}>Random Article</a>
+				<a href="/" class="random-article-btn" onclick={goToRandomArticle}>Random Article</a>
 			</nav>
 		</header>
 	{/if}
