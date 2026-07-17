@@ -1,6 +1,6 @@
 ---
 title: "How `felicialimanta.fyi` came to be"
-description: "Welcoming you to my personal digital garden. A brief test post to check typesetting, dark theme, and fluid layout scaling."
+description: "Welcoming you to my personal digital garden."
 ---
 
 ## Hey there, I'm ~~using Whatsapp~~ Felicia
