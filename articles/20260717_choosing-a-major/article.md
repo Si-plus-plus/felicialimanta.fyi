@@ -1,7 +1,7 @@
 ---
 title: "Choosing CS as my Major through a Coin Flip. Yep."
 description: "I was 50/50 between CS and Design. A coin flip, and here I am."
-tags: ["dev", "life"]
+tags: ["life"]
 ---
 
 ## It all started with origami?
