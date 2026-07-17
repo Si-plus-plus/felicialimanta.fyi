@@ -8,7 +8,8 @@ export const load: LayoutServerLoad = () => {
 			slug: art.slug,
 			date: art.date,
 			title: art.title,
-			description: art.description
+			description: art.description,
+			tags: art.tags
 		}))
 	};
 };
