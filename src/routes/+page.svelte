@@ -6,7 +6,7 @@
 </script>
 
 <svelte:head>
-	<title>{SITE_NAME} — Writings</title>
+	<title>{SITE_NAME} — Articles</title>
 	<meta name="description" content={SITE_DESCRIPTION} />
 </svelte:head>
 
