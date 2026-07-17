@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="text-scale" content="scale" />
+		<script>
+			try {
+				const theme = localStorage.getItem('theme');
+				if (theme === 'dark' || theme === 'light') {
+					document.documentElement.setAttribute('data-theme', theme);
+				}
+				const fontSize = localStorage.getItem('font-size');
+				if (fontSize) {
+					document.documentElement.style.setProperty('--font-size-base', fontSize + 'px');
+				}
+			} catch (e) {}
+		</script>
+		%sveltekit.head%
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">%sveltekit.body%</div>
+	</body>
+</html>
