@@ -5,11 +5,21 @@
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import { SITE_NAME, SITE_BIO, SITE_FOOTER } from '$lib/constants';
+	import type { LayoutData } from './$types';
+	import { goto } from '$app/navigation';
 
-	let { children } = $props();
+	let { data, children } = $props<{ data: LayoutData; children: any }>();
 
 	let theme = $state('light');
 	let fontSize = $state(16);
+
+	function goToRandomArticle(e: MouseEvent) {
+		e.preventDefault();
+		if (data.articles && data.articles.length > 0) {
+			const randomIndex = Math.floor(Math.random() * data.articles.length);
+			goto(`/articles/${data.articles[randomIndex].slug}`);
+		}
+	}
 
 	onMount(() => {
 		// Global click listener for the burst effect
@@ -71,7 +81,7 @@
 			<h1 class="site-title"><a href="/">{SITE_NAME}</a></h1>
 			<p class="site-bio">{SITE_BIO}</p>
 			<nav class="site-nav">
-				<a href="/">Articles</a>
+				<a href="/" onclick={goToRandomArticle}>Random Article</a>
 			</nav>
 		</header>
 	{:else}
@@ -79,7 +89,7 @@
 			<h1 class="site-title"><a href="/">{SITE_NAME}</a></h1>
 			<nav class="site-nav">
 				<a href="/">Home</a>
-				<a href="/">Articles</a>
+				<a href="/" onclick={goToRandomArticle}>Random Article</a>
 			</nav>
 		</header>
 	{/if}

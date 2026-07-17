@@ -11,7 +11,7 @@
 </svelte:head>
 
 <div class="fade-in">
-	<a href="/" class="back-link">← Back to Articles</a>
+	<!-- <a href="/" class="back-link">← Back to Articles</a> -->
 
 	<article>
 		<header class="article-header">
@@ -26,25 +26,6 @@
 </div>
 
 <style>
-	.back-link {
-		display: inline-flex;
-		align-items: center;
-		margin-bottom: 32px;
-		font-size: 0.9rem;
-		color: var(--text-primary);
-		text-decoration: none;
-		opacity: 0.6;
-		transition: all var(--transition-speed) ease;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-	}
-
-	.back-link:hover {
-		opacity: 1;
-		color: var(--accent);
-		transform: translateX(-4px);
-	}
-
 	.article-header {
 		margin-bottom: 48px;
 	}

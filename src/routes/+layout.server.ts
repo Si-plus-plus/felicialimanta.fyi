@@ -1,7 +1,7 @@
 import { getArticles } from '$lib/server/parser';
-import type { PageServerLoad } from './$types';
+import type { LayoutServerLoad } from './$types';
 
-export const load: PageServerLoad = () => {
+export const load: LayoutServerLoad = () => {
 	const articles = getArticles();
 	return {
 		articles: articles.map((art) => ({
