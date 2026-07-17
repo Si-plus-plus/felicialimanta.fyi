@@ -13,6 +13,7 @@ export interface Article {
 	date: string; // ISO format: YYYY-MM-DD
 	title: string;
 	description: string;
+	tags: string[];
 	html: string;
 }
 
@@ -113,9 +114,18 @@ export function parseArticleFile(dirName: string): Article {
 
 	const titleMatch = yamlStr.match(/^title:\s*"([^"]+)"/m) || yamlStr.match(/^title:\s*'([^']+)'/m) || yamlStr.match(/^title:\s*([^\r\n]+)/m);
 	const descMatch = yamlStr.match(/^description:\s*"([^"]+)"/m) || yamlStr.match(/^description:\s*'([^']+)'/m) || yamlStr.match(/^description:\s*([^\r\n]+)/m);
+	const tagsMatch = yamlStr.match(/^tags:\s*\[(.*?)\]/m);
 
 	const title = titleMatch ? titleMatch[1].trim() : '';
 	const description = descMatch ? descMatch[1].trim() : '';
+	
+	let tags: string[] = [];
+	if (tagsMatch && tagsMatch[1]) {
+		tags = tagsMatch[1]
+			.split(',')
+			.map(t => t.trim().replace(/^['"]|['"]$/g, ''))
+			.filter(Boolean);
+	}
 
 	if (!title) {
 		throw new Error(`Missing "title" in frontmatter of: "${dirName}/article.md".`);
@@ -162,6 +172,7 @@ export function parseArticleFile(dirName: string): Article {
 		date: info.date,
 		title,
 		description,
+		tags,
 		html
 	};
 }
