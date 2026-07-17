@@ -4,6 +4,7 @@
 	import { clickBurst } from '$lib/clickBurst';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
+	import { SITE_NAME, SITE_BIO, SITE_FOOTER } from '$lib/constants';
 
 	let { children } = $props();
 
@@ -26,6 +27,11 @@
 		}
 	});
 
+	// Synchronize font size base property on mount as well to ensure correctness
+	$effect(() => {
+		document.documentElement.style.setProperty('--font-size-base', `${fontSize}px`);
+	});
+
 	function toggleTheme() {
 		theme = theme === 'light' ? 'dark' : 'light';
 		document.documentElement.setAttribute('data-theme', theme);
@@ -35,7 +41,6 @@
 	function increaseFontSize() {
 		if (fontSize < 24) {
 			fontSize += 2;
-			document.documentElement.style.setProperty('--font-size-base', `${fontSize}px`);
 			localStorage.setItem('font-size', fontSize.toString());
 		}
 	}
@@ -43,7 +48,6 @@
 	function decreaseFontSize() {
 		if (fontSize > 12) {
 			fontSize -= 2;
-			document.documentElement.style.setProperty('--font-size-base', `${fontSize}px`);
 			localStorage.setItem('font-size', fontSize.toString());
 		}
 	}
@@ -56,17 +60,15 @@
 <div class="container">
 	{#if $page.url.pathname === '/'}
 		<header class="site-header home-header">
-			<h1 class="site-title"><a use:clickBurst href="/">Felicia Limanta</a></h1>
-			<p class="site-bio">
-				Software Engineer & Designer. Exploring the intersection of minimalism, technology, and intentional living.
-			</p>
+			<h1 class="site-title"><a use:clickBurst href="/">{SITE_NAME}</a></h1>
+			<p class="site-bio">{SITE_BIO}</p>
 			<nav class="site-nav">
 				<a use:clickBurst href="/">Articles</a>
 			</nav>
 		</header>
 	{:else}
 		<header class="site-header inner-header">
-			<h1 class="site-title"><a use:clickBurst href="/">Felicia Limanta</a></h1>
+			<h1 class="site-title"><a use:clickBurst href="/">{SITE_NAME}</a></h1>
 			<nav class="site-nav">
 				<a use:clickBurst href="/">Home</a>
 				<a use:clickBurst href="/">Articles</a>
@@ -79,7 +81,7 @@
 	</main>
 
 	<footer>
-		Built with [ SvelteKit, Vite ] by [ Felicia Limanta, Antigravity ].
+		{SITE_FOOTER}
 	</footer>
 </div>
 

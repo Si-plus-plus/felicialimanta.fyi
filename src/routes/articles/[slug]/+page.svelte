@@ -2,6 +2,7 @@
 	import type { PageData } from './$types';
 	import { clickBurst } from '$lib/clickBurst';
 	import { onMount } from 'svelte';
+	import { SITE_NAME } from '$lib/constants';
 
 	let { data }: { data: PageData } = $props();
 
@@ -15,7 +16,7 @@
 </script>
 
 <svelte:head>
-	<title>{data.article.title} — Felicia Limanta</title>
+	<title>{data.article.title} — {SITE_NAME}</title>
 	<meta name="description" content={data.article.description} />
 </svelte:head>
 

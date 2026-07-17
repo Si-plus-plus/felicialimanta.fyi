@@ -1,13 +1,14 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import { clickBurst } from '$lib/clickBurst';
+	import { SITE_NAME, SITE_DESCRIPTION } from '$lib/constants';
 
 	let { data }: { data: PageData } = $props();
 </script>
 
 <svelte:head>
-	<title>Felicia Limanta — Writings</title>
-	<meta name="description" content="Personal thoughts, essays, and notes on software engineering and life." />
+	<title>{SITE_NAME} — Writings</title>
+	<meta name="description" content={SITE_DESCRIPTION} />
 </svelte:head>
 
 <div class="fade-in">

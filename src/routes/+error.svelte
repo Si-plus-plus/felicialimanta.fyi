@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { clickBurst } from '$lib/clickBurst';
+	import { SITE_NAME } from '$lib/constants';
 </script>
 
 <svelte:head>
-	<title>Page Not Found — Felicia Limanta</title>
+	<title>Page Not Found — {SITE_NAME}</title>
 </svelte:head>
 
 <div class="fade-in">
