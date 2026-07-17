@@ -127,10 +127,25 @@ export function parseArticleFile(dirName: string): Article {
 	// Render Markdown to HTML
 	let html = marked.parse(markdownBody) as string;
 
-	// Fix relative image paths to resolve correctly in SvelteKit
+	// Fix relative image paths and wrap all images in figures with captions
 	html = html.replace(
-		/(<img\s+[^>]*?src=["'])(?!https?:\/\/|\/)([^"']+)(["'])/gi,
-		`$1/articles/${info.slug}/$2$3`
+		/<img\s+([^>]*?)src=["']([^"']+)["']([^>]*?)>/gi,
+		(match, beforeSrc, src, afterSrc) => {
+			// Rewrite relative image paths
+			let finalSrc = src;
+			if (!src.startsWith('http') && !src.startsWith('/')) {
+				finalSrc = `/articles/${info.slug}/${src}`;
+			}
+			
+			// Extract alt text for caption
+			const altMatch = match.match(/alt=["']([^"']*)["']/i);
+			const altText = altMatch && altMatch[1] ? altMatch[1] : '';
+			
+			return `<figure class="article-image">
+				<img ${beforeSrc}src="${finalSrc}"${afterSrc}>
+				${altText ? `<figcaption>${altText}</figcaption>` : ''}
+			</figure>`;
+		}
 	);
 
 	return {
