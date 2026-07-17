@@ -12,13 +12,18 @@
 		readSlugs = getReadArticles();
 	});
 
-	let selectedTag = $derived($page.url.searchParams.get('tag') || 'All');
+	let selectedTag = $state('All');
 	let allTags = $derived(['All', ...new Set(data.articles.flatMap(a => a.tags || []))]);
 	let filteredArticles = $derived(
 		selectedTag === 'All' 
 			? data.articles 
 			: data.articles.filter(a => a.tags && a.tags.includes(selectedTag))
 	);
+
+	$effect(() => {
+		const tag = $page.url.searchParams.get('tag');
+		selectedTag = tag || 'All';
+	});
 </script>
 
 <svelte:head>
