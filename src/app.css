@@ -367,7 +367,7 @@ footer {
 
 /* Accessibility: respect user preferences for reduced motion */
 @media (prefers-reduced-motion: reduce) {
-	*,
+	*:not(.burst-line),
 	::before,
 	::after {
 		animation-delay: -1ms !important;
@@ -377,10 +377,5 @@ footer {
 		scroll-behavior: auto !important;
 		transition-duration: 0s !important;
 		transition-delay: 0s !important;
-	}
-	
-	.burst-line {
-		animation: none !important;
-		opacity: 0 !important;
 	}
 }

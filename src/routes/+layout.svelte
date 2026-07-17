@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '../app.css';
 	import favicon from '$lib/assets/favicon.svg';
-	import { clickBurst } from '$lib/clickBurst';
+	import { triggerClickBurst } from '$lib/clickBurst';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import { SITE_NAME, SITE_BIO, SITE_FOOTER } from '$lib/constants';
@@ -12,6 +12,10 @@
 	let fontSize = $state(16);
 
 	onMount(() => {
+		// Global click listener for the burst effect
+		const handleGlobalClick = (e: MouseEvent) => triggerClickBurst(e.clientX, e.clientY);
+		document.addEventListener('click', handleGlobalClick);
+
 		// Read persisted settings on mount
 		const storedTheme = document.documentElement.getAttribute('data-theme');
 		if (storedTheme) {
@@ -25,6 +29,10 @@
 		if (storedSize) {
 			fontSize = parseInt(storedSize, 10);
 		}
+
+		return () => {
+			document.removeEventListener('click', handleGlobalClick);
+		};
 	});
 
 	// Synchronize font size base property on mount as well to ensure correctness
@@ -60,18 +68,18 @@
 <div class="container">
 	{#if $page.url.pathname === '/'}
 		<header class="site-header home-header">
-			<h1 class="site-title"><a use:clickBurst href="/">{SITE_NAME}</a></h1>
+			<h1 class="site-title"><a href="/">{SITE_NAME}</a></h1>
 			<p class="site-bio">{SITE_BIO}</p>
 			<nav class="site-nav">
-				<a use:clickBurst href="/">Articles</a>
+				<a href="/">Articles</a>
 			</nav>
 		</header>
 	{:else}
 		<header class="site-header inner-header">
-			<h1 class="site-title"><a use:clickBurst href="/">{SITE_NAME}</a></h1>
+			<h1 class="site-title"><a href="/">{SITE_NAME}</a></h1>
 			<nav class="site-nav">
-				<a use:clickBurst href="/">Home</a>
-				<a use:clickBurst href="/">Articles</a>
+				<a href="/">Home</a>
+				<a href="/">Articles</a>
 			</nav>
 		</header>
 	{/if}
@@ -86,10 +94,10 @@
 </div>
 
 <div class="control-panel">
-	<button use:clickBurst onclick={decreaseFontSize} class="control-btn" title="Decrease Font Size" aria-label="Decrease Font Size">A-</button>
-	<button use:clickBurst onclick={increaseFontSize} class="control-btn" title="Increase Font Size" aria-label="Increase Font Size">A+</button>
+	<button onclick={decreaseFontSize} class="control-btn" title="Decrease Font Size" aria-label="Decrease Font Size">A-</button>
+	<button onclick={increaseFontSize} class="control-btn" title="Increase Font Size" aria-label="Increase Font Size">A+</button>
 	<div class="control-divider"></div>
-	<button use:clickBurst onclick={toggleTheme} class="control-btn" title="Toggle Light/Dark Theme" aria-label="Toggle Theme">
+	<button onclick={toggleTheme} class="control-btn" title="Toggle Light/Dark Theme" aria-label="Toggle Theme">
 		{#if theme === 'light'}
 			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
 		{:else}

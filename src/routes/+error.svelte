@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { clickBurst } from '$lib/clickBurst';
 	import { SITE_NAME } from '$lib/constants';
 </script>
 
@@ -15,7 +14,7 @@
 		<p class="description">
 			{$page.error?.message || "The page you are looking for doesn't exist or has been moved."}
 		</p>
-		<a use:clickBurst href="/" class="back-link">Go back home</a>
+		<a href="/" class="back-link">Go back home</a>
 	</section>
 </div>
 

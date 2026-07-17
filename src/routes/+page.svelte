@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { clickBurst } from '$lib/clickBurst';
 	import { SITE_NAME, SITE_DESCRIPTION } from '$lib/constants';
 
 	let { data }: { data: PageData } = $props();
@@ -18,7 +17,7 @@
 		<ul class="article-list">
 			{#each data.articles as article}
 				<li class="article-item">
-					<a use:clickBurst href="/articles/{article.slug}" class="article-link">
+					<a href="/articles/{article.slug}" class="article-link">
 						<span class="article-date">{article.date}</span>
 						<h2 class="article-title">{article.title}</h2>
 					</a>

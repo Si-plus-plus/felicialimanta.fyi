@@ -1,18 +1,8 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { clickBurst } from '$lib/clickBurst';
-	import { onMount } from 'svelte';
 	import { SITE_NAME } from '$lib/constants';
 
 	let { data }: { data: PageData } = $props();
-
-	onMount(() => {
-		// Bind click burst directly to all links within the rendered markdown body
-		const links = document.querySelectorAll('.article-content a');
-		links.forEach((link) => {
-			clickBurst(link as HTMLElement);
-		});
-	});
 </script>
 
 <svelte:head>
@@ -21,7 +11,7 @@
 </svelte:head>
 
 <div class="fade-in">
-	<a use:clickBurst href="/" class="back-link">← Back to Articles</a>
+	<a href="/" class="back-link">← Back to Articles</a>
 
 	<article>
 		<header class="article-header">
