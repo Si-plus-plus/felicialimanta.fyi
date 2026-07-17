@@ -7,7 +7,7 @@
 
 	onMount(() => {
 		// Bind click burst directly to all links within the rendered markdown body
-		const links = document.querySelectorAll('.prose a');
+		const links = document.querySelectorAll('.article-content a');
 		links.forEach((link) => {
 			clickBurst(link as HTMLElement);
 		});
@@ -19,185 +19,148 @@
 	<meta name="description" content={data.article.description} />
 </svelte:head>
 
-<main class="container fade-in">
-	<header class="header border-b">
-		<h1 class="logo"><a use:clickBurst href="/">felicialimanta.fyi</a></h1>
-		<nav class="nav">
-			<a use:clickBurst href="/" class="nav-link">Writings</a>
-		</nav>
-	</header>
+<div class="fade-in">
+	<a use:clickBurst href="/" class="back-link">← Back to Articles</a>
 
-	<article class="article-detail">
+	<article>
 		<header class="article-header">
-			<span class="date">{data.article.date}</span>
-			<h1 class="title">{data.article.title}</h1>
-			<p class="description">{data.article.description}</p>
+			<span class="article-date">{data.article.date}</span>
+			<h1>{data.article.title}</h1>
 		</header>
-		<div class="prose">
+
+		<div class="article-content">
 			{@html data.article.html}
 		</div>
 	</article>
-</main>
+</div>
 
 <style>
-	.container {
-		max-width: 680px;
-		margin: 0 auto;
-		padding: 2rem 1.5rem;
-		min-height: 100vh;
-		display: flex;
-		flex-direction: column;
-	}
-
-	.header {
-		display: flex;
-		justify-content: space-between;
-		align-items: baseline;
-		padding-bottom: 1.5rem;
-		margin-bottom: 3rem;
-	}
-
-	.logo {
-		font-size: 1.25rem;
-		font-weight: 500;
-		margin: 0;
-	}
-
-	.logo a {
-		text-decoration: none;
-		color: var(--color-text);
-	}
-
-	.nav {
-		display: flex;
-		gap: 1.5rem;
-	}
-
-	.nav-link {
+	.back-link {
+		display: inline-flex;
+		align-items: center;
+		margin-bottom: 32px;
 		font-size: 0.9rem;
+		color: var(--text-primary);
 		text-decoration: none;
-		color: var(--color-text);
 		opacity: 0.6;
-		transition: opacity 0.2s ease, color 0.2s ease;
+		transition: all var(--transition-speed) ease;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
 	}
 
-	.nav-link:hover {
+	.back-link:hover {
 		opacity: 1;
-		color: var(--color-accent);
-	}
-
-	.article-detail {
-		display: flex;
-		flex-direction: column;
-		gap: 2.5rem;
+		color: var(--accent);
+		transform: translateX(-4px);
 	}
 
 	.article-header {
-		display: flex;
-		flex-direction: column;
-		gap: 0.75rem;
-		border-bottom: 1px solid var(--color-border);
-		padding-bottom: 2rem;
+		margin-bottom: 48px;
 	}
 
-	.date {
-		font-size: 0.8rem;
-		font-weight: 500;
+	.article-date {
+		display: block;
+		font-size: 0.9rem;
+		opacity: 0.5;
+		margin-bottom: 12px;
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
-		opacity: 0.5;
 	}
 
-	.title {
+	.article-header h1 {
 		font-size: 2.25rem;
 		font-weight: 500;
-		line-height: 1.2;
 		margin: 0;
-		color: var(--color-text);
+		letter-spacing: -0.03em;
+		line-height: 1.2;
 	}
 
-	.description {
-		font-size: 1.15rem;
-		line-height: 1.6;
-		margin: 0.25rem 0 0 0;
-		opacity: 0.7;
-	}
-
-	/* Prose/Markdown body styling */
-	.prose {
+	.article-content :global(p) {
+		margin-bottom: 24px;
 		font-size: 1rem;
-		line-height: 1.7;
-		color: var(--color-text);
+		line-height: 1.8;
+		opacity: 0.85;
 	}
 
-	.prose :global(p) {
-		margin: 0 0 1.5rem 0;
-		opacity: 0.9;
-	}
-
-	.prose :global(h2) {
+	.article-content :global(h2) {
 		font-size: 1.5rem;
 		font-weight: 500;
-		margin: 2.5rem 0 1rem 0;
-		color: var(--color-text);
+		margin-top: 56px;
+		margin-bottom: 24px;
+		letter-spacing: -0.02em;
 	}
 
-	.prose :global(h3) {
-		font-size: 1.25rem;
-		font-weight: 500;
-		margin: 2rem 0 1rem 0;
-		color: var(--color-text);
-	}
-
-	.prose :global(ul), .prose :global(ol) {
-		margin: 0 0 1.5rem 0;
-		padding-left: 1.5rem;
-		opacity: 0.9;
-	}
-
-	.prose :global(li) {
-		margin-bottom: 0.5rem;
-	}
-
-	.prose :global(a) {
-		color: var(--color-accent);
-		text-decoration: underline;
-		text-underline-offset: 3px;
-		transition: opacity 0.2s ease;
-	}
-
-	.prose :global(a:hover) {
-		opacity: 0.8;
-	}
-
-	.prose :global(blockquote) {
-		margin: 2rem 0;
-		padding: 0.5rem 0 0.5rem 1.25rem;
-		border-left: 3px solid var(--color-accent);
+	.article-content :global(blockquote) {
+		border-left: 3px solid var(--lines);
+		margin: 40px 0;
+		padding-left: 24px;
 		font-style: italic;
-		opacity: 0.8;
+		opacity: 0.7;
+		transition: border-color var(--transition-speed) ease;
 	}
 
-	.prose :global(pre) {
-		background-color: var(--color-border);
-		padding: 1rem;
+	.article-content :global(blockquote:hover) {
+		border-color: var(--accent);
+	}
+
+	.article-content :global(a) {
+		color: var(--accent);
+		text-decoration: none;
+		border-bottom: 1px solid transparent;
+		transition: border-color var(--transition-speed) ease;
+	}
+
+	.article-content :global(a:hover) {
+		border-bottom-color: var(--accent);
+	}
+
+	.article-content :global(ul),
+	.article-content :global(ol) {
+		margin-bottom: 24px;
+		padding-left: 24px;
+		opacity: 0.85;
+		line-height: 1.8;
+	}
+
+	.article-content :global(li) {
+		margin-bottom: 8px;
+	}
+
+	.article-content :global(code) {
+		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		background-color: var(--lines);
+		padding: 4px 6px;
 		border-radius: 4px;
+		font-size: 0.85em;
+	}
+
+	.article-content :global(pre) {
+		background-color: var(--lines);
+		padding: 24px;
+		border-radius: 8px;
 		overflow-x: auto;
-		margin: 1.5rem 0;
+		margin: 32px 0;
+		line-height: 1.6;
 	}
 
-	.prose :global(code) {
-		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-		font-size: 0.9em;
-		background-color: var(--color-border);
-		padding: 0.2rem 0.4rem;
-		border-radius: 4px;
-	}
-
-	.prose :global(pre code) {
+	.article-content :global(pre code) {
 		background-color: transparent;
 		padding: 0;
 		border-radius: 0;
-		font-size: 0.85em;
+		font-size: 0.9em;
+	}
+
+	.article-content :global(img) {
+		max-width: 100%;
+		height: auto;
+		border-radius: 8px;
+		margin: 40px 0;
+		display: block;
+	}
+
+	.article-content :global(hr) {
+		border: 0;
+		border-top: 1px solid var(--lines);
+		margin: 48px 0;
 	}
 </style>

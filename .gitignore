@@ -2,9 +2,7 @@ node_modules
 
 # Planning docs (kept local, not part of the repo)
 .plans/
-
-# Local tool settings
-.claude/settings.local.json
+.diary/
 
 # Output
 .output
