@@ -25,6 +25,16 @@
 		<header class="article-header">
 			<span class="article-date">{data.article.date}</span>
 			<h1>{data.article.title}</h1>
+			{#if data.article.description}
+				<p class="article-description">{data.article.description}</p>
+			{/if}
+			{#if data.article.tags && data.article.tags.length > 0}
+				<div class="article-tags">
+					{#each data.article.tags as tag}
+						<a href="/?tag={encodeURIComponent(tag)}" class="article-tag">#{tag}</a>
+					{/each}
+				</div>
+			{/if}
 		</header>
 
 		<div class="article-content">
@@ -53,6 +63,33 @@
 		margin: 0;
 		letter-spacing: -0.03em;
 		line-height: 1.2;
+	}
+
+	.article-description {
+		font-size: 1.2rem;
+		opacity: 0.7;
+		margin: 16px 0 0 0;
+		line-height: 1.5;
+	}
+
+	.article-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin-top: 24px;
+	}
+
+	.article-tag {
+		font-size: 0.85rem;
+		color: var(--accent);
+		opacity: 0.8;
+		text-decoration: none;
+		transition: opacity var(--transition-speed) ease;
+	}
+
+	.article-tag:hover {
+		opacity: 1;
+		text-decoration: underline;
 	}
 
 	.article-content :global(p) {
