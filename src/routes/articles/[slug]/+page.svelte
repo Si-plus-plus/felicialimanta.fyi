@@ -1,8 +1,16 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import { SITE_NAME } from '$lib/constants';
+	import { markAsRead } from '$lib/readHistory';
+	import { onMount } from 'svelte';
 
 	let { data }: { data: PageData } = $props();
+
+	onMount(() => {
+		if (data.article && data.article.slug) {
+			markAsRead(data.article.slug);
+		}
+	});
 </script>
 
 <svelte:head>

@@ -1,8 +1,15 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import { SITE_NAME, SITE_DESCRIPTION } from '$lib/constants';
+	import { getReadArticles } from '$lib/readHistory';
+	import { onMount } from 'svelte';
 
 	let { data }: { data: PageData } = $props();
+
+	let readSlugs = $state<string[]>([]);
+	onMount(() => {
+		readSlugs = getReadArticles();
+	});
 </script>
 
 <svelte:head>
@@ -16,7 +23,7 @@
 	{:else}
 		<ul class="article-list">
 			{#each data.articles as article}
-				<li class="article-item">
+				<li class="article-item" class:read={readSlugs.includes(article.slug)}>
 					<a href="/articles/{article.slug}" class="article-link">
 						<span class="article-date">{article.date}</span>
 						<h2 class="article-title">{article.title}</h2>
@@ -36,7 +43,15 @@
 
 	.article-item {
 		border-bottom: 1px solid var(--lines);
-		transition: border-color var(--transition-speed) ease;
+		transition: border-color var(--transition-speed) ease, opacity var(--transition-speed) ease;
+	}
+
+	.article-item.read {
+		opacity: 0.5;
+	}
+
+	.article-item.read:hover {
+		opacity: 1;
 	}
 
 	.article-item:last-child {
