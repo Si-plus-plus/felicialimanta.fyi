@@ -68,6 +68,7 @@
 		<header class="site-header inner-header">
 			<h1 class="site-title"><a use:clickBurst href="/">Felicia Limanta</a></h1>
 			<nav class="site-nav">
+				<a use:clickBurst href="/">Home</a>
 				<a use:clickBurst href="/">Articles</a>
 			</nav>
 		</header>
