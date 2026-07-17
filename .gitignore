@@ -1,0 +1,29 @@
+node_modules
+
+# Planning docs (kept local, not part of the repo)
+.plans/
+
+# Local tool settings
+.claude/settings.local.json
+
+# Output
+.output
+.vercel
+.netlify
+.wrangler
+/.svelte-kit
+/build
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.*
+!.env.example
+!.env.test
+
+# Vite
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
