@@ -137,12 +137,20 @@ export function parseArticleFile(dirName: string): Article {
 				finalSrc = `/articles/${info.slug}/${src}`;
 			}
 			
+			// Detect custom sizing syntax like image.jpg#50
+			let customStyle = '';
+			const sizeMatch = finalSrc.match(/#(\d+)$/);
+			if (sizeMatch) {
+				customStyle = ` style="width: ${sizeMatch[1]}%;"`;
+				finalSrc = finalSrc.replace(/#\d+$/, '');
+			}
+			
 			// Extract alt text for caption
 			const altMatch = match.match(/alt=["']([^"']*)["']/i);
 			const altText = altMatch && altMatch[1] ? altMatch[1] : '';
 			
 			return `<figure class="article-image">
-				<img ${beforeSrc}src="${finalSrc}"${afterSrc}>
+				<img ${beforeSrc}src="${finalSrc}"${afterSrc}${customStyle}>
 				${altText ? `<figcaption>${altText}</figcaption>` : ''}
 			</figure>`;
 		}

@@ -130,13 +130,6 @@
 		font-size: 0.9em;
 	}
 
-	.article-content :global(img) {
-		max-width: 100%;
-		height: auto;
-		border-radius: 8px;
-		margin: 40px 0;
-		display: block;
-	}
 
 	.article-content :global(hr) {
 		border: 0;
