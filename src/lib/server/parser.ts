@@ -84,6 +84,23 @@ export function parseArticleFile(dirName: string): Article {
 		throw new Error(`Missing article.md in directory: "${dirName}".`);
 	}
 
+	// Auto-copy assets (images, etc) to the public static directory
+	const srcDir = path.join(ARTICLES_DIR, dirName);
+	const destDir = path.resolve('static', 'articles', info.slug);
+	if (!fs.existsSync(destDir)) {
+		fs.mkdirSync(destDir, { recursive: true });
+	}
+	const files = fs.readdirSync(srcDir);
+	for (const file of files) {
+		if (file !== 'article.md') {
+			const srcFile = path.join(srcDir, file);
+			const destFile = path.join(destDir, file);
+			if (fs.statSync(srcFile).isFile()) {
+				fs.copyFileSync(srcFile, destFile);
+			}
+		}
+	}
+
 	const content = fs.readFileSync(filePath, 'utf-8');
 
 	// Parse frontmatter block delimited by ---
@@ -108,7 +125,13 @@ export function parseArticleFile(dirName: string): Article {
 	}
 
 	// Render Markdown to HTML
-	const html = marked.parse(markdownBody) as string;
+	let html = marked.parse(markdownBody) as string;
+
+	// Fix relative image paths to resolve correctly in SvelteKit
+	html = html.replace(
+		/(<img\s+[^>]*?src=["'])(?!https?:\/\/|\/)([^"']+)(["'])/gi,
+		`$1/articles/${info.slug}/$2$3`
+	);
 
 	return {
 		directoryName: dirName,

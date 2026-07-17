@@ -9,6 +9,7 @@ node_modules
 .vercel
 .netlify
 .wrangler
+/static/articles
 /.svelte-kit
 /build
 
