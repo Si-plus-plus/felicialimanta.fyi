@@ -30,6 +30,52 @@
 		};
 	}
 
+	function pan(node: HTMLElement) {
+		let isMouseDown = false;
+		let startX = 0;
+		let startY = 0;
+		let scrollLeft = 0;
+		let scrollTop = 0;
+
+		function onMouseDown(e: MouseEvent) {
+			if (e.button !== 0) return;
+			isMouseDown = true;
+			node.classList.add('is-dragging');
+			startX = e.clientX;
+			startY = e.clientY;
+			scrollLeft = node.scrollLeft;
+			scrollTop = node.scrollTop;
+		}
+
+		function onMouseMove(e: MouseEvent) {
+			if (!isMouseDown) return;
+			e.preventDefault();
+			const dx = e.clientX - startX;
+			const dy = e.clientY - startY;
+			node.scrollLeft = scrollLeft - dx;
+			node.scrollTop = scrollTop - dy;
+		}
+
+		function onMouseUp() {
+			if (isMouseDown) {
+				isMouseDown = false;
+				node.classList.remove('is-dragging');
+			}
+		}
+
+		node.addEventListener('mousedown', onMouseDown);
+		window.addEventListener('mousemove', onMouseMove);
+		window.addEventListener('mouseup', onMouseUp);
+
+		return {
+			destroy() {
+				node.removeEventListener('mousedown', onMouseDown);
+				window.removeEventListener('mousemove', onMouseMove);
+				window.removeEventListener('mouseup', onMouseUp);
+			}
+		};
+	}
+
 	async function renderChart(target: HTMLDivElement | null, idSuffix: string) {
 		if (!code || !target) return;
 		try {
@@ -111,7 +157,7 @@
 			<p>{error}</p>
 		</div>
 	{:else}
-		<div class="mermaid-scroll-area">
+		<div use:pan class="mermaid-scroll-area">
 			<div 
 				bind:this={inlineContainer} 
 				class="mermaid-wrapper" 
@@ -143,7 +189,7 @@
 					</button>
 				</div>
 			</div>
-			<div class="mermaid-modal-body">
+			<div use:pan class="mermaid-modal-body">
 				<div 
 					bind:this={modalContainer} 
 					class="mermaid-wrapper" 
@@ -215,6 +261,8 @@
 		align-items: flex-start;
 		padding: 1rem 0;
 		flex: 1;
+		cursor: grab;
+		user-select: none;
 	}
 
 	.mermaid-wrapper {
@@ -289,6 +337,15 @@
 		justify-content: center;
 		align-items: flex-start;
 		background: var(--bg-primary, #ffffff);
+		cursor: grab;
+		user-select: none;
+	}
+
+	.mermaid-scroll-area:active,
+	.mermaid-modal-body:active,
+	:global(.mermaid-scroll-area.is-dragging),
+	:global(.mermaid-modal-body.is-dragging) {
+		cursor: grabbing;
 	}
 
 	.close-btn {
