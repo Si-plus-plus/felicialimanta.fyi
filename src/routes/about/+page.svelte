@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { SITE_NAME } from '$lib/constants';
+	import MermaidRenderer from '$lib/components/MermaidRenderer.svelte';
+	import skillsMap from './skills.mmd?raw';
 </script>
 
 <svelte:head>
@@ -29,6 +31,11 @@
 			</p>
 			<cite>— What Gemini said about my niche</cite>
 		</blockquote>
+	</section>
+
+	<section class="about-section">
+		<h2>Skill Map</h2>
+		<MermaidRenderer code={skillsMap} />
 	</section>
 
 	<section class="about-section">
