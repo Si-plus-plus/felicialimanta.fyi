@@ -11,17 +11,16 @@
 		minHeight?: string;
 	} = $props();
 
-	let container: HTMLDivElement | null = $state(null);
+	let inlineContainer: HTMLDivElement | null = $state(null);
+	let modalContainer: HTMLDivElement | null = $state(null);
 	let error = $state('');
 
 	// svelte-ignore state_referenced_locally
 	let zoomScale = $state(initialScale);
 	let isFullscreen = $state(false);
 
-	const renderId = `mermaid-${Math.random().toString(36).substring(2, 9)}`;
-
-	async function renderChart() {
-		if (!code || !container) return;
+	async function renderChart(target: HTMLDivElement | null, idSuffix: string) {
+		if (!code || !target) return;
 		try {
 			const mermaid = (await import('mermaid')).default;
 			mermaid.initialize({
@@ -29,9 +28,10 @@
 				theme: 'neutral',
 				securityLevel: 'loose'
 			});
+			const renderId = `mermaid-${Math.random().toString(36).substring(2, 9)}-${idSuffix}`;
 			const { svg } = await mermaid.render(renderId, code);
-			if (container) {
-				container.innerHTML = svg;
+			if (target) {
+				target.innerHTML = svg;
 				error = '';
 			}
 		} catch (e: any) {
@@ -56,37 +56,41 @@
 		isFullscreen = !isFullscreen;
 		if (!isFullscreen) {
 			zoomScale = initialScale;
+			document.body.style.overflow = '';
+		} else {
+			document.body.style.overflow = 'hidden';
 		}
 	}
 
 	function handleKeydown(e: KeyboardEvent) {
 		if (e.key === 'Escape' && isFullscreen) {
-			isFullscreen = false;
-			zoomScale = initialScale;
+			toggleFullscreen();
 		}
 	}
 
 	$effect(() => {
-		if (code && container) {
-			renderChart();
+		if (code && inlineContainer) {
+			renderChart(inlineContainer, 'inline');
+		}
+	});
+
+	$effect(() => {
+		if (isFullscreen && code && modalContainer) {
+			renderChart(modalContainer, 'modal');
 		}
 	});
 </script>
 
 <svelte:window onkeydown={handleKeydown} />
 
-<div class="mermaid-container" class:fullscreen={isFullscreen}>
+<div class="mermaid-container">
 	<div class="mermaid-controls">
 		<button class="control-btn" onclick={zoomOut} title="Zoom Out" aria-label="Zoom Out">-</button>
 		<span class="zoom-level">{Math.round(zoomScale * 100)}%</span>
 		<button class="control-btn" onclick={zoomIn} title="Zoom In" aria-label="Zoom In">+</button>
 		<button class="control-btn reset-btn" onclick={resetZoom} title="Reset Zoom" aria-label="Reset Zoom">Reset</button>
-		<button class="control-btn icon-btn" onclick={toggleFullscreen} title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"} aria-label="Toggle Fullscreen">
-			{#if isFullscreen}
-				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v3a2 2 0 0 1-2 2H3"/><path d="M21 8h-3a2 2 0 0 1-2-2V3"/><path d="M3 16h3a2 2 0 0 1 2 2v3"/><path d="M16 21v-3a2 2 0 0 1 2-2h3"/></svg>
-			{:else}
-				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
-			{/if}
+		<button class="control-btn icon-btn" onclick={toggleFullscreen} title="Fullscreen Modal" aria-label="Open Fullscreen Modal">
+			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
 		</button>
 	</div>
 
@@ -98,13 +102,45 @@
 	{:else}
 		<div class="mermaid-scroll-area">
 			<div 
-				bind:this={container} 
+				bind:this={inlineContainer} 
 				class="mermaid-wrapper" 
 				style="transform: scale({zoomScale}); transform-origin: center top; {minWidth ? `min-width: ${minWidth};` : ''} {minHeight ? `min-height: ${minHeight};` : ''}"
 			></div>
 		</div>
 	{/if}
 </div>
+
+{#if isFullscreen}
+	<div 
+		class="mermaid-modal-backdrop"
+		onclick={(e) => { if (e.target === e.currentTarget) toggleFullscreen(); }}
+		role="button"
+		tabindex="0"
+		onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggleFullscreen(); }}
+	>
+		<div class="mermaid-modal-content">
+			<div class="mermaid-modal-header">
+				<span class="modal-title">Chart View</span>
+				<div class="mermaid-controls">
+					<button class="control-btn" onclick={zoomOut} title="Zoom Out" aria-label="Zoom Out">-</button>
+					<span class="zoom-level">{Math.round(zoomScale * 100)}%</span>
+					<button class="control-btn" onclick={zoomIn} title="Zoom In" aria-label="Zoom In">+</button>
+					<button class="control-btn reset-btn" onclick={resetZoom} title="Reset Zoom" aria-label="Reset Zoom">Reset</button>
+					<button class="control-btn icon-btn close-btn" onclick={toggleFullscreen} title="Close Fullscreen" aria-label="Close Fullscreen">
+						<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+					</button>
+				</div>
+			</div>
+			<div class="mermaid-modal-body">
+				<div 
+					bind:this={modalContainer} 
+					class="mermaid-wrapper" 
+					style="transform: scale({zoomScale}); transform-origin: center top; {minWidth ? `min-width: ${minWidth};` : ''}"
+				></div>
+			</div>
+		</div>
+	</div>
+{/if}
 
 <style>
 	.mermaid-container {
@@ -117,24 +153,6 @@
 		border-radius: 8px;
 		border: 1px solid var(--border-color, #e2e8f0);
 		transition: background-color 0.2s ease;
-	}
-
-	.mermaid-container.fullscreen {
-		position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		width: 100vw;
-		height: 100vh;
-		z-index: 9999;
-		margin: 0;
-		border-radius: 0;
-		border: none;
-		background: var(--bg-primary, #ffffff);
-		display: flex;
-		flex-direction: column;
-		padding: 2rem 1rem 1rem 1rem;
 	}
 
 	.mermaid-controls {
@@ -200,12 +218,73 @@
 		height: auto;
 	}
 
-	.fullscreen .mermaid-wrapper :global(svg) {
-		max-width: none;
-	}
-
 	.mermaid-error {
 		color: #e53e3e;
 		font-family: monospace;
+	}
+
+	.mermaid-modal-backdrop {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		background: rgba(0, 0, 0, 0.65);
+		backdrop-filter: blur(4px);
+		z-index: 99999;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 1.5rem;
+		box-sizing: border-box;
+	}
+
+	.mermaid-modal-content {
+		background: var(--bg-primary, #ffffff);
+		border-radius: 12px;
+		width: 100%;
+		max-width: 1200px;
+		height: 85vh;
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+		box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
+		border: 1px solid var(--border-color, #cbd5e1);
+	}
+
+	.mermaid-modal-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0.75rem 1.25rem;
+		border-bottom: 1px solid var(--border-color, #e2e8f0);
+		background: var(--bg-secondary, #f8fafc);
+	}
+
+	.modal-title {
+		font-weight: 600;
+		font-size: 0.95rem;
+		color: var(--text-primary, #0f172a);
+	}
+
+	.mermaid-modal-body {
+		flex: 1;
+		overflow: auto;
+		padding: 1.5rem;
+		display: flex;
+		justify-content: center;
+		align-items: flex-start;
+		background: var(--bg-primary, #ffffff);
+	}
+
+	.close-btn {
+		background: transparent;
+		border: none;
+		color: var(--text-primary, #0f172a);
+		margin-left: 0.5rem;
+	}
+	
+	.close-btn:hover {
+		background: rgba(0, 0, 0, 0.08);
 	}
 </style>
