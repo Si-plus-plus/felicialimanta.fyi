@@ -92,6 +92,7 @@
 			<h1 class="site-title"><a href="/">{SITE_NAME}</a></h1>
 			<p class="site-bio">{SITE_BIO}</p>
 			<nav class="site-nav">
+				<a href="/about">About</a>
 				<a href="/" class="random-article-btn" onclick={goToRandomArticle}>Random Article</a>
 			</nav>
 		</header>
@@ -100,6 +101,7 @@
 			<h1 class="site-title"><a href="/">{SITE_NAME}</a></h1>
 			<nav class="site-nav">
 				<a href="/">Home</a>
+				<a href="/about">About</a>
 				<a href="/" class="random-article-btn" onclick={goToRandomArticle}>Random Article</a>
 			</nav>
 		</header>
