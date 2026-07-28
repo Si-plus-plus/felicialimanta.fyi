@@ -19,7 +19,7 @@
 	let zoomScale = $state(initialScale);
 	let isFullscreen = $state(false);
 
-	let backdropMouseDownTarget: EventTarget | null = null;
+	let backdropMouseDownTarget: EventTarget | null = $state(null);
 
 	function portal(node: HTMLElement) {
 		document.body.appendChild(node);
@@ -178,8 +178,7 @@
 <svelte:window onkeydown={handleKeydown} />
 
 <div class="mermaid-container">
-	<div class="mermaid-controls">
-		<span class="zoom-hint">Ctrl + Scroll to zoom • Drag to pan</span>
+	<div class="mermaid-controls inline-controls">
 		<button class="control-btn" onclick={zoomOut} title="Zoom Out" aria-label="Zoom Out">-</button>
 		<span class="zoom-level">{Math.round(zoomScale * 100)}%</span>
 		<button class="control-btn" onclick={zoomIn} title="Zoom In" aria-label="Zoom In">+</button>
@@ -222,9 +221,11 @@
 	>
 		<div class="mermaid-modal-content">
 			<div class="mermaid-modal-header">
-				<span class="modal-title">Chart View</span>
+				<div class="modal-title-group">
+					<span class="modal-title">Chart View</span>
+					<span class="zoom-hint">Ctrl + Scroll to zoom • mouse drag to pan</span>
+				</div>
 				<div class="mermaid-controls">
-					<span class="zoom-hint">Ctrl + Scroll to zoom • Drag to pan</span>
 					<button class="control-btn" onclick={zoomOut} title="Zoom Out" aria-label="Zoom Out">-</button>
 					<span class="zoom-level">{Math.round(zoomScale * 100)}%</span>
 					<button class="control-btn" onclick={zoomIn} title="Zoom In" aria-label="Zoom In">+</button>
@@ -268,17 +269,36 @@
 		align-items: center;
 		justify-content: flex-end;
 		gap: 0.35rem;
-		margin-bottom: 0.75rem;
 		user-select: none;
+		flex-shrink: 0;
+	}
+
+	.inline-controls {
 		width: 100%;
+		margin-bottom: 0.75rem;
+	}
+
+	.modal-title-group {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		min-width: 0;
+		flex-shrink: 1;
+	}
+
+	.modal-title {
+		font-weight: 600;
+		font-size: 0.95rem;
+		color: var(--text-primary, #0f172a);
+		white-space: nowrap;
 	}
 
 	.zoom-hint {
 		font-size: 0.75rem;
 		color: var(--text-secondary, #64748b);
-		margin-right: auto;
 		opacity: 0.8;
 		user-select: none;
+		white-space: nowrap;
 	}
 
 	.control-btn {
@@ -382,13 +402,7 @@
 		padding: 0.75rem 1.25rem;
 		border-bottom: 1px solid var(--border-color, #e2e8f0);
 		background: var(--bg-secondary, #f8fafc);
-	}
-
-	.modal-title {
-		font-weight: 600;
-		font-size: 0.95rem;
-		color: var(--text-primary, #0f172a);
-		margin-right: 1.5rem;
+		gap: 1rem;
 	}
 
 	.mermaid-modal-body {
