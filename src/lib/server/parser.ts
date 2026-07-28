@@ -47,6 +47,7 @@ export function getArticleDirectories(): string[] {
 		fs.mkdirSync(ARTICLES_DIR, { recursive: true });
 	}
 	return fs.readdirSync(ARTICLES_DIR).filter((file) => {
+		if (file.startsWith('.')) return false;
 		const fullPath = path.join(ARTICLES_DIR, file);
 		return fs.statSync(fullPath).isDirectory();
 	});

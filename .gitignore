@@ -3,6 +3,7 @@ node_modules
 # Planning docs (kept local, not part of the repo)
 .plans/
 .diary/
+.drafts/
 
 # Output
 .output
