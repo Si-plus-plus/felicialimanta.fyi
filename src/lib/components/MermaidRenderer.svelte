@@ -159,10 +159,15 @@
 	{:else}
 		<div use:pan class="mermaid-scroll-area">
 			<div 
-				bind:this={inlineContainer} 
-				class="mermaid-wrapper" 
-				style="transform: scale({zoomScale}); transform-origin: center top; {minWidth ? `min-width: ${minWidth};` : ''} {minHeight ? `min-height: ${minHeight};` : ''}"
-			></div>
+				class="mermaid-scalable-outer" 
+				style="width: calc(({minWidth || '100%'}) * {zoomScale});"
+			>
+				<div 
+					bind:this={inlineContainer} 
+					class="mermaid-wrapper" 
+					style="transform: scale({zoomScale}); transform-origin: 0 0; width: {minWidth || '100%'}; {minHeight ? `min-height: ${minHeight};` : ''}"
+				></div>
+			</div>
 		</div>
 	{/if}
 </div>
@@ -191,10 +196,15 @@
 			</div>
 			<div use:pan class="mermaid-modal-body">
 				<div 
-					bind:this={modalContainer} 
-					class="mermaid-wrapper" 
-					style="transform: scale({zoomScale}); transform-origin: center top; {minWidth ? `min-width: ${minWidth};` : ''}"
-				></div>
+					class="mermaid-scalable-outer" 
+					style="width: calc(({minWidth || '100%'}) * {zoomScale});"
+				>
+					<div 
+						bind:this={modalContainer} 
+						class="mermaid-wrapper" 
+						style="transform: scale({zoomScale}); transform-origin: 0 0; width: {minWidth || '100%'};"
+					></div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -256,13 +266,16 @@
 	.mermaid-scroll-area {
 		width: 100%;
 		overflow: auto;
-		display: flex;
-		justify-content: center;
-		align-items: flex-start;
 		padding: 1rem 0;
 		flex: 1;
 		cursor: grab;
 		user-select: none;
+	}
+
+	.mermaid-scalable-outer {
+		margin: 0 auto;
+		box-sizing: content-box;
+		position: relative;
 	}
 
 	.mermaid-wrapper {
@@ -270,7 +283,6 @@
 		justify-content: center;
 		align-items: center;
 		transition: transform 0.2s ease-out;
-		width: 100%;
 	}
 
 	.mermaid-wrapper :global(svg) {
@@ -333,9 +345,6 @@
 		flex: 1;
 		overflow: auto;
 		padding: 1.5rem;
-		display: flex;
-		justify-content: center;
-		align-items: flex-start;
 		background: var(--bg-primary, #ffffff);
 		cursor: grab;
 		user-select: none;
