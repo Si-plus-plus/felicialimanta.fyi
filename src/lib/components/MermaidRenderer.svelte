@@ -135,11 +135,11 @@
 	}
 
 	function zoomIn() {
-		if (zoomScale < 3) zoomScale = parseFloat((zoomScale + 0.25).toFixed(2));
+		if (zoomScale < 10) zoomScale = parseFloat((zoomScale + 0.25).toFixed(2));
 	}
 
 	function zoomOut() {
-		if (zoomScale > 0.5) zoomScale = parseFloat((zoomScale - 0.25).toFixed(2));
+		if (zoomScale > 0.25) zoomScale = parseFloat((zoomScale - 0.25).toFixed(2));
 	}
 
 	function resetZoom() {
@@ -328,7 +328,7 @@
 		font-family: monospace;
 		padding: 0 0.25rem;
 		color: var(--text-secondary, #64748b);
-		min-width: 42px;
+		min-width: 52px;
 		text-align: center;
 	}
 
