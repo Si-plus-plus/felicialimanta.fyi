@@ -19,6 +19,8 @@
 	let zoomScale = $state(initialScale);
 	let isFullscreen = $state(false);
 
+	let backdropMouseDownTarget: EventTarget | null = null;
+
 	function portal(node: HTMLElement) {
 		document.body.appendChild(node);
 		return {
@@ -28,6 +30,20 @@
 				}
 			}
 		};
+	}
+
+	function handleBackdropMouseDown(e: MouseEvent) {
+		backdropMouseDownTarget = e.target;
+	}
+
+	function handleBackdropClick(e: MouseEvent) {
+		if (
+			e.target === e.currentTarget && 
+			backdropMouseDownTarget === e.currentTarget
+		) {
+			toggleFullscreen();
+		}
+		backdropMouseDownTarget = null;
 	}
 
 	function pan(node: HTMLElement) {
@@ -198,7 +214,8 @@
 	<div 
 		use:portal
 		class="mermaid-modal-backdrop"
-		onclick={(e) => { if (e.target === e.currentTarget) toggleFullscreen(); }}
+		onmousedown={handleBackdropMouseDown}
+		onclick={handleBackdropClick}
 		role="button"
 		tabindex="0"
 		onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggleFullscreen(); }}
