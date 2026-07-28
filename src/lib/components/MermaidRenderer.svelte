@@ -76,6 +76,27 @@
 		};
 	}
 
+	function wheelZoom(node: HTMLElement) {
+		function onWheel(e: WheelEvent) {
+			if (e.ctrlKey || e.metaKey) {
+				e.preventDefault();
+				if (e.deltaY < 0) {
+					zoomIn();
+				} else if (e.deltaY > 0) {
+					zoomOut();
+				}
+			}
+		}
+
+		node.addEventListener('wheel', onWheel, { passive: false });
+
+		return {
+			destroy() {
+				node.removeEventListener('wheel', onWheel);
+			}
+		};
+	}
+
 	async function renderChart(target: HTMLDivElement | null, idSuffix: string) {
 		if (!code || !target) return;
 		try {
@@ -142,6 +163,7 @@
 
 <div class="mermaid-container">
 	<div class="mermaid-controls">
+		<span class="zoom-hint">Ctrl + Scroll to zoom • Drag to pan</span>
 		<button class="control-btn" onclick={zoomOut} title="Zoom Out" aria-label="Zoom Out">-</button>
 		<span class="zoom-level">{Math.round(zoomScale * 100)}%</span>
 		<button class="control-btn" onclick={zoomIn} title="Zoom In" aria-label="Zoom In">+</button>
@@ -157,7 +179,7 @@
 			<p>{error}</p>
 		</div>
 	{:else}
-		<div use:pan class="mermaid-scroll-area">
+		<div use:pan use:wheelZoom class="mermaid-scroll-area">
 			<div 
 				class="mermaid-scalable-outer" 
 				style="width: calc(({minWidth || '100%'}) * {zoomScale});"
@@ -185,6 +207,7 @@
 			<div class="mermaid-modal-header">
 				<span class="modal-title">Chart View</span>
 				<div class="mermaid-controls">
+					<span class="zoom-hint">Ctrl + Scroll to zoom • Drag to pan</span>
 					<button class="control-btn" onclick={zoomOut} title="Zoom Out" aria-label="Zoom Out">-</button>
 					<span class="zoom-level">{Math.round(zoomScale * 100)}%</span>
 					<button class="control-btn" onclick={zoomIn} title="Zoom In" aria-label="Zoom In">+</button>
@@ -194,7 +217,7 @@
 					</button>
 				</div>
 			</div>
-			<div use:pan class="mermaid-modal-body">
+			<div use:pan use:wheelZoom class="mermaid-modal-body">
 				<div 
 					class="mermaid-scalable-outer" 
 					style="width: calc(({minWidth || '100%'}) * {zoomScale});"
@@ -229,6 +252,15 @@
 		justify-content: flex-end;
 		gap: 0.35rem;
 		margin-bottom: 0.75rem;
+		user-select: none;
+		width: 100%;
+	}
+
+	.zoom-hint {
+		font-size: 0.75rem;
+		color: var(--text-secondary, #64748b);
+		margin-right: auto;
+		opacity: 0.8;
 		user-select: none;
 	}
 
@@ -339,6 +371,7 @@
 		font-weight: 600;
 		font-size: 0.95rem;
 		color: var(--text-primary, #0f172a);
+		margin-right: 1.5rem;
 	}
 
 	.mermaid-modal-body {
