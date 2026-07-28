@@ -1,9 +1,21 @@
 <script lang="ts">
-	let { code = '' }: { code: string } = $props();
+	let { 
+		code = '',
+		initialScale = 1,
+		minWidth = '',
+		minHeight = ''
+	}: { 
+		code: string;
+		initialScale?: number;
+		minWidth?: string;
+		minHeight?: string;
+	} = $props();
+
 	let container: HTMLDivElement | null = $state(null);
 	let error = $state('');
 
-	let zoomScale = $state(1);
+	// svelte-ignore state_referenced_locally
+	let zoomScale = $state(initialScale);
 	let isFullscreen = $state(false);
 
 	const renderId = `mermaid-${Math.random().toString(36).substring(2, 9)}`;
@@ -37,20 +49,20 @@
 	}
 
 	function resetZoom() {
-		zoomScale = 1;
+		zoomScale = initialScale;
 	}
 
 	function toggleFullscreen() {
 		isFullscreen = !isFullscreen;
 		if (!isFullscreen) {
-			zoomScale = 1;
+			zoomScale = initialScale;
 		}
 	}
 
 	function handleKeydown(e: KeyboardEvent) {
 		if (e.key === 'Escape' && isFullscreen) {
 			isFullscreen = false;
-			zoomScale = 1;
+			zoomScale = initialScale;
 		}
 	}
 
@@ -88,7 +100,7 @@
 			<div 
 				bind:this={container} 
 				class="mermaid-wrapper" 
-				style="transform: scale({zoomScale}); transform-origin: center top;"
+				style="transform: scale({zoomScale}); transform-origin: center top; {minWidth ? `min-width: ${minWidth};` : ''} {minHeight ? `min-height: ${minHeight};` : ''}"
 			></div>
 		</div>
 	{/if}
@@ -180,10 +192,11 @@
 		justify-content: center;
 		align-items: center;
 		transition: transform 0.2s ease-out;
+		width: 100%;
 	}
 
 	.mermaid-wrapper :global(svg) {
-		max-width: 100%;
+		width: 100%;
 		height: auto;
 	}
 
