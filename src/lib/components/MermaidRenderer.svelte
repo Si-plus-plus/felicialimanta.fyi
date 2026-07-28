@@ -19,6 +19,17 @@
 	let zoomScale = $state(initialScale);
 	let isFullscreen = $state(false);
 
+	function portal(node: HTMLElement) {
+		document.body.appendChild(node);
+		return {
+			destroy() {
+				if (node.parentNode) {
+					node.parentNode.removeChild(node);
+				}
+			}
+		};
+	}
+
 	async function renderChart(target: HTMLDivElement | null, idSuffix: string) {
 		if (!code || !target) return;
 		try {
@@ -112,6 +123,7 @@
 
 {#if isFullscreen}
 	<div 
+		use:portal
 		class="mermaid-modal-backdrop"
 		onclick={(e) => { if (e.target === e.currentTarget) toggleFullscreen(); }}
 		role="button"
@@ -237,6 +249,7 @@
 		justify-content: center;
 		padding: 1.5rem;
 		box-sizing: border-box;
+		margin: 0 !important;
 	}
 
 	.mermaid-modal-content {
@@ -250,6 +263,7 @@
 		overflow: hidden;
 		box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
 		border: 1px solid var(--border-color, #cbd5e1);
+		margin: 0 !important;
 	}
 
 	.mermaid-modal-header {
