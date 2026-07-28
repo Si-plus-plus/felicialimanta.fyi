@@ -26,10 +26,12 @@ I mean, it's just a notebook right?
 
 Aannd it's done.
 
-![Front of the handmade notebook](front_book.jpg)
+![Front of the handmade notebook](front_book.jpg#50)
 
 I felt hella proud of myself. In this era of AI, where everything is given in an instant.
 Where things can be bought at a cheap price. I still made something by myself. Using waste.
+
+![Inside of the handmade notebook](inside_book.jpg#50)
 
 I know that this wouldn't last long tho. Since it was made using cardboard and the elastics were brittle.
 But, it's still something right?
