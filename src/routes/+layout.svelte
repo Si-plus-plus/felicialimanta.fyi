@@ -92,7 +92,7 @@
 			<h1 class="site-title"><a href="/">{SITE_NAME}</a></h1>
 			<p class="site-bio">{SITE_BIO}</p>
 			<nav class="site-nav">
-				<a href="/about">About</a>
+				<a href="/about" class:active={$page.url.pathname === '/about'}>About</a>
 				<a href="/" class="random-article-btn" onclick={goToRandomArticle}>Random Article</a>
 			</nav>
 		</header>
@@ -100,8 +100,8 @@
 		<header class="site-header inner-header">
 			<h1 class="site-title"><a href="/">{SITE_NAME}</a></h1>
 			<nav class="site-nav">
-				<a href="/">Home</a>
-				<a href="/about">About</a>
+				<a href="/" class:active={$page.url.pathname === '/'}>Home</a>
+				<a href="/about" class:active={$page.url.pathname === '/about'}>About</a>
 				<a href="/" class="random-article-btn" onclick={goToRandomArticle}>Random Article</a>
 			</nav>
 		</header>

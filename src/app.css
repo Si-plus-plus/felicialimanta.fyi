@@ -150,9 +150,15 @@ main {
 	transition: transform var(--transition-speed) ease;
 }
 
-.site-nav a:hover {
+.site-nav a:hover,
+.site-nav a.active {
 	opacity: 1;
 	color: var(--accent);
+	font-weight: 600;
+}
+
+.site-nav a.active::before {
+	opacity: 1;
 }
 
 .site-nav a:hover::before {

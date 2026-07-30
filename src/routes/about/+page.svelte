@@ -35,7 +35,14 @@
 
 	<section class="about-section">
 		<h2>Accumulated Skills Over the Years</h2>
+		<p>
+			I take on whatever challenge comes up, regardless of how niche or out-of-bounds it feels. Over time, those seemingly unrelated experiences form a surprisingly useful toolkit:
+		</p>
 		<MermaidRenderer code={skillsMap} initialScale={2.35} minWidth="750px" focusTop={true} />
+
+		<p>
+			With this chart, I am not saying that I have maxxed out the skills yet. I am still learning and exploring new things.
+		</p>
 	</section>
 
 	<section class="about-section">
