@@ -47,18 +47,33 @@
 		}));
 	}
 
-	function getContentSnippet(searchText: string | undefined, query: string): string | null {
+	function getContentSnippet(text: string | undefined, query: string): string | null {
 		const trimmed = query.trim();
-		if (!trimmed || !searchText) return null;
-		const index = searchText.toLowerCase().indexOf(trimmed.toLowerCase());
+		if (!trimmed || !text) return null;
+		const index = text.toLowerCase().indexOf(trimmed.toLowerCase());
 		if (index === -1) return null;
 
 		const start = Math.max(0, index - 50);
-		const end = Math.min(searchText.length, index + trimmed.length + 110);
-		let snippet = searchText.slice(start, end);
+		const end = Math.min(text.length, index + trimmed.length + 110);
+		let snippet = text.slice(start, end);
 		if (start > 0) snippet = '...' + snippet;
-		if (end < searchText.length) snippet = snippet + '...';
+		if (end < text.length) snippet = snippet + '...';
 		return snippet;
+	}
+
+	function getMatchingSnippet(article: PageData['articles'][number], query: string): string | null {
+		const trimmed = query.trim().toLowerCase();
+		if (!trimmed) return null;
+
+		if (article.description && article.description.toLowerCase().includes(trimmed)) {
+			return getContentSnippet(article.description, query);
+		}
+
+		if (article.searchText && article.searchText.toLowerCase().includes(trimmed)) {
+			return getContentSnippet(article.searchText, query);
+		}
+
+		return null;
 	}
 </script>
 
@@ -121,9 +136,9 @@
 									{/if}
 								{/each}
 							</h2>
-							{#if searchQuery.trim() && getContentSnippet(article.searchText, searchQuery)}
+							{#if searchQuery.trim() && getMatchingSnippet(article, searchQuery)}
 								<p class="article-snippet">
-									{#each getSegments(getContentSnippet(article.searchText, searchQuery)!, searchQuery) as segment}
+									{#each getSegments(getMatchingSnippet(article, searchQuery)!, searchQuery) as segment}
 										{#if segment.isMatch}
 											<mark class="highlight">{segment.text}</mark>
 										{:else}
