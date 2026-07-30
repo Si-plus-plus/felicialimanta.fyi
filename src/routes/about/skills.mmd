@@ -1,22 +1,369 @@
-graph TD
-    Root["Felicia Limanta"]
-    
-    Root --> SE["Software Engineering & DX"]
-    SE --> SE1["Web Dev (SvelteKit, TypeScript, Vite)"]
-    SE --> SE2["Micro-optimizations (DX & UX)"]
-    SE --> SE3["AI Tooling & Automation"]
+graph BT
 
-    Root --> CP["Competitive Programming"]
-    CP --> CP1["Problem Solving & Algorithms"]
-    CP --> CP2["Contest Administration (Untitled TC)"]
-    CP --> CP3["Technical Committee (ICPC APAC, Jakarta)"]
+    %% ==========================================
+    %% SECTION 1: Pre Uni (2019) - BOTTOM
+    %% ==========================================
+    subgraph PU ["Pre Uni (2019)"]
+        direction LR
+        subgraph PU_c1 [" "]
+            ss1["graphic design fundamentals"]
+            sm1["basic organizational structure"]
+            sm2["visual design intuition"]
+            sm3["copywriting basics"]
+            sm4["user interface UI & user experience UX"]
+        end
+        subgraph PU_c2 [" "]
+            if1["project lifecycle management"]
+            if2["project management"]
+            if3["user experience UX design"]
+            if4["pitching & presentation"]
+        end
+    end
 
-    Root --> EV["Event & Community Operations"]
-    EV --> EV1["EWPC Staff"]
-    EV --> EV2["Coding & Algorithms Tournament Director"]
-    EV --> EV3["CS Competitions Admin"]
+    %% ==========================================
+    %% SECTION 2: Jollybee (2020–2024)
+    %% ==========================================
+    subgraph JB ["Jollybee (2020–2024)"]
+        direction LR
+        subgraph JB_c1 [" "]
+            jb1["project management"]
+            jb2["vendor & procurement management"]
+            jb3["talent recruitment & onboarding"]
+            jb4["organizational structure"]
+            jb5["administrative bureaucracy & stakeholder management"]
+            jb6["peer coaching & mentorship"]
+        end
+        subgraph JB_c2 [" "]
+            jb7["content copywriting"]
+            jb8["community engagement"]
+            jb9["social media strategy & content planning"]
+            jb10["visual design"]
+            jb11["team & people management"]
+            jb12["contestant wellbeing & personal support"]
+        end
+        subgraph JB_c3 [" "]
+            jb13["event operations & coordination"]
+            jb14["operational management & oversight"]
+            jb15["organic community growth and audience building"]
+            jb16["strategic planning"]
+            jb17["public relations"]
+            jb18["administration"]
+        end
+    end
 
-    Root --> HB["Exploration & Hobbies"]
-    HB --> HB1["Arcade Rhythm Games"]
-    HB --> HB2["Tea Tasting"]
-    HB --> HB3["TCGs & DIY Projects"]
+    %% ==========================================
+    %% SECTION 3: csrelatedcompetitions (2021–present)
+    %% ==========================================
+    subgraph CS ["csrelatedcompetitions (2021–present)"]
+        direction LR
+        subgraph CS_c1 [" "]
+            cs1["strategic planning"]
+            cs2["organic community growth and audience building"]
+            cs3["social media strategy and content planning"]
+        end
+        subgraph CS_c2 [" "]
+            cs4["community engagement"]
+            cs5["cross-disciplinary talent engagement"]
+            cs6["partnership acquisition"]
+        end
+    end
+
+    %% ==========================================
+    %% SECTION 4: TOKI: IOI (2022)
+    %% ==========================================
+    subgraph TI ["TOKI: IOI (2022)"]
+        direction LR
+        subgraph TI_c1 [" "]
+            ti1["open-source software development"]
+            ti2["project lifecycle management"]
+            ti3["quality assurance & task testing"]
+            ti4["organizational structure & hierarchy"]
+        end
+        subgraph TI_c2 [" "]
+            ti5["cross-functional team management"]
+            ti6["product ownership & scope management"]
+            ti7["team & people management"]
+        end
+    end
+
+    %% ==========================================
+    %% SECTION 5: TOKI: OSN (2023)
+    %% ==========================================
+    subgraph TO ["TOKI: OSN (2023)"]
+        to1["team & people management"]
+    end
+
+    %% ==========================================
+    %% SECTION 6: TOKI: Pelatnas (2024)
+    %% ==========================================
+    subgraph PL ["TOKI: Pelatnas for IOI and EGOI (2024)"]
+        direction LR
+        subgraph PL_c1 [" "]
+            pl1["operational management & oversight"]
+            pl2["end-to-end event logistics"]
+            pl3["venue & resource procurement"]
+            pl4["contestant care & mental health support"]
+            pl5["team coordination & workflow optimization"]
+        end
+        subgraph PL_c2 [" "]
+            pl6["government bureaucracy reporting"]
+            pl7["national delegation leadership"]
+            pl8["content copywriting"]
+            pl9["quality assurance"]
+        end
+        subgraph PL_c3 [" "]
+            pl10["team & people management"]
+            pl11["administrative bureaucracy & stakeholder management"]
+            pl12["strategic planning"]
+            pl13["public relations"]
+        end
+    end
+
+    %% ==========================================
+    %% SECTION 7: GDP Labs (2024–2026)
+    %% ==========================================
+    subgraph GL ["GDP Labs (2024–2026)"]
+        direction LR
+        subgraph GL_c1 [" "]
+            gl1["end-to-end product feature ownership"]
+            gl2["software development life cycle"]
+            gl3["AI adoption"]
+            gl4["spec-driven workflow"]
+        end
+        subgraph GL_c2 [" "]
+            gl5["industrial bureaucracy"]
+            gl6["talent recruitment & onboarding"]
+            gl7["community engagement"]
+        end
+    end
+
+    %% ==========================================
+    %% SECTION 8: untitledtc (2024–present)
+    %% ==========================================
+    subgraph UT ["untitledtc (2024–present)"]
+        direction LR
+        subgraph UT_c1 [" "]
+            ut1["strategic planning"]
+            ut2["administration"]
+            ut3["open educational resource management"]
+            ut4["social media strategy and content planning"]
+        end
+        subgraph UT_c2 [" "]
+            ut5["community engagement"]
+            ut6["curriculum direction and educational scaling"]
+            ut7["organic community growth and audience building"]
+        end
+    end
+
+    %% ==========================================
+    %% SECTION 9: ICPC (2024–present)
+    %% ==========================================
+    subgraph ICPC ["ICPC (2024–present)"]
+        direction LR
+        subgraph IC_c1 [" "]
+            ic1["web development & maintenance"]
+            ic2["participant-focused UI and UX design"]
+            ic3["event branding & visual assets"]
+            ic4["social media strategy & channel setup"]
+            ic5["content creation & event documentation"]
+        end
+        subgraph IC_c2 [" "]
+            ic6["on-site event operations & participant support"]
+            ic7["team & people management"]
+            ic8["operational management"]
+            ic9["cross-country committee experience"]
+            ic10["partnership acquisition"]
+        end
+    end
+
+    %% ==========================================
+    %% SECTION 10: Coding & Algorithms Tournament (2026–present) - TOP
+    %% ==========================================
+    subgraph CAT ["Coding & Algorithms Tournament (2026–present)"]
+        direction LR
+        subgraph CAT_c1 [" "]
+            ca1["operational management & oversight"]
+            ca2["end-to-end event logistics"]
+            ca3["team & people management"]
+            ca4["venue & resource procurement"]
+            ca5["quality assurance"]
+        end
+        subgraph CAT_c2 [" "]
+            ca6["team coordination & workflow optimization"]
+            ca7["product ownership & scope management"]
+            ca8["partnership acquisition"]
+            ca9["talent recruitment & onboarding"]
+            ca10["industrial bureaucracy"]
+        end
+        subgraph CAT_c3 [" "]
+            ca11["organic community growth & audience building"]
+            ca12["strategic planning"]
+            ca13["public relations"]
+            ca14["administration"]
+            ca15["project management"]
+        end
+        subgraph CAT_c4 [" "]
+            ca16["operations & coordination"]
+            ca17["organizational structure"]
+            ca18["software development life cycle"]
+            ca19["project lifecycle management"]
+            ca20["visual design"]
+        end
+        subgraph CAT_c5 [" "]
+            ca21["social media strategy and content planning"]
+            ca22["cross-functional team management"]
+            ca23["community engagement"]
+            ca24["open educational resource management"]
+            ca25["curriculum direction"]
+        end
+    end
+
+    %% ==========================================
+    %% SKILL-TO-SKILL CONNECTIONS (LINEAGE ARROWS)
+    %% ==========================================
+
+    %% Pre Uni -> Jollybee
+    if2 --> jb1
+    sm1 --> jb4
+    sm3 --> jb7
+    sm2 --> jb10
+
+    %% Jollybee -> csrelatedcompetitions
+    jb16 --> cs1
+    jb15 --> cs2
+    jb9 --> cs3
+    jb8 --> cs4
+
+    %% Pre Uni & Jollybee -> TOKI IOI
+    if1 --> ti2
+    sm1 --> ti4
+    jb11 --> ti5
+    jb11 --> ti7
+
+    %% TOKI IOI -> TOKI OSN
+    ti7 --> to1
+
+    %% Jollybee, IOI, OSN -> TOKI Pelatnas
+    jb14 --> pl1
+    jb13 --> pl2
+    jb2 --> pl3
+    jb12 --> pl4
+    jb11 --> pl5
+    jb5 --> pl6
+    jb7 --> pl8
+    ti3 --> pl9
+    to1 --> pl10
+    jb5 --> pl11
+    jb16 --> pl12
+    jb17 --> pl13
+
+    %% IOI & Jollybee -> GDP Labs
+    ti2 --> gl1
+    jb3 --> gl6
+    jb8 --> gl7
+
+    %% Pelatnas & Jollybee -> untitledtc
+    pl12 --> ut1
+    jb18 --> ut2
+    jb9 --> ut4
+    jb8 --> ut5
+    jb15 --> ut7
+
+    %% Pre Uni, Jollybee, Pelatnas, CS -> ICPC
+    if3 --> ic2
+    jb10 --> ic3
+    jb9 --> ic4
+    jb7 --> ic5
+    jb13 --> ic6
+    pl10 --> ic7
+    pl1 --> ic8
+    cs6 --> ic10
+
+    %% Connections into Coding & Algorithms Tournament
+    pl1 --> ca1
+    jb14 --> ca1
+    pl2 --> ca2
+    jb13 --> ca2
+    ic7 --> ca3
+    pl10 --> ca3
+    pl3 --> ca4
+    jb2 --> ca4
+    pl9 --> ca5
+    ti3 --> ca5
+    pl5 --> ca6
+    ti6 --> ca7
+    ic10 --> ca8
+    cs6 --> ca8
+    gl6 --> ca9
+    jb3 --> ca9
+    gl5 --> ca10
+    ut7 --> ca11
+    cs2 --> ca11
+    jb15 --> ca11
+    ut1 --> ca12
+    cs1 --> ca12
+    pl12 --> ca12
+    pl13 --> ca13
+    jb17 --> ca13
+    ut2 --> ca14
+    jb18 --> ca14
+    jb1 --> ca15
+    if2 --> ca15
+    ic6 --> ca16
+    jb13 --> ca16
+    ti4 --> ca17
+    jb4 --> ca17
+    gl2 --> ca18
+    ti2 --> ca19
+    if1 --> ca19
+    ic3 --> ca20
+    jb10 --> ca20
+    ut4 --> ca21
+    cs3 --> ca21
+    jb9 --> ca21
+    ti5 --> ca22
+    gl7 --> ca23
+    ut5 --> ca23
+    cs4 --> ca23
+    jb8 --> ca23
+    ut3 --> ca24
+    ut6 --> ca25
+
+    %% ==========================================
+    %% COLOR STYLES FOR SECTIONS
+    %% ==========================================
+    style CAT fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
+    style ICPC fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style UT fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    style GL fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    style PL fill:#fbe9e7,stroke:#d84315,stroke-width:2px
+    style TO fill:#fffde7,stroke:#fbc02d,stroke-width:2px
+    style TI fill:#e0f7fa,stroke:#00838f,stroke-width:2px
+    style CS fill:#ede7f6,stroke:#512da8,stroke-width:2px
+    style JB fill:#f1f8e9,stroke:#689f38,stroke-width:2px
+    style PU fill:#eceff1,stroke:#546e7a,stroke-width:2px
+
+    %% Hide column container borders inside sections
+    style CAT_c1 fill:none,stroke:none
+    style CAT_c2 fill:none,stroke:none
+    style CAT_c3 fill:none,stroke:none
+    style CAT_c4 fill:none,stroke:none
+    style CAT_c5 fill:none,stroke:none
+    style IC_c1 fill:none,stroke:none
+    style IC_c2 fill:none,stroke:none
+    style UT_c1 fill:none,stroke:none
+    style UT_c2 fill:none,stroke:none
+    style GL_c1 fill:none,stroke:none
+    style GL_c2 fill:none,stroke:none
+    style PL_c1 fill:none,stroke:none
+    style PL_c2 fill:none,stroke:none
+    style PL_c3 fill:none,stroke:none
+    style TI_c1 fill:none,stroke:none
+    style TI_c2 fill:none,stroke:none
+    style CS_c1 fill:none,stroke:none
+    style CS_c2 fill:none,stroke:none
+    style JB_c1 fill:none,stroke:none
+    style JB_c2 fill:none,stroke:none
+    style JB_c3 fill:none,stroke:none
+    style PU_c1 fill:none,stroke:none
+    style PU_c2 fill:none,stroke:none
