@@ -41,6 +41,21 @@ export function parseDirectoryName(dirName: string): { date: string; slug: strin
 }
 
 /**
+ * Extracts plain text content and asset metadata (image sources, alt text, link hrefs) from HTML for search indexing.
+ * Strips out all raw HTML tags to prevent code decorators from being searchable.
+ */
+export function generateSearchText(html: string): string {
+	return html
+		.replace(/<img[^>]*?src=["']([^"']+)["'][^>]*?alt=["']([^"']*)["'][^>]*?>/gi, ' $1 $2 ')
+		.replace(/<img[^>]*?alt=["']([^"']*)["'][^>]*?src=["']([^"']+)["'][^>]*?>/gi, ' $1 $2 ')
+		.replace(/<img[^>]*?src=["']([^"']+)["'][^>]*?>/gi, ' $1 ')
+		.replace(/<a[^>]*?href=["']([^"']+)["'][^>]*?>/gi, ' $1 ')
+		.replace(/<[^>]+>/g, ' ')
+		.replace(/\s+/g, ' ')
+		.trim();
+}
+
+/**
  * Returns a list of directory names inside the root articles/ directory.
  */
 export function getArticleDirectories(): string[] {
@@ -168,17 +183,7 @@ export function parseArticleFile(dirName: string): Article {
 		}
 	);
 
-	// Generate a sanitized plaintext version for search
-	// 1. Replace <img> with their src and alt text
-	let searchText = html.replace(/<img[^>]*?src=["']([^"']+)["'][^>]*?alt=["']([^"']*)["'][^>]*?>/gi, ' $1 $2 ')
-		.replace(/<img[^>]*?alt=["']([^"']*)["'][^>]*?src=["']([^"']+)["'][^>]*?>/gi, ' $1 $2 ')
-		.replace(/<img[^>]*?src=["']([^"']+)["'][^>]*?>/gi, ' $1 ');
-	// 2. Replace <a> with their href
-	searchText = searchText.replace(/<a[^>]*?href=["']([^"']+)["'][^>]*?>/gi, ' $1 ');
-	// 3. Remove all remaining HTML tags
-	searchText = searchText.replace(/<[^>]+>/g, ' ');
-	// 4. Normalize whitespace
-	searchText = searchText.replace(/\s+/g, ' ').trim();
+	const searchText = generateSearchText(html);
 
 	return {
 		directoryName: dirName,
