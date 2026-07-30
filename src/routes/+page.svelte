@@ -31,6 +31,35 @@
 		const tag = $page.url.searchParams.get('tag');
 		selectedTag = tag || 'All';
 	});
+
+	function escapeRegExp(str: string): string {
+		return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+	}
+
+	function getSegments(text: string, query: string): { text: string; isMatch: boolean }[] {
+		const trimmed = query.trim();
+		if (!trimmed || !text) return [{ text, isMatch: false }];
+		const regex = new RegExp(`(${escapeRegExp(trimmed)})`, 'gi');
+		const parts = text.split(regex);
+		return parts.map(part => ({
+			text: part,
+			isMatch: part.toLowerCase() === trimmed.toLowerCase()
+		}));
+	}
+
+	function getContentSnippet(searchText: string | undefined, query: string): string | null {
+		const trimmed = query.trim();
+		if (!trimmed || !searchText) return null;
+		const index = searchText.toLowerCase().indexOf(trimmed.toLowerCase());
+		if (index === -1) return null;
+
+		const start = Math.max(0, index - 50);
+		const end = Math.min(searchText.length, index + trimmed.length + 110);
+		let snippet = searchText.slice(start, end);
+		if (start > 0) snippet = '...' + snippet;
+		if (end < searchText.length) snippet = snippet + '...';
+		return snippet;
+	}
 </script>
 
 <svelte:head>
@@ -83,7 +112,26 @@
 					<li class="article-item" class:read={readSlugs.includes(article.slug)}>
 						<a href="/articles/{article.slug}" class="article-link">
 							<span class="article-date">{article.date}</span>
-							<h2 class="article-title">{article.title}</h2>
+							<h2 class="article-title">
+								{#each getSegments(article.title, searchQuery) as segment}
+									{#if segment.isMatch}
+										<mark class="highlight">{segment.text}</mark>
+									{:else}
+										{segment.text}
+									{/if}
+								{/each}
+							</h2>
+							{#if searchQuery.trim() && getContentSnippet(article.searchText, searchQuery)}
+								<p class="article-snippet">
+									{#each getSegments(getContentSnippet(article.searchText, searchQuery)!, searchQuery) as segment}
+										{#if segment.isMatch}
+											<mark class="highlight">{segment.text}</mark>
+										{:else}
+											{segment.text}
+										{/if}
+									{/each}
+								</p>
+							{/if}
 							{#if article.tags && article.tags.length > 0}
 								<div class="article-tags">
 									{#each article.tags as tag}
@@ -146,6 +194,25 @@
 		margin: 0;
 		transition: color var(--transition-speed) ease;
 		letter-spacing: -0.01em;
+	}
+
+	mark.highlight {
+		background-color: rgba(79, 59, 120, 0.15);
+		color: var(--accent);
+		border-radius: 2px;
+		padding: 0 2px;
+	}
+
+	:root[data-theme='dark'] mark.highlight {
+		background-color: rgba(165, 146, 214, 0.25);
+		color: var(--accent);
+	}
+
+	.article-snippet {
+		font-size: 0.9rem;
+		opacity: 0.75;
+		margin: 8px 0 0 0;
+		line-height: 1.5;
 	}
 
 	.article-link:hover {
