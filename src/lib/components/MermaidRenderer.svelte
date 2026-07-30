@@ -3,12 +3,16 @@
 		code = '',
 		initialScale = 1,
 		minWidth = '',
-		minHeight = ''
+		minHeight = '',
+		focusTop = false,
+		aspectRatio = '4 / 3'
 	}: { 
 		code: string;
 		initialScale?: number;
 		minWidth?: string;
 		minHeight?: string;
+		focusTop?: boolean;
+		aspectRatio?: string;
 	} = $props();
 
 	let inlineContainer: HTMLDivElement | null = $state(null);
@@ -120,13 +124,39 @@
 			mermaid.initialize({
 				startOnLoad: false,
 				theme: 'neutral',
-				securityLevel: 'loose'
+				securityLevel: 'loose',
+				flowchart: {
+					nodeSpacing: 25,
+					rankSpacing: 35,
+					padding: 8,
+					curve: 'basis'
+				}
 			});
 			const renderId = `mermaid-${Math.random().toString(36).substring(2, 9)}-${idSuffix}`;
 			const { svg } = await mermaid.render(renderId, code);
 			if (target) {
 				target.innerHTML = svg;
 				error = '';
+				if (focusTop) {
+					setTimeout(() => {
+						const scrollArea = target.closest('.mermaid-scroll-area') as HTMLElement | null;
+						if (scrollArea) {
+							const targetNode = target.querySelector('[id*="CAT"]') || 
+											   target.querySelector('.cluster') || 
+											   target.querySelector('svg g');
+							if (targetNode) {
+								const nodeRect = targetNode.getBoundingClientRect();
+								const scrollRect = scrollArea.getBoundingClientRect();
+								const currentScrollLeft = scrollArea.scrollLeft;
+								const nodeCenterX = nodeRect.left + nodeRect.width / 2 - scrollRect.left + currentScrollLeft;
+								scrollArea.scrollLeft = Math.max(0, nodeCenterX - scrollRect.width / 2);
+							} else {
+								scrollArea.scrollLeft = (scrollArea.scrollWidth - scrollArea.clientWidth) / 2;
+							}
+							scrollArea.scrollTop = 0;
+						}
+					}, 50);
+				}
 			}
 		} catch (e: any) {
 			console.error('Mermaid render error:', e);
@@ -181,7 +211,7 @@
 
 <svelte:window onkeydown={handleKeydown} />
 
-<div class="mermaid-container">
+<div class="mermaid-container" style="--aspect-ratio: {aspectRatio || '4 / 3'};">
 	<div class="mermaid-controls inline-controls">
 		<button class="control-btn" onclick={zoomOut} title="Zoom Out" aria-label="Zoom Out">-</button>
 		<span class="zoom-level">{Math.round(zoomScale * 100)}%</span>
@@ -259,9 +289,12 @@
 	.mermaid-container {
 		position: relative;
 		width: 100%;
+		aspect-ratio: var(--aspect-ratio, 4 / 3);
+		display: flex;
+		flex-direction: column;
 		overflow: hidden;
-		margin: 1.5rem 0;
-		padding: 1rem;
+		margin: 1rem 0;
+		padding: 0.5rem;
 		background: var(--bg-secondary, rgba(0, 0, 0, 0.02));
 		border-radius: 8px;
 		border: 1px solid var(--border-color, #e2e8f0);
@@ -279,7 +312,7 @@
 
 	.inline-controls {
 		width: 100%;
-		margin-bottom: 0.75rem;
+		margin-bottom: 0.25rem;
 	}
 
 	.modal-title-group {
@@ -339,8 +372,9 @@
 	.mermaid-scroll-area {
 		width: 100%;
 		overflow: auto;
-		padding: 1rem 0;
+		padding: 0.25rem 0;
 		flex: 1;
+		min-height: 0;
 		cursor: grab;
 		user-select: none;
 	}

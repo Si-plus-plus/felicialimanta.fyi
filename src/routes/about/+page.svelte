@@ -35,7 +35,7 @@
 
 	<section class="about-section">
 		<h2>Accumulated Skills Over the Years</h2>
-		<MermaidRenderer code={skillsMap} initialScale={1.1} minWidth="750px" />
+		<MermaidRenderer code={skillsMap} initialScale={2.35} minWidth="750px" focusTop={true} />
 	</section>
 
 	<section class="about-section">
