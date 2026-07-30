@@ -13,11 +13,18 @@
 	});
 
 	let selectedTag = $state('All');
+	let searchQuery = $state('');
 	let allTags = $derived(['All', ...new Set(data.articles.flatMap(a => a.tags || []))]);
 	let filteredArticles = $derived(
-		selectedTag === 'All' 
-			? data.articles 
-			: data.articles.filter(a => a.tags && a.tags.includes(selectedTag))
+		data.articles.filter(a => {
+			const tagMatch = selectedTag === 'All' || (a.tags && a.tags.includes(selectedTag));
+			const query = searchQuery.trim().toLowerCase();
+			const queryMatch = !query || 
+				[a.title, a.description, a.date, a.searchText]
+					.filter(Boolean)
+					.some(text => text!.toLowerCase().includes(query));
+			return tagMatch && queryMatch;
+		})
 	);
 
 	$effect(() => {
@@ -35,20 +42,31 @@
 	{#if data.articles.length === 0}
 		<p class="empty-state">No articles published yet.</p>
 	{:else}
-		<div class="tag-filter">
-			{#each allTags as tag}
-				<a 
-					href={tag === 'All' ? '/' : `/?tag=${encodeURIComponent(tag)}`}
-					class="tag-button" 
-					class:active={selectedTag === tag}
-				>
-					{tag === 'All' ? 'All' : `#${tag}`}
-				</a>
-			{/each}
+		<div class="controls-container">
+			<div class="tag-filter">
+				{#each allTags as tag}
+					<a 
+						href={tag === 'All' ? '/' : `/?tag=${encodeURIComponent(tag)}`}
+						class="tag-button" 
+						class:active={selectedTag === tag}
+					>
+						{tag === 'All' ? 'All' : `#${tag}`}
+					</a>
+				{/each}
+			</div>
+
+			<div class="search-container">
+				<input 
+					type="search" 
+					bind:value={searchQuery} 
+					placeholder="Search articles..." 
+					class="search-input"
+				/>
+			</div>
 		</div>
 
 		{#if filteredArticles.length === 0}
-			<p class="empty-state">No articles found for #{selectedTag}.</p>
+			<p class="empty-state">No articles found{selectedTag !== 'All' ? ` for #${selectedTag}` : ''}{searchQuery ? ` matching "${searchQuery}"` : ''}.</p>
 		{:else}
 			<ul class="article-list">
 				{#each filteredArticles as article}
@@ -133,11 +151,58 @@
 		font-style: italic;
 	}
 
+	.controls-container {
+		display: flex;
+		flex-direction: column-reverse;
+		gap: 16px;
+		margin-bottom: 32px;
+	}
+
+	@media (min-width: 640px) {
+		.controls-container {
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: flex-start;
+		}
+	}
+
+	.search-container {
+		width: 100%;
+	}
+
+	@media (min-width: 640px) {
+		.search-container {
+			width: 240px;
+			flex-shrink: 0;
+		}
+	}
+
+	.search-input {
+		width: 100%;
+		padding: 6px 14px;
+		font-size: 0.85rem;
+		border: 1px solid var(--lines);
+		border-radius: 99px;
+		background: transparent;
+		color: var(--text-primary);
+		transition: border-color var(--transition-speed) ease;
+	}
+
+	.search-input:focus {
+		outline: none;
+		border-color: var(--accent);
+	}
+
+	.search-input::placeholder {
+		color: var(--text-primary);
+		opacity: 0.5;
+	}
+
 	.tag-filter {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 8px;
-		margin-bottom: 32px;
+		flex: 1;
 	}
 
 	.tag-button {
