@@ -62,6 +62,16 @@
 					placeholder="Search articles..." 
 					class="search-input"
 				/>
+				{#if searchQuery}
+					<button 
+						type="button" 
+						class="clear-btn" 
+						aria-label="Clear search"
+						onclick={() => searchQuery = ''}
+					>
+						&times;
+					</button>
+				{/if}
 			</div>
 		</div>
 
@@ -167,6 +177,7 @@
 	}
 
 	.search-container {
+		position: relative;
 		width: 100%;
 	}
 
@@ -179,7 +190,8 @@
 
 	.search-input {
 		width: 100%;
-		padding: 6px 14px;
+		padding: 6px 30px 6px 14px;
+		font-family: inherit;
 		font-size: 0.85rem;
 		border: 1px solid var(--lines);
 		border-radius: 99px;
@@ -188,9 +200,37 @@
 		transition: border-color var(--transition-speed) ease;
 	}
 
+	.search-input::-webkit-search-cancel-button,
+	.search-input::-webkit-search-decoration {
+		-webkit-appearance: none;
+		appearance: none;
+	}
+
 	.search-input:focus {
 		outline: none;
 		border-color: var(--accent);
+	}
+
+	.clear-btn {
+		position: absolute;
+		right: 10px;
+		top: 50%;
+		transform: translateY(-50%);
+		background: none;
+		border: none;
+		color: var(--text-primary);
+		opacity: 0.5;
+		cursor: pointer;
+		font-family: inherit;
+		font-size: 1.1rem;
+		line-height: 1;
+		padding: 0 4px;
+		transition: opacity var(--transition-speed) ease, color var(--transition-speed) ease;
+	}
+
+	.clear-btn:hover {
+		opacity: 1;
+		color: var(--accent);
 	}
 
 	.search-input::placeholder {
