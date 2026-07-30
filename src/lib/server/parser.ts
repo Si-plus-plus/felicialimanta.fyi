@@ -15,6 +15,7 @@ export interface Article {
 	description: string;
 	tags: string[];
 	html: string;
+	searchText: string;
 }
 
 /**
@@ -167,6 +168,18 @@ export function parseArticleFile(dirName: string): Article {
 		}
 	);
 
+	// Generate a sanitized plaintext version for search
+	// 1. Replace <img> with their src and alt text
+	let searchText = html.replace(/<img[^>]*?src=["']([^"']+)["'][^>]*?alt=["']([^"']*)["'][^>]*?>/gi, ' $1 $2 ')
+		.replace(/<img[^>]*?alt=["']([^"']*)["'][^>]*?src=["']([^"']+)["'][^>]*?>/gi, ' $1 $2 ')
+		.replace(/<img[^>]*?src=["']([^"']+)["'][^>]*?>/gi, ' $1 ');
+	// 2. Replace <a> with their href
+	searchText = searchText.replace(/<a[^>]*?href=["']([^"']+)["'][^>]*?>/gi, ' $1 ');
+	// 3. Remove all remaining HTML tags
+	searchText = searchText.replace(/<[^>]+>/g, ' ');
+	// 4. Normalize whitespace
+	searchText = searchText.replace(/\s+/g, ' ').trim();
+
 	return {
 		directoryName: dirName,
 		slug: info.slug,
@@ -174,7 +187,8 @@ export function parseArticleFile(dirName: string): Article {
 		title,
 		description,
 		tags,
-		html
+		html,
+		searchText
 	};
 }
 
