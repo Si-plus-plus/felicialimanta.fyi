@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { SITE_NAME } from '$lib/constants';
-	import MermaidRenderer from '$lib/components/MermaidRenderer.svelte';
-	import skillsMap from './skills.mmd?raw';
+	import SkillsMatrix from '$lib/components/SkillsMatrix.svelte';
 </script>
 
 <svelte:head>
@@ -38,8 +37,7 @@
 		<p>
 			I take on whatever challenge comes up, regardless of how niche or out-of-bounds it feels. Over time, those seemingly unrelated experiences form a surprisingly useful toolkit:
 		</p>
-		<MermaidRenderer code={skillsMap} initialScale={2.35} minWidth="750px" focusTop={true} />
-
+		<SkillsMatrix />
 		<p>
 			With this chart, I am not saying that I have maxxed out the skills yet. I am still learning and exploring new things.
 		</p>
