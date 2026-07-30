@@ -39,7 +39,7 @@
 		</p>
 		<SkillsMatrix />
 		<p>
-			With this chart, I am not saying that I have maxxed out the skills yet. I am still learning and exploring new things.
+			With this matrix, I am not saying that I have maxxed out the skills yet. I am still learning and exploring new things.
 		</p>
 	</section>
 
