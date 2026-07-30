@@ -120,7 +120,7 @@
 		</div>
 
 		{#if filteredArticles.length === 0}
-			<p class="empty-state">No articles found{selectedTag !== 'All' ? ` for #${selectedTag}` : ''}{searchQuery ? ` matching "${searchQuery}"` : ''}.</p>
+			<p class="empty-state">No articles found{selectedTag !== 'All' ? ` for #${selectedTag}` : ''}{searchQuery ? ` matching "${searchQuery}"` : ''}</p>
 		{:else}
 			<ul class="article-list">
 				{#each filteredArticles as article}
