@@ -9,7 +9,8 @@ export const load: LayoutServerLoad = () => {
 			date: art.date,
 			title: art.title,
 			description: art.description,
-			tags: art.tags
+			tags: art.tags,
+			searchText: art.searchText
 		}))
 	};
 };

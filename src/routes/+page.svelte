@@ -13,17 +13,68 @@
 	});
 
 	let selectedTag = $state('All');
+	let searchQuery = $state('');
 	let allTags = $derived(['All', ...new Set(data.articles.flatMap(a => a.tags || []))]);
 	let filteredArticles = $derived(
-		selectedTag === 'All' 
-			? data.articles 
-			: data.articles.filter(a => a.tags && a.tags.includes(selectedTag))
+		data.articles.filter(a => {
+			const tagMatch = selectedTag === 'All' || (a.tags && a.tags.includes(selectedTag));
+			const query = searchQuery.trim().toLowerCase();
+			const queryMatch = !query || 
+				[a.title, a.description, a.date, a.searchText]
+					.filter(Boolean)
+					.some(text => text!.toLowerCase().includes(query));
+			return tagMatch && queryMatch;
+		})
 	);
 
 	$effect(() => {
 		const tag = $page.url.searchParams.get('tag');
 		selectedTag = tag || 'All';
 	});
+
+	function escapeRegExp(str: string): string {
+		return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+	}
+
+	function getSegments(text: string, query: string): { text: string; isMatch: boolean }[] {
+		const trimmed = query.trim();
+		if (!trimmed || !text) return [{ text, isMatch: false }];
+		const regex = new RegExp(`(${escapeRegExp(trimmed)})`, 'gi');
+		const parts = text.split(regex);
+		return parts.map(part => ({
+			text: part,
+			isMatch: part.toLowerCase() === trimmed.toLowerCase()
+		}));
+	}
+
+	function getContentSnippet(text: string | undefined, query: string): string | null {
+		const trimmed = query.trim();
+		if (!trimmed || !text) return null;
+		const index = text.toLowerCase().indexOf(trimmed.toLowerCase());
+		if (index === -1) return null;
+
+		const start = Math.max(0, index - 50);
+		const end = Math.min(text.length, index + trimmed.length + 110);
+		let snippet = text.slice(start, end);
+		if (start > 0) snippet = '...' + snippet;
+		if (end < text.length) snippet = snippet + '...';
+		return snippet;
+	}
+
+	function getMatchingSnippet(article: PageData['articles'][number], query: string): string | null {
+		const trimmed = query.trim().toLowerCase();
+		if (!trimmed) return null;
+
+		if (article.description && article.description.toLowerCase().includes(trimmed)) {
+			return getContentSnippet(article.description, query);
+		}
+
+		if (article.searchText && article.searchText.toLowerCase().includes(trimmed)) {
+			return getContentSnippet(article.searchText, query);
+		}
+
+		return null;
+	}
 </script>
 
 <svelte:head>
@@ -35,27 +86,67 @@
 	{#if data.articles.length === 0}
 		<p class="empty-state">No articles published yet.</p>
 	{:else}
-		<div class="tag-filter">
-			{#each allTags as tag}
-				<a 
-					href={tag === 'All' ? '/' : `/?tag=${encodeURIComponent(tag)}`}
-					class="tag-button" 
-					class:active={selectedTag === tag}
-				>
-					{tag === 'All' ? 'All' : `#${tag}`}
-				</a>
-			{/each}
+		<div class="controls-container">
+			<div class="tag-filter">
+				{#each allTags as tag}
+					<a 
+						href={tag === 'All' ? '/' : `/?tag=${encodeURIComponent(tag)}`}
+						class="tag-button" 
+						class:active={selectedTag === tag}
+					>
+						{tag === 'All' ? 'All' : `#${tag}`}
+					</a>
+				{/each}
+			</div>
+
+			<div class="search-container">
+				<input 
+					type="search" 
+					bind:value={searchQuery} 
+					placeholder="Search articles..." 
+					class="search-input"
+				/>
+				{#if searchQuery}
+					<button 
+						type="button" 
+						class="clear-btn" 
+						aria-label="Clear search"
+						onclick={() => searchQuery = ''}
+					>
+						&times;
+					</button>
+				{/if}
+			</div>
 		</div>
 
 		{#if filteredArticles.length === 0}
-			<p class="empty-state">No articles found for #{selectedTag}.</p>
+			<p class="empty-state">No articles found{selectedTag !== 'All' ? ` for #${selectedTag}` : ''}{searchQuery ? ` matching "${searchQuery}"` : ''}</p>
 		{:else}
 			<ul class="article-list">
 				{#each filteredArticles as article}
 					<li class="article-item" class:read={readSlugs.includes(article.slug)}>
 						<a href="/articles/{article.slug}" class="article-link">
 							<span class="article-date">{article.date}</span>
-							<h2 class="article-title">{article.title}</h2>
+							<h2 class="article-title">
+								{#each getSegments(article.title, searchQuery) as segment}
+									{#if segment.isMatch}
+										<mark class="highlight">{segment.text}</mark>
+									{:else}
+										{segment.text}
+									{/if}
+								{/each}
+							</h2>
+							{#if searchQuery.trim() && getMatchingSnippet(article, searchQuery)}
+								<p class="article-snippet">
+									{#each getSegments(getMatchingSnippet(article, searchQuery)!, searchQuery) as segment}
+										{#if segment.isMatch}
+											<mark class="highlight">{segment.text}</mark>
+										{:else}
+											{segment.text}
+										{/if}
+									{/each}
+								</p>
+							{/if}
 							{#if article.tags && article.tags.length > 0}
 								<div class="article-tags">
 									{#each article.tags as tag}
@@ -120,6 +211,25 @@
 		letter-spacing: -0.01em;
 	}
 
+	mark.highlight {
+		background-color: rgba(79, 59, 120, 0.15);
+		color: var(--accent);
+		border-radius: 2px;
+		padding: 0 2px;
+	}
+
+	:root[data-theme='dark'] mark.highlight {
+		background-color: rgba(165, 146, 214, 0.25);
+		color: var(--accent);
+	}
+
+	.article-snippet {
+		font-size: 0.9rem;
+		opacity: 0.75;
+		margin: 8px 0 0 0;
+		line-height: 1.5;
+	}
+
 	.article-link:hover {
 		transform: translateX(12px);
 	}
@@ -133,11 +243,92 @@
 		font-style: italic;
 	}
 
+	.controls-container {
+		display: flex;
+		flex-direction: column-reverse;
+		gap: 16px;
+		margin-bottom: 32px;
+	}
+
+	@media (min-width: 640px) {
+		.controls-container {
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: flex-start;
+		}
+	}
+
+	.search-container {
+		position: relative;
+		width: 100%;
+	}
+
+	@media (min-width: 640px) {
+		.search-container {
+			width: 240px;
+			flex-shrink: 0;
+		}
+	}
+
+	.search-input {
+		width: 100%;
+		padding: 6px 30px 6px 14px;
+		font-family: inherit;
+		font-size: 0.85rem;
+		line-height: 1.6;
+		border: 1px solid var(--lines);
+		border-radius: 99px;
+		background: transparent;
+		color: var(--text-primary);
+		opacity: 0.6;
+		transition: all var(--transition-speed) ease;
+	}
+
+	.search-input::-webkit-search-cancel-button,
+	.search-input::-webkit-search-decoration {
+		-webkit-appearance: none;
+		appearance: none;
+	}
+
+	.search-input:hover,
+	.search-input:focus {
+		outline: none;
+		border-color: var(--accent);
+		opacity: 1;
+	}
+
+	.clear-btn {
+		position: absolute;
+		right: 10px;
+		top: 50%;
+		transform: translateY(-50%);
+		background: none;
+		border: none;
+		color: var(--text-primary);
+		opacity: 0.5;
+		cursor: pointer;
+		font-family: inherit;
+		font-size: 1.1rem;
+		line-height: 1;
+		padding: 0 4px;
+		transition: opacity var(--transition-speed) ease, color var(--transition-speed) ease;
+	}
+
+	.clear-btn:hover {
+		opacity: 1;
+		color: var(--accent);
+	}
+
+	.search-input::placeholder {
+		color: var(--text-primary);
+		opacity: 0.5;
+	}
+
 	.tag-filter {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 8px;
-		margin-bottom: 32px;
+		flex: 1;
 	}
 
 	.tag-button {

@@ -4,7 +4,7 @@ description: "A story of what led me to resignation."
 tags: ["work"]
 ---
 
-## So, I resigned.
+## So, I resigned
 
 Yea, you read it right. After two months as an intern and another two years as a fulltime Software Engineer in the same company, I decided that the time is due.
 
@@ -12,11 +12,11 @@ I chose to quit without any backups. Without any ongoing job applications. Witho
 
 > The tl;dr is that **my guts told me to quit. Now.**
 
-## What went wrong?
+## An Ideal Working Environment?
 
 An AI-first, a fast adapting company, a high paying company for freshgrads, a top-notch medical insurance, a hybrid WFO schedule, free lunch, occasional group lunches, reimbursed AI tools,... what can go wrong?
 
-## Being a cog in a machine
+## Being a Cog in a Machine
 
 When I first applied here, I did my due diligence. Yea I applied in a funny way (will be covered at a later time), but I accepted the offer after doing my research. 
 
@@ -27,7 +27,7 @@ Everyone is unique. I like listening to other people's stories because, I get to
 This is what differentiates us from AI agents. Or cron jobs.
 At first, I was happy and I felt "seen". My past felt "seen". The network I brought felt "seen" and "appreciated". But the reality told me otherwise.
 
-## Idealistic me
+## Choosing Quality Over Speed
 
 In an AI-first company, I had a hard time adapting actually. As I am someone from a community that appreciated human effort and struggle (read: Competitive Programming) and sometimes, doing things manually in justice of learning, instead of with AI, took more time.
 
@@ -41,37 +41,42 @@ Again, this kind of "ideal" workflow was taking more time than my peers. But, mo
 
 I want AI to be a tool for me, not to downgrade me.
 
-## The shift
+## Becoming a Zombie
 
 We had overtimes, avoidable miscommunications, tight deadlines, daily deployments, the telephone game, and other stuff that are totally understandable in a fast paced company. I thought that was a challenge to be overcomed. Delivering more than expected, as much as possible.
 
-From getting a relatively high KPI compared to my peers, to getting spotlighted as an engineer mutliple times during my period here. I was happy at that time. I was learning as much as I could. I was enjoying my work. 
+From getting a relatively high KPI compared to my peers, to getting spotlighted as star of the month in the company multiple times during my period here. I was happy at that time. I was learning as much as I could. I was enjoying my work. 
 
-Then, my marks are slowly drowning in a downward slope. I still had my plus points which helped leveraged several of my strong points against my peers, but it wasn't enough. I realized I was trying to force myself into a pace and style of work that no longer matched how I build and learn best.
+Then, I was slowly drowning from being a thriving employee to just a surviving employee. I still had my plus points which helped leverage several of my strong advantages, but it wasn't enough to be proud of myself and my work anymore. I realized I was trying to force myself into a pace and style of work that no longer matched how I build and learn best.
 
 The signs were there. I got burnt out. And, at the same time, I realized that I thrive when I have time to deeply understand my craft, rather than focusing purely on speed.
 
 My values were no longer aligned with the company. I tried raising this issue but to no avail.
 
-I tried voicing my perspective and finding a middle ground, but ultimately, our core values were just different. And that’s okay. I am not asking the company to change for me. It was simply the sign I needed to step back and choose a different path.
+For months, I tried voicing my perspective and finding a middle ground, but ultimately, our core values were just different. And that’s okay. I am not asking the company to change for me. It was simply the sign I needed to step back and choose a different path.
 
 I guess this is my time to go.
 
-## The push
+## The Final Straw: Choosing Growth Over Comfort
 
-My mentor in life, who had pushed me to get a full-time job here, told me to resign after hearing my stories.
+My mentor in life, who had pushed me to get a full-time job and he supported me going here, told me to resign after hearing my stories.
 From recruiting a ton of interns and fulltimers, to the one quitting.
 
-The signs were there. I wasn't happy. I wasn't learning. I wasn't growing. I am not growing. I wouldn't be able to grow anymore here. It is the time to go.
+My gut told me to quit, and my body seemed to agree. I found myself sneezing constantly the moment I sat down at my desk and the sneezing calmed down whenever I left the office, even though Jakarta was at an all time high in pollution rates. And I couldn't even eat the provided lunches anymore because they were getting spicy more and more frequently,... way beyond my tolerance. Were these the signs?
+
+> If multiple people share the exact same gut feeling, like when my mentor and I had the same instinct, what do you call it?
+>
+> A **colon**y.
+
+The signs were there. I wasn't happy. I wasn't learning. I wasn't growing. I am not growing. I wouldn't be able to grow anymore here. I saw that this place couldn't provide me the room to grow. It is the time to go.
 
 The company was not getting anything more from me as our values had clashed, and I don't want to be a zombie who worked only for the salary while clashing with my internal values.
 
-I didn't have anything in planned when I submitted my resignation letter. No ongoing job applications. 
+I didn't have anything planned when I submitted my resignation letter. No ongoing job applications. 
 
 But, a lot of my friends said that I look livelier, happier, more optimistic, enjoying my work more, and a lot more positive than I was before submitting the resignation letter.
 
-I was so excited with my resignation that I made it grander than what it's supposed to be. 
+I was so excited with my resignation that I made it a lot more grander than what it was supposed to be. 
 
 I guess that's that.
-My guts saw the littlest things that my concious mind missed. It's time to trust my subconcious mind and let things flow.
-
+My guts saw the littlest things that my conscious mind missed. It's time to trust my subconscious mind and let things flow.
