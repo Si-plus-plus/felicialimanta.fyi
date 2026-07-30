@@ -15,6 +15,7 @@ export interface Article {
 	description: string;
 	tags: string[];
 	html: string;
+	searchText: string;
 }
 
 /**
@@ -37,6 +38,21 @@ export function parseDirectoryName(dirName: string): { date: string; slug: strin
 		date: `${year}-${month}-${day}`,
 		slug
 	};
+}
+
+/**
+ * Extracts plain text content and asset metadata (image sources, alt text, link hrefs) from HTML for search indexing.
+ * Strips out all raw HTML tags to prevent code decorators from being searchable.
+ */
+export function generateSearchText(html: string): string {
+	return html
+		.replace(/<img[^>]*?src=["']([^"']+)["'][^>]*?alt=["']([^"']*)["'][^>]*?>/gi, ' $1 $2 ')
+		.replace(/<img[^>]*?alt=["']([^"']*)["'][^>]*?src=["']([^"']+)["'][^>]*?>/gi, ' $1 $2 ')
+		.replace(/<img[^>]*?src=["']([^"']+)["'][^>]*?>/gi, ' $1 ')
+		.replace(/<a[^>]*?href=["']([^"']+)["'][^>]*?>/gi, ' $1 ')
+		.replace(/<[^>]+>/g, ' ')
+		.replace(/\s+/g, ' ')
+		.trim();
 }
 
 /**
@@ -167,6 +183,8 @@ export function parseArticleFile(dirName: string): Article {
 		}
 	);
 
+	const searchText = generateSearchText(html);
+
 	return {
 		directoryName: dirName,
 		slug: info.slug,
@@ -174,7 +192,8 @@ export function parseArticleFile(dirName: string): Article {
 		title,
 		description,
 		tags,
-		html
+		html,
+		searchText
 	};
 }
 
