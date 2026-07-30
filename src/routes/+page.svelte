@@ -275,11 +275,13 @@
 		padding: 6px 30px 6px 14px;
 		font-family: inherit;
 		font-size: 0.85rem;
+		line-height: 1.6;
 		border: 1px solid var(--lines);
 		border-radius: 99px;
 		background: transparent;
 		color: var(--text-primary);
-		transition: border-color var(--transition-speed) ease;
+		opacity: 0.6;
+		transition: all var(--transition-speed) ease;
 	}
 
 	.search-input::-webkit-search-cancel-button,
@@ -288,9 +290,11 @@
 		appearance: none;
 	}
 
+	.search-input:hover,
 	.search-input:focus {
 		outline: none;
 		border-color: var(--accent);
+		opacity: 1;
 	}
 
 	.clear-btn {
