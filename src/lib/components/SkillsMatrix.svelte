@@ -78,8 +78,8 @@
 								<div class="event-years">{event.years}</div>
 								<div
 									class="header-tooltip"
-									class:align-right={idx >= EVENTS.length - 2}
-									class:align-left={idx <= 1}
+									class:align-right={idx >= EVENTS.length - 4}
+									class:align-left={idx <= 2}
 								>
 									{event.title} ({event.years})
 								</div>
@@ -251,33 +251,33 @@
 		position: sticky;
 		left: 0;
 		background-color: var(--bg-primary) !important;
-		z-index: 10;
-		border-right: 1px solid var(--lines);
+		z-index: 45;
+		box-shadow: inset -1px -1px 0 var(--lines);
 		width: 230px;
 		min-width: 230px;
 		max-width: 230px;
-		white-space: nowrap;
-		text-overflow: ellipsis;
+		white-space: normal;
+		line-height: 1.25;
 	}
 
 	.sticky-col::after {
 		content: '';
 		position: absolute;
 		top: 0;
-		right: -10px;
+		right: -6px;
 		bottom: 0;
-		width: 10px;
-		background: linear-gradient(to right, rgba(0, 0, 0, 0.08), transparent);
+		width: 6px;
+		background: linear-gradient(to right, rgba(0, 0, 0, 0.035), transparent);
 		pointer-events: none;
-		z-index: 25;
+		z-index: 48;
 	}
 
 	:root[data-theme='dark'] .sticky-col::after {
-		background: linear-gradient(to right, rgba(0, 0, 0, 0.35), transparent);
+		background: linear-gradient(to right, rgba(0, 0, 0, 0.15), transparent);
 	}
 
 	thead th.sticky-col {
-		z-index: 30;
+		z-index: 60;
 		background-color: #f3f4f6 !important;
 		vertical-align: bottom;
 		padding-bottom: 10px;
@@ -285,7 +285,7 @@
 	}
 
 	thead th.sticky-col::after {
-		z-index: 35;
+		z-index: 65;
 	}
 
 	:root[data-theme='dark'] thead th.sticky-col {
@@ -314,6 +314,7 @@
 		min-width: 75px;
 		vertical-align: bottom;
 		position: relative;
+		z-index: 30;
 	}
 
 	.header-tooltip-wrapper {
@@ -350,7 +351,9 @@
 		padding: 6px 10px;
 		border-radius: 4px;
 		font-size: 0.72rem;
-		white-space: nowrap;
+		max-width: 220px;
+		white-space: normal;
+		text-align: center;
 		pointer-events: none;
 		opacity: 0;
 		visibility: hidden;
@@ -406,7 +409,7 @@
 
 	.category-row .sticky-col {
 		background-color: #f8f9fa !important;
-		z-index: 20;
+		z-index: 45;
 	}
 
 	:root[data-theme='dark'] .category-row .sticky-col {
@@ -438,12 +441,6 @@
 		overflow: visible;
 	}
 
-	.category-title {
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	}
-
 	.chevron {
 		transition: transform 0.25s ease;
 		opacity: 0.8;
@@ -457,9 +454,8 @@
 
 	.category-title {
 		flex: 1;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
+		white-space: normal;
+		line-height: 1.25;
 	}
 
 	.skill-row {
@@ -472,9 +468,9 @@
 
 	.skill-label {
 		font-weight: 400;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
+		font-size: 0.70rem;
+		white-space: normal;
+		line-height: 1.25;
 		display: block;
 	}
 
