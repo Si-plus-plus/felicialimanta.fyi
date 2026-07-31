@@ -1,19 +1,16 @@
 <script lang="ts">
 	import { slide } from 'svelte/transition';
-	import { EVENTS, SKILLS, type SkillItem } from '../../routes/about/skillsData';
+	import { CATEGORIES, EVENTS, SKILLS, type SkillItem } from '../../routes/about/skillsData';
 
 	let activeSkillId = $state<string | null>(null);
 	let activeEventId = $state<string | null>(null);
 
-	const categories = ['Leadership & Ops', 'Tech & Product', 'Design & Content', 'Community & Outreach'] as const;
+	const categories = Object.values(CATEGORIES);
 
 	// Default all categories to collapsed (closed) by default
-	let collapsedCategories = $state<Record<string, boolean>>({
-		'Leadership & Ops': true,
-		'Tech & Product': true,
-		'Design & Content': true,
-		'Community & Outreach': true
-	});
+	let collapsedCategories = $state<Record<string, boolean>>(
+		Object.fromEntries(categories.map((cat) => [cat, true]))
+	);
 
 	function toggleCategory(cat: string) {
 		collapsedCategories[cat] = !collapsedCategories[cat];
@@ -216,6 +213,7 @@
 	.table-container {
 		width: 100%;
 		overflow-x: auto;
+		overflow-y: hidden;
 		border: 1px solid var(--lines);
 		border-radius: 8px;
 		background: var(--bg-primary);
