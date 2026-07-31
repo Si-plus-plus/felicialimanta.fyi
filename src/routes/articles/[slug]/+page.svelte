@@ -107,6 +107,23 @@
 		letter-spacing: -0.02em;
 	}
 
+	.article-content :global(h3) {
+		font-size: 1.2rem;
+		font-weight: 500;
+		margin-top: 40px;
+		margin-bottom: 16px;
+		letter-spacing: -0.015em;
+		opacity: 0.9;
+	}
+
+	.article-content :global(h4) {
+		font-size: 1rem;
+		font-weight: 500;
+		margin-top: 28px;
+		margin-bottom: 12px;
+		opacity: 0.85;
+	}
+
 	.article-content :global(blockquote) {
 		border-left: 3px solid var(--lines);
 		margin: 40px 0;

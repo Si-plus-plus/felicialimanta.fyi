@@ -33,7 +33,7 @@
 	</section>
 
 	<section class="about-section">
-		<h2>Accumulated Skills Over the Years</h2>
+		<h3>Accumulated Skills Over the Years</h3>
 		<p>
 			I take on whatever challenge comes up, regardless of how niche or out-of-bounds it feels. Over time, those seemingly unrelated experiences form a surprisingly useful toolkit:
 		</p>
