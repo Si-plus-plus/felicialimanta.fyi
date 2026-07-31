@@ -97,7 +97,8 @@ jobs:
                 }
               }
 
-              const articleUrl = `https://felicialimanta.fyi/articles/${folderName}`;
+              const slug = folderName.replace(/^\d{8}_/, '');
+              const articleUrl = `https://felicialimanta.fyi/articles/${slug}`;
 
               // Inject data into HTML template
               const htmlBody = template
