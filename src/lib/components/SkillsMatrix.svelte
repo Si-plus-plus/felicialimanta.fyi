@@ -128,7 +128,8 @@
 					</tr>
 
 					{#if !isCollapsed}
-						{#each SKILLS.filter((s) => s.category === category) as skill (skill.id)}
+						{@const categorySkills = SKILLS.filter((s) => s.category === category)}
+						{#each categorySkills as skill, sIdx (skill.id)}
 							{@const isHovered = activeSkillId === skill.id}
 							{@const range = getSkillRange(skill)}
 							<tr
@@ -139,7 +140,17 @@
 								onmouseleave={() => handleSkillHover(null)}
 							>
 								<td class="sticky-col skill-name">
-									<span class="skill-label">{skill.name}</span>
+									<div class="skill-tooltip-wrapper">
+										<span class="skill-label">{skill.name}</span>
+										{#if skill.description}
+											<div
+												class="skill-tooltip"
+												class:align-top={sIdx >= categorySkills.length - 2}
+											>
+												{skill.description}
+											</div>
+										{/if}
+									</div>
 								</td>
 								{#each EVENTS as event, idx (event.id)}
 									{@const active = isSkillActiveInEvent(skill, event.id)}
@@ -470,6 +481,57 @@
 		white-space: normal;
 		line-height: 1.25;
 		display: block;
+	}
+
+	.skill-row:hover .sticky-col {
+		z-index: 65;
+	}
+
+	.skill-tooltip-wrapper {
+		position: relative;
+		cursor: help;
+		display: block;
+		width: 100%;
+	}
+
+	.skill-tooltip {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		transform: translateY(4px);
+		background-color: var(--text-primary);
+		color: var(--bg-primary);
+		padding: 6px 10px;
+		border-radius: 4px;
+		font-size: 0.72rem;
+		font-weight: 400;
+		line-height: 1.35;
+		width: 220px;
+		white-space: normal;
+		text-align: left;
+		pointer-events: none;
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity 0.2s ease, transform 0.2s ease;
+		border: 1px solid var(--lines);
+		z-index: 70;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	}
+
+	.skill-tooltip.align-top {
+		top: auto;
+		bottom: 100%;
+		transform: translateY(-4px);
+	}
+
+	.skill-tooltip-wrapper:hover .skill-tooltip {
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(8px);
+	}
+
+	.skill-tooltip-wrapper:hover .skill-tooltip.align-top {
+		transform: translateY(-8px);
 	}
 
 	.skill-row.highlighted {
