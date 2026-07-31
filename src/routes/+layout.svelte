@@ -4,9 +4,16 @@
 	import { triggerClickBurst } from '$lib/clickBurst';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-	import { SITE_NAME, SITE_BIO, SITE_FOOTER } from '$lib/constants';
+	import { SITE_NAME, SITE_BIO, SITE_FOOTER, SUBSCRIBE_FORM_URL } from '$lib/constants';
+
+
 	import type { LayoutData } from './$types';
 	import { goto, onNavigate } from '$app/navigation';
+
+	function handleSubscribeHover(e: MouseEvent) {
+		const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+		triggerClickBurst(rect.right - 10, rect.top + 6);
+	}
 
 	let { data, children } = $props<{ data: LayoutData; children: any }>();
 
@@ -112,7 +119,21 @@
 	</main>
 
 	<footer>
-		{SITE_FOOTER}
+		<div class="footer-subscription">
+			<a 
+				href={SUBSCRIBE_FORM_URL} 
+				target="_blank" 
+				rel="noopener noreferrer" 
+				class="subscribe-btn"
+				onmouseenter={handleSubscribeHover}
+			>
+				<svg class="subscribe-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+				</svg>
+				<span>Subscribe to new articles</span>
+			</a>
+		</div>
+		<p class="footer-credit">{SITE_FOOTER}</p>
 	</footer>
 </div>
 
