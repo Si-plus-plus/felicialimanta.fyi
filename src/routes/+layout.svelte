@@ -52,6 +52,7 @@
 			// Fallback to media query preference detection
 			theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 		}
+		document.documentElement.setAttribute('data-theme', theme);
 
 		const storedSize = localStorage.getItem('font-size');
 		if (storedSize) {
