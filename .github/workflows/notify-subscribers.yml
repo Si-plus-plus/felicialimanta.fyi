@@ -29,17 +29,21 @@ jobs:
             const { execSync } = require('child_process');
             
             // 1. Get changed files across the push using before/after SHAs
-            let diffCmd = 'git diff --name-status HEAD^ HEAD';
+            let diffCmd = 'git diff --no-renames --name-status HEAD^ HEAD';
             if (process.env.BEFORE_SHA && process.env.BEFORE_SHA !== '0000000000000000000000000000000000000000') {
-              diffCmd = `git diff --name-status ${process.env.BEFORE_SHA} ${process.env.AFTER_SHA}`;
+              diffCmd = `git diff --no-renames --name-status ${process.env.BEFORE_SHA} ${process.env.AFTER_SHA}`;
             }
 
             const output = execSync(diffCmd).toString();
+            console.log("Git diff output:\n", output);
+
             const changedFiles = output.split('\n')
               .filter(line => line.startsWith('A')) // Only Added files
-              .map(line => line.split('\t')[1])
+              .map(line => line.split(/\s+/)[1])
               .filter(file => file && file.startsWith('articles/') && file.endsWith('.md'))
               .filter(file => !file.includes('/.drafts/') && !file.endsWith('template.md')); // Exclude drafts and template
+
+            console.log("Detected changed article files:", changedFiles);
 
             if (!changedFiles || changedFiles.length === 0) {
               console.log("No new published articles found. Exiting.");
@@ -106,7 +110,7 @@ jobs:
               const subject = `New Article: ${title}`;
 
               // 4. Send request to Google Apps Script Web App
-              console.log(`Sending notification for: ${title}`);
+              console.log(`Sending notification request to Apps Script for: ${title}`);
               const response = await fetch(process.env.APPSCRIPT_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -118,5 +122,9 @@ jobs:
               });
               
               const result = await response.text();
-              console.log('AppScript response:', result);
+              console.log('AppScript raw response:', result);
+
+              if (!result.startsWith('Success')) {
+                core.setFailed(`Apps Script rejected request: ${result}`);
+              }
             }
