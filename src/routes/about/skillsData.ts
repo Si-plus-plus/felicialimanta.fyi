@@ -92,7 +92,7 @@ export const SKILLS: SkillItem[] = [
 		id: 'finance',
 		name: 'Financial Oversight',
 		category: CATEGORIES.LEADERSHIP,
-		events: ['cat', 'ut', 'pl', 'cs', 'jb'],
+		events: ['cat', 'icpc', 'ut', 'pl', 'cs', 'jb'],
 		description: 'Managing budgets, resource allocation, sponsorship accounts, and financial tracking.'
 	},
 
@@ -101,14 +101,14 @@ export const SKILLS: SkillItem[] = [
 		id: 'sdlc',
 		name: 'Software Development Life Cycle',
 		category: CATEGORIES.TECH,
-		events: ['cat', 'gl', 'ti', 'if'],
+		events: ['cat', 'icpc', 'gl', 'ti', 'if'],
 		description: 'Managing software development from requirement analysis to deployment and maintenance.'
 	},
 	{
 		id: 'prod_owner',
 		name: 'Product Ownership',
 		category: CATEGORIES.TECH,
-		events: ['cat', 'gl', 'ti', 'if'],
+		events: ['cat', 'icpc', 'ut', 'gl', 'ti', 'csrc', 'if'],
 		description: 'Defining product vision, prioritizing features, and aligning developer output with user needs.'
 	},
 	{
@@ -117,13 +117,6 @@ export const SKILLS: SkillItem[] = [
 		category: CATEGORIES.TECH,
 		events: ['cat', 'pl', 'ti', 'jb', 'if'],
 		description: 'Validating system correctness, problem dataset verification, automated test execution, and ensuring the quality of deliverables.'
-	},
-	{
-		id: 'web_dev',
-		name: 'Software & Web Development',
-		category: CATEGORIES.TECH,
-		events: ['cat', 'icpc', 'ti'],
-		description: 'Building web and mobile platforms, and full-stack software applications.'
 	},
 	{
 		id: 'ai_adoption',
@@ -146,7 +139,7 @@ export const SKILLS: SkillItem[] = [
 		name: 'Community Engagement',
 		category: CATEGORIES.COMMUNITY,
 		events: ['cat', 'ut', 'gl', 'cs', 'jb'],
-		description: 'Fostering active community participation, hosting events, and building welcoming developer spaces.'
+		description: 'Fostering active community participation, hosting events, and building welcoming communities.'
 	},
 	{
 		id: 'comm_growth',
@@ -159,7 +152,7 @@ export const SKILLS: SkillItem[] = [
 		id: 'partnerships',
 		name: 'Partnership Acquisition',
 		category: CATEGORIES.COMMUNITY,
-		events: ['cat', 'icpc', 'cs'],
+		events: ['cat', 'icpc', 'gl', 'cs'],
 		description: 'Securing sponsorships, institutional backing, and collaborative partner relationships.'
 	},
 	{
@@ -180,7 +173,7 @@ export const SKILLS: SkillItem[] = [
 		id: 'open_edu',
 		name: 'Open Educational Resource',
 		category: CATEGORIES.COMMUNITY,
-		events: ['cat', 'ut'],
+		events: ['cat', 'ut', 'cs'],
 		description: 'Creating and publishing open-access learning materials, problem sets, and educational contest archives.'
 	},
 
