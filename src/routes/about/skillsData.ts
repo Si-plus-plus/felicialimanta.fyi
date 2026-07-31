@@ -9,8 +9,8 @@ export interface EventRole {
 export const CATEGORIES = {
 	LEADERSHIP: 'Leadership & Ops',
 	TECH: 'Tech & Product',
-	DESIGN: 'Design & Content',
-	COMMUNITY: 'Community & Outreach'
+	COMMUNITY: 'Community & Outreach',
+	DESIGN: 'Design & Content'
 } as const;
 
 export type CategoryName = (typeof CATEGORIES)[keyof typeof CATEGORIES];
@@ -19,7 +19,6 @@ export interface SkillItem {
 	id: string;
 	name: string;
 	category: CategoryName;
-	// Event IDs where this skill was utilized
 	events: string[];
 }
 
@@ -39,29 +38,24 @@ export const EVENTS: EventRole[] = [
 
 export const SKILLS: SkillItem[] = [
 	// Leadership & Ops
-	{ id: 'op_mgmt', name: 'Operational Oversight', category: CATEGORIES.LEADERSHIP, events: ['cat', 'icpc', 'pl', 'jb', 'if'] },
-	{ id: 'team_mgmt', name: 'Team & People Management', category: CATEGORIES.LEADERSHIP, events: ['cat', 'icpc', 'pl', 'to', 'ti', 'jb'] },
+	{ id: 'op_mgmt', name: 'Operational Oversight', category: CATEGORIES.LEADERSHIP, events: ['cat', 'icpc', 'ut', 'pl', 'cs', 'jb', 'if'] },
+	{ id: 'team_mgmt', name: 'Team & People Management', category: CATEGORIES.LEADERSHIP, events: ['cat', 'icpc', 'ut', 'gl', 'pl', 'to', 'ti', 'jb'] },
 	{ id: 'strat_plan', name: 'Strategic Planning', category: CATEGORIES.LEADERSHIP, events: ['cat', 'ut', 'pl', 'cs', 'jb'] },
-	{ id: 'proj_mgmt', name: 'Project Lifecycle & Management', category: CATEGORIES.LEADERSHIP, events: ['cat', 'ti', 'jb', 'if'] },
-	{ id: 'event_logistics', name: 'End-to-End Event Logistics', category: CATEGORIES.LEADERSHIP, events: ['cat', 'pl', 'jb'] },
-	{ id: 'admin_bureau', name: 'Administration & Bureaucracy', category: CATEGORIES.LEADERSHIP, events: ['cat', 'gl', 'ut', 'pl', 'jb', 'pm'] },
-	{ id: 'org_struct', name: 'Organizational Structure', category: CATEGORIES.LEADERSHIP, events: ['cat', 'ti', 'jb', 'pm'] },
-	{ id: 'procurement', name: 'Venue & Resource Procurement', category: CATEGORIES.LEADERSHIP, events: ['cat', 'pl', 'jb'] },
+	{ id: 'proj_mgmt', name: 'Project Lifecycle & Management', category: CATEGORIES.LEADERSHIP, events: ['cat', 'pl', 'ti', 'jb', 'if'] },
+	{ id: 'event_logistics', name: 'End-to-End Event Logistics', category: CATEGORIES.LEADERSHIP, events: ['cat', 'ut', 'pl', 'jb'] },
+	{
+		id: 'admin_bureau', name: 'Stakeholder & Administrative Management', category: CATEGORIES.LEADERSHIP, events: ['cat', 'gl', 'ut', 'pl', 'to', 'jb', 'pm']
+	},
+	{ id: 'intl_relations', name: 'International Event Coordination', category: CATEGORIES.LEADERSHIP, events: ['cat', 'icpc', 'pl', 'ti'] },
+	{ id: 'finance', name: 'Financial Oversight', category: CATEGORIES.LEADERSHIP, events: ['cat', 'ut', 'pl', 'cs', 'jb'] },
 
 	// Tech & Product
 	{ id: 'sdlc', name: 'Software Development Life Cycle', category: CATEGORIES.TECH, events: ['cat', 'gl', 'ti', 'if'] },
-	{ id: 'prod_owner', name: 'Product Ownership', category: CATEGORIES.TECH, events: ['cat', 'gl', 'ti'] },
-	{ id: 'qa_testing', name: 'Quality Assurance & Testing', category: CATEGORIES.TECH, events: ['cat', 'pl', 'ti'] },
-	{ id: 'web_dev', name: 'Web Development & Maintenance', category: CATEGORIES.TECH, events: ['cat', 'icpc', 'ti'] },
-	{ id: 'ai_adoption', name: 'AI Adoption for Workflows', category: CATEGORIES.TECH, events: ['cat', 'gl'] },
+	{ id: 'prod_owner', name: 'Product Ownership', category: CATEGORIES.TECH, events: ['cat', 'gl', 'ti', 'if'] },
+	{ id: 'qa_testing', name: 'Quality Assurance & Testing', category: CATEGORIES.TECH, events: ['cat', 'pl', 'ti', 'jb', 'if'] },
+	{ id: 'web_dev', name: 'Software & Web Development', category: CATEGORIES.TECH, events: ['cat', 'icpc', 'ti'] },
+	{ id: 'ai_adoption', name: 'AI Adoption for Workflows', category: CATEGORIES.TECH, events: ['cat', 'gl', 'ut'] },
 	{ id: 'ai_pipeline', name: 'AI Pipeline Orchestration', category: CATEGORIES.TECH, events: ['cat', 'gl'] },
-
-	// Design & Content
-	{ id: 'ui_ux', name: 'UI & UX Design', category: CATEGORIES.DESIGN, events: ['icpc', 'jb', 'if', 'pm'] },
-	{ id: 'visual_design', name: 'Visual Design & Event Branding', category: CATEGORIES.DESIGN, events: ['cat', 'icpc', 'jb', 'if', 'pm'] },
-	{ id: 'copywriting', name: 'Content Copywriting', category: CATEGORIES.DESIGN, events: ['cat', 'icpc', 'pl', 'jb', 'pm'] },
-	{ id: 'social_media', name: 'Social Media Strategy & Content', category: CATEGORIES.DESIGN, events: ['cat', 'icpc', 'ut', 'cs', 'jb'] },
-	{ id: 'public_relations', name: 'Public Relations & Pitching', category: CATEGORIES.DESIGN, events: ['cat', 'pl', 'jb', 'if'] },
 
 	// Community & Outreach
 	{ id: 'comm_engage', name: 'Community Engagement', category: CATEGORIES.COMMUNITY, events: ['cat', 'ut', 'gl', 'cs', 'jb'] },
@@ -70,4 +64,10 @@ export const SKILLS: SkillItem[] = [
 	{ id: 'talent_recruitment', name: 'Talent Onboarding & Recruitment', category: CATEGORIES.COMMUNITY, events: ['cat', 'gl', 'jb'] },
 	{ id: 'coaching_care', name: 'Mentorship', category: CATEGORIES.COMMUNITY, events: ['pl', 'jb'] },
 	{ id: 'open_edu', name: 'Open Educational Resource', category: CATEGORIES.COMMUNITY, events: ['cat', 'ut'] },
+
+	// Design & Content
+	{ id: 'ui_ux', name: 'UI, UX, or DX Design', category: CATEGORIES.DESIGN, events: ['icpc', 'pl', 'jb', 'if', 'pm'] },
+	{ id: 'visual_design', name: 'Visual Design & Event Branding', category: CATEGORIES.DESIGN, events: ['cat', 'icpc', 'ut', 'cs', 'jb', 'if', 'pm'] },
+	{ id: 'copywriting', name: 'Copywriting & Proofreading', category: CATEGORIES.DESIGN, events: ['cat', 'icpc', 'pl', 'ti', 'jb', 'pm'] },
+	{ id: 'social_media', name: 'Social Media Strategy & Content', category: CATEGORIES.DESIGN, events: ['cat', 'icpc', 'ut', 'cs', 'jb'] },
 ];
