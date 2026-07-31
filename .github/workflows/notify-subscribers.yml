@@ -1,0 +1,131 @@
+name: Notify Subscribers of New Article
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'articles/**/*.md'
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch full history for accurate diffing
+
+      - name: Send Email Notifications
+        uses: actions/github-script@v7
+        env:
+          APPSCRIPT_URL: ${{ secrets.APPSCRIPT_URL }}
+          SECRET_TOKEN: ${{ secrets.APPSCRIPT_SECRET_TOKEN }}
+          BEFORE_SHA: ${{ github.event.before }}
+          AFTER_SHA: ${{ github.event.after }}
+        with:
+          script: |
+            const fs = require('fs');
+            const { execSync } = require('child_process');
+            
+            // 1. Get changed files across the push using before/after SHAs
+            let diffCmd = 'git diff --no-renames --name-status HEAD^ HEAD';
+            if (process.env.BEFORE_SHA && process.env.BEFORE_SHA !== '0000000000000000000000000000000000000000') {
+              diffCmd = `git diff --no-renames --name-status ${process.env.BEFORE_SHA} ${process.env.AFTER_SHA}`;
+            }
+
+            const output = execSync(diffCmd).toString();
+            console.log("Git diff output:\n", output);
+
+            const changedFiles = output.split('\n')
+              .filter(line => line.startsWith('A')) // Only Added files
+              .map(line => line.split(/\s+/)[1])
+              .filter(file => file && file.startsWith('articles/') && file.endsWith('.md'))
+              .filter(file => !file.includes('/.drafts/') && !file.endsWith('template.md')); // Exclude drafts and template
+
+            console.log("Detected changed article files:", changedFiles);
+
+            if (!changedFiles || changedFiles.length === 0) {
+              console.log("No new published articles found. Exiting.");
+              return;
+            }
+
+            // 2. Read the email template
+            let template = fs.readFileSync('src/lib/assets/email-template.html', 'utf8');
+
+            // 3. Process each new article
+            for (const file of changedFiles) {
+              const content = fs.readFileSync(file, 'utf8');
+              
+              // Parse YAML Frontmatter
+              let title = '';
+              let description = '';
+              const frontmatterMatch = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+              
+              if (frontmatterMatch) {
+                const yamlText = frontmatterMatch[1];
+                const titleMatch = yamlText.match(/^title:\s*["']?(.*?)["']?$/m);
+                const descMatch = yamlText.match(/^description:\s*["']?(.*?)["']?$/m);
+                if (titleMatch) title = titleMatch[1].trim();
+                if (descMatch) description = descMatch[1].trim();
+              }
+
+              // Fallbacks if frontmatter is missing
+              if (!title) {
+                const h1Match = content.match(/^#\s+(.*)/m);
+                title = h1Match ? h1Match[1].trim() : 'New Article Published!';
+              }
+
+              // Extract body text (content after frontmatter) for preview
+              const bodyContent = content.replace(/^---\r?\n[\s\S]*?\r?\n---/, '').trim();
+              const paragraphs = bodyContent.split(/\r?\n\r?\n/).map(p => p.trim()).filter(p => p && !p.startsWith('#') && !p.startsWith('!'));
+              
+              if (!description) {
+                description = paragraphs[0] || 'A new article has been published on felicialimanta.fyi.';
+              }
+              const preview = paragraphs[0] || description;
+
+              // Parse Date from folder name (e.g. articles/20260731_folder/article.md)
+              const folderName = file.split('/')[1] || '';
+              let dateStr = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+              if (folderName.length >= 8) {
+                const year = folderName.substring(0, 4);
+                const month = parseInt(folderName.substring(4, 6), 10) - 1;
+                const day = parseInt(folderName.substring(6, 8), 10);
+                if (!isNaN(month) && !isNaN(day)) {
+                  dateStr = new Date(year, month, day).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+                }
+              }
+
+              const slug = folderName.replace(/^\d{8}_/, '');
+              const articleUrl = `https://felicialimanta.fyi/articles/${slug}`;
+
+              // Inject data into HTML template
+              const htmlBody = template
+                .replace('{{TITLE}}', title)
+                .replace('{{DATE}}', dateStr)
+                .replace('{{DESCRIPTION}}', description)
+                .replace('{{PREVIEW}}', preview)
+                .replace('{{URL}}', articleUrl);
+              
+              const subject = `New Article: ${title}`;
+
+              // 4. Send request to Google Apps Script Web App
+              console.log(`Sending notification request to Apps Script for: ${title}`);
+              const response = await fetch(process.env.APPSCRIPT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({
+                  token: process.env.SECRET_TOKEN,
+                  subject: subject,
+                  htmlBody: htmlBody
+                })
+              });
+              
+              const result = await response.text();
+              console.log('AppScript raw response:', result);
+
+              if (!result.startsWith('Success')) {
+                core.setFailed(`Apps Script rejected request: ${result}`);
+              }
+            }

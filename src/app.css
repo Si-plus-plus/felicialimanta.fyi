@@ -289,6 +289,52 @@ footer {
 	transition: border-color var(--transition-speed) ease, color var(--transition-speed) ease;
 }
 
+.footer-subscription {
+	margin-bottom: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.subscribe-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 18px;
+	border: 1px solid var(--lines);
+	border-radius: 20px;
+	color: var(--text-primary);
+	text-decoration: none;
+	font-size: 0.85rem;
+	font-weight: 500;
+	opacity: 0.85;
+	background: transparent;
+	transition: all var(--transition-speed) ease;
+}
+
+.subscribe-btn:hover {
+	border-color: var(--accent);
+	color: var(--accent);
+	opacity: 1;
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(79, 59, 120, 0.12);
+}
+
+.subscribe-icon {
+	width: 14px;
+	height: 14px;
+	color: var(--accent);
+	transition: transform var(--transition-speed) ease;
+}
+
+.subscribe-btn:hover .subscribe-icon {
+	transform: scale(1.2) rotate(15deg);
+}
+
+.footer-credit {
+	margin: 0;
+}
+
 /* Playful but aesthetic scrollbar */
 ::-webkit-scrollbar {
 	width: 14px;
