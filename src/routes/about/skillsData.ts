@@ -25,7 +25,7 @@ export interface SkillItem {
 
 export const EVENTS: EventRole[] = [
 	{ id: 'cat', title: 'Coding & Algorithms Tournament', line1: 'CAT', line2: '', years: '2026–' },
-	{ id: 'icpc', title: 'ICPC Regionals, Asia Pacific Championship, and World Finals', line1: 'ICPC', line2: '', years: '2024–' },
+	{ id: 'icpc', title: 'ICPC Regional Asia Jakarta, Asia Pacific Championship, and World Finals', line1: 'ICPC', line2: '', years: '2024–' },
 	{ id: 'ut', title: 'untitledtc', line1: 'untitled', line2: 'tc', years: '2024–' },
 	{ id: 'gl', title: 'GDP Labs', line1: 'GDP', line2: 'Labs', years: '2024–26' },
 	{ id: 'pl', title: 'TOKI Pelatnas (National Training Camp) for IOI/EGOI', line1: 'TOKI', line2: 'Pelatnas', years: '2024' },
@@ -92,7 +92,7 @@ export const SKILLS: SkillItem[] = [
 		id: 'finance',
 		name: 'Financial Oversight',
 		category: CATEGORIES.LEADERSHIP,
-		events: ['cat', 'icpc', 'ut', 'pl', 'cs', 'jb'],
+		events: ['cat', 'ut', 'pl', 'cs', 'jb'],
 		description: 'Managing budgets, resource allocation, sponsorship accounts, and financial tracking.'
 	},
 
