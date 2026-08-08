@@ -29,6 +29,7 @@
 
         zoomBehavior = d3zoom()
             .scaleExtent([1, 8])
+            .translateExtent([[0, 0], [width, height]])
             .on('zoom', (e) => {
                 transform = e.transform;
             });
@@ -59,7 +60,13 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
         </button>
     </div>
-    <svg bind:this={svg} viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMidYMid meet">
+    <svg bind:this={svg} viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMidYMid meet" style="--zoom-k: {transform.k}">
+        <defs>
+            <pattern id="water-lines" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                <line x1="0" y1="0" x2="0" y2="12" class="water-line" />
+            </pattern>
+        </defs>
+        <rect width={width} height={height} fill="url(#water-lines)" />
         <g transform={transform.toString()}>
             <g class="countries">
                 {#each countries as country}
@@ -71,7 +78,7 @@
                     {@const coords = projection([trip.longitude, trip.latitude])}
                     {#if coords}
                         <circle cx={coords[0]} cy={coords[1]} r={4 / transform.k} class="marker" stroke-width={1.5 / transform.k} />
-                        <text x={coords[0]} y={coords[1] - (8 / transform.k)} font-size={`${10 / transform.k}px`} class="marker-label" text-anchor="middle">{trip.city}</text>
+                        <text x={coords[0]} y={coords[1] - (8 / transform.k)} class="marker-label" text-anchor="middle">{trip.city}</text>
                     {/if}
                 {/each}
             </g>
@@ -80,19 +87,23 @@
 </div>
 
 <style>
+    .water-line {
+        stroke: var(--text-primary);
+        stroke-opacity: 0.12;
+        stroke-width: 1;
+        transition: stroke var(--transition-speed) ease, stroke-opacity var(--transition-speed) ease;
+    }
+
+    :global([data-theme='dark']) .water-line {
+        stroke-opacity: 0.22;
+    }
+
     .map-container {
         width: 100%;
         margin: 0 auto;
         border-radius: 0.5rem;
         overflow: hidden;
         background-color: var(--bg-primary);
-        background-image: repeating-linear-gradient(
-            45deg,
-            var(--lines) 0,
-            var(--lines) 1px,
-            transparent 1px,
-            transparent 12px
-        );
         position: relative;
     }
 
@@ -160,7 +171,7 @@
     }
 
     .marker {
-        fill: var(--accent);
+        fill: #a592d6;
         stroke: var(--bg-primary);
         transition: fill var(--transition-speed) ease;
     }
@@ -170,5 +181,6 @@
         font-weight: 500;
         pointer-events: none;
         opacity: 0.8;
+        font-size: calc(var(--font-size-base, 16px) * 0.625 / var(--zoom-k, 1));
     }
 </style>
