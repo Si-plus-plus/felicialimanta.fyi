@@ -54,9 +54,6 @@
 			<li><a href="https://untitledtc.com/">Untitled TC</a> - Contributor (from 2024)</li>
 			<li><a href="https://www.instagram.com/csrelatedcompetitions" target="_blank" rel="noopener noreferrer">CS-related Competitions</a> - Administrator (from 2021)</li>
 		</ul>
-		<div class="travel-hint">
-			<a href="/globetrotter" class="travel-btn">View my travel history 🌍</a>
-		</div>
 	</section>
 
 	<section class="about-section">
