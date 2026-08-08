@@ -85,7 +85,14 @@
         margin: 0 auto;
         border-radius: 0.5rem;
         overflow: hidden;
-        background: var(--bg-primary);
+        background-color: var(--bg-primary);
+        background-image: repeating-linear-gradient(
+            45deg,
+            var(--lines) 0,
+            var(--lines) 1px,
+            transparent 1px,
+            transparent 12px
+        );
         position: relative;
     }
 
