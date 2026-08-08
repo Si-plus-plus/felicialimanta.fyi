@@ -54,6 +54,9 @@
 			<li><a href="https://untitledtc.com/">Untitled TC</a> - Contributor (from 2024)</li>
 			<li><a href="https://www.instagram.com/csrelatedcompetitions" target="_blank" rel="noopener noreferrer">CS-related Competitions</a> - Administrator (from 2021)</li>
 		</ul>
+		<div class="travel-hint">
+			<a href="/globetrotter" class="travel-btn">View my travel history 🌍</a>
+		</div>
 	</section>
 
 	<section class="about-section">
@@ -121,5 +124,32 @@
 		margin-bottom: 16px;
 		color: var(--text-primary);
 		opacity: 0.9;
+	}
+
+	.travel-hint {
+		margin-top: 1.5rem;
+	}
+
+	.travel-btn {
+		display: inline-block;
+		background: var(--bg-surface, #1e1e1e);
+		border: 1px solid var(--border-color, #333);
+		padding: 0.75rem 1.25rem;
+		border-radius: 0.5rem;
+		color: #9d4edd;
+		text-decoration: none;
+		font-weight: 600;
+		transition: all 0.2s ease;
+	}
+
+	:global([data-theme='light']) .travel-btn {
+		background: #f5f5f5;
+		border-color: #ddd;
+	}
+
+	.travel-btn:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 4px 12px rgba(157, 78, 221, 0.15);
+		color: #7b2cbf;
 	}
 </style>
