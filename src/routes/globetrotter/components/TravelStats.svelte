@@ -18,7 +18,7 @@
 <div class="stats-grid">
     <div class="stat-card">
         <span class="stat-value">{stats().trips}</span>
-        <span class="stat-label">Total Trips</span>
+        <span class="stat-label">Trips</span>
     </div>
     <div class="stat-card">
         <span class="stat-value">{stats().cities}</span>
@@ -37,50 +37,48 @@
 <style>
     .stats-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        grid-template-columns: repeat(4, 1fr);
         gap: 1rem;
         margin: 2rem 0;
     }
+    
+    @media (max-width: 600px) {
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
 
     .stat-card {
-        background: var(--bg-surface, #1e1e1e);
-        border: 1px solid var(--border-color, #333);
-        border-radius: 0.75rem;
-        padding: 1.5rem;
+        background: var(--bg-primary);
+        border-radius: 0.5rem;
+        padding: 1.5rem 1rem;
         text-align: center;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        transition: transform var(--transition-speed) ease;
     }
 
     .stat-card:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(157, 78, 221, 0.15); /* subtle purple glow */
     }
 
     .stat-value {
-        font-size: 2.5rem;
-        font-weight: 800;
-        color: #9d4edd; /* Purple accent */
-        line-height: 1;
-        margin-bottom: 0.5rem;
+        font-size: 2.25rem;
+        font-weight: 500;
+        color: var(--accent);
+        line-height: 1.2;
+        margin-bottom: 0.25rem;
     }
 
     .stat-label {
-        font-size: 0.875rem;
-        color: var(--text-muted, #888);
+        font-size: 0.75rem;
+        color: var(--text-primary);
+        opacity: 0.7;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        font-weight: 600;
-    }
-    
-    :global([data-theme='light']) .stat-card {
-        background: #fff;
-        border-color: #eee;
-    }
-    :global([data-theme='light']) .stat-label {
-        color: #666;
+        font-weight: 500;
+        white-space: nowrap;
     }
 </style>

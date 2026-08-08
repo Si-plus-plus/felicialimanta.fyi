@@ -39,14 +39,8 @@
     .table-container {
         width: 100%;
         overflow-x: auto;
-        background: var(--bg-surface, #1e1e1e);
-        border: 1px solid var(--border-color, #333);
-        border-radius: 0.75rem;
-    }
-    
-    :global([data-theme='light']) .table-container {
-        background: #fff;
-        border-color: #eee;
+        background: var(--bg-primary);
+        border-radius: 0.5rem;
     }
 
     .history-table {
@@ -57,62 +51,49 @@
 
     th, td {
         padding: 1rem 1.5rem;
-        border-bottom: 1px solid var(--border-color, #333);
-    }
-    
-    :global([data-theme='light']) th, :global([data-theme='light']) td {
-        border-bottom-color: #eee;
+        border-bottom: 1px solid var(--lines);
+        font-size: 0.95rem;
     }
 
     th {
-        font-weight: 600;
-        color: var(--text-muted, #888);
+        font-weight: 500;
+        color: var(--text-primary);
+        opacity: 0.7;
         text-transform: uppercase;
         font-size: 0.75rem;
         letter-spacing: 0.05em;
-        background: rgba(0,0,0,0.2);
-    }
-    
-    :global([data-theme='light']) th {
-        background: rgba(0,0,0,0.02);
-        color: #666;
+        background: transparent;
     }
 
     tbody tr {
-        transition: background-color 0.2s ease;
+        transition: background-color var(--transition-speed) ease;
     }
 
     tbody tr:hover {
-        background: rgba(157, 78, 221, 0.05); /* very faint purple */
+        background: var(--lines);
     }
 
     .period-col {
-        font-weight: 600;
-        color: #9d4edd;
+        font-weight: 500;
+        color: var(--accent);
         white-space: nowrap;
     }
 
     .city {
-        font-weight: 600;
-        color: var(--text-color, #fff);
-    }
-    
-    :global([data-theme='light']) .city {
-        color: #111;
+        font-weight: 500;
+        color: var(--text-primary);
     }
 
     .country {
-        color: var(--text-muted, #aaa);
-    }
-    
-    :global([data-theme='light']) .country {
-        color: #666;
+        color: var(--text-primary);
+        opacity: 0.7;
     }
     
     .empty-state {
         text-align: center;
         padding: 3rem;
-        color: var(--text-muted, #888);
+        color: var(--text-primary);
+        opacity: 0.7;
         font-style: italic;
     }
 </style>
