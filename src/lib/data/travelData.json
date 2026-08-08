@@ -1,0 +1,142 @@
+[
+  {
+    "id": "1",
+    "city": "Yogyakarta",
+    "country": "Indonesia",
+    "continent": "Asia",
+    "latitude": -7.7956,
+    "longitude": 110.3695,
+    "period": "2022-08",
+    "purpose": "IOI, as Host Technical Committee"
+  },
+  {
+    "id": "2",
+    "city": "Malang",
+    "country": "Indonesia",
+    "continent": "Asia",
+    "latitude": -7.9797,
+    "longitude": 112.6304,
+    "period": "2022-11",
+    "purpose": "GEMASTIK, as Coach"
+  },
+  {
+    "id": "3",
+    "city": "Jakarta",
+    "country": "Indonesia",
+    "continent": "Asia",
+    "latitude": -6.2088,
+    "longitude": 106.8456,
+    "period": "2022-11",
+    "purpose": "ICPC Regional, as Coach"
+  },
+  {
+    "id": "4",
+    "city": "Bogor",
+    "country": "Indonesia",
+    "continent": "Asia",
+    "latitude": -6.5971,
+    "longitude": 106.7932,
+    "period": "2022-11",
+    "purpose": "OSN, as Technical Committee"
+  },
+  {
+    "id": "5",
+    "city": "Jakarta",
+    "country": "Indonesia",
+    "continent": "Asia",
+    "latitude": -6.2088,
+    "longitude": 106.8456,
+    "period": "2023-12",
+    "purpose": "ICPC Regional, as Coach"
+  },
+  {
+    "id": "6",
+    "city": "Hue City",
+    "country": "Vietnam",
+    "continent": "Asia",
+    "latitude": 16.4637,
+    "longitude": 107.5909,
+    "period": "2023-12",
+    "purpose": "ICPC Regional"
+  },
+  {
+    "id": "7",
+    "city": "Hanoi",
+    "country": "Vietnam",
+    "continent": "Asia",
+    "latitude": 21.0285,
+    "longitude": 105.8542,
+    "period": "2024-03",
+    "purpose": "ICPC APAC, as Coach"
+  },
+  {
+    "id": "8",
+    "city": "Luxor",
+    "country": "Egypt",
+    "continent": "Africa",
+    "latitude": 25.6872,
+    "longitude": 32.6396,
+    "period": "2024-04",
+    "purpose": "ICPC World Finals, as Coach"
+  },
+  {
+    "id": "9",
+    "city": "Veldhoven",
+    "country": "Netherlands",
+    "continent": "Europe",
+    "latitude": 51.4172,
+    "longitude": 5.4053,
+    "period": "2024-07",
+    "purpose": "EGOI, as Deputy Leader"
+  },
+  {
+    "id": "10",
+    "city": "Jakarta",
+    "country": "Indonesia",
+    "continent": "Asia",
+    "latitude": -6.2088,
+    "longitude": 106.8456,
+    "period": "2024-11",
+    "purpose": "ICPC Regional, as Committee"
+  },
+  {
+    "id": "11",
+    "city": "Singapore",
+    "country": "Singapore",
+    "continent": "Asia",
+    "latitude": 1.3521,
+    "longitude": 103.8198,
+    "period": "2025-03",
+    "purpose": "ICPC APAC, as Technical Committee"
+  },
+  {
+    "id": "12",
+    "city": "Baku",
+    "country": "Azerbaijan",
+    "continent": "Asia",
+    "latitude": 40.3776,
+    "longitude": 49.8530,
+    "period": "2025-09",
+    "purpose": "ICPC World Finals, as APAC Representative"
+  },
+  {
+    "id": "13",
+    "city": "Taoyuan",
+    "country": "Taiwan",
+    "continent": "Asia",
+    "latitude": 25.009667,
+    "longitude": 121.268855,
+    "period": "2026-03",
+    "purpose": "ICPC APAC, as Technical Committee"
+  },
+  {
+    "id": "14",
+    "city": "Stockholm",
+    "country": "Sweden",
+    "continent": "Europe",
+    "latitude": 59.3293,
+    "longitude": 18.0686,
+    "period": "2026-08",
+    "purpose": "ICPC EWPC, as Jury"
+  }
+]
