@@ -46,7 +46,7 @@
 	<section class="about-section">
 		<h2>Current Commitments</h2>
 		<ul>
-			<li><a href="https://ewpc.icpc.global/">European Women's Programming Contest</a> - Staff (from 2026)</li>
+			<li><a href="https://ewpc.icpc.global/">European Women's Programming Contest</a> - Volunteer (from 2026)</li>
 			<li><a href="https://catournament.org/">Coding & Algorithms Tournament</a> - Contest Director (from 2026)</li>
 			<li><a href="https://store.steampowered.com/app/4745300/Flightline">Flightline</a> - Marketer (from 2026)</li>
 			<li><a href="https://apac.icpc.global/">ICPC Asia Pacific Championship</a> - Technical Committee (from 2025)</li>
