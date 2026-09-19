@@ -559,3 +559,27 @@ footer {
 	opacity: 0.6;
 	font-style: italic;
 }
+
+/* Article Videos & Embeds */
+.article-video {
+	margin: 48px 0;
+	text-align: center;
+}
+
+.article-video iframe {
+	width: 100%;
+	aspect-ratio: 16 / 9;
+	border: 0;
+	border-radius: 8px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+	display: block;
+}
+
+.article-video figcaption {
+	margin-top: 12px;
+	font-size: 0.85rem;
+	color: var(--text-primary);
+	opacity: 0.6;
+	font-style: italic;
+}
+
