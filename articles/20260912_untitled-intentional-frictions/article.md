@@ -1,7 +1,7 @@
 ---
 title: "Untitled: A Training Camp that Intentionally Adds Friction to Encourage Student Agency"
 description: "Breaking the convention of not maximizing profits while being sustainable, for both Indonesian Competitive Programming and us"
-tags: ["side-project"]
+tags: ["side-project", "community"]
 ---
 
 
