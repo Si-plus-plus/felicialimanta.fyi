@@ -99,7 +99,9 @@ Some people said I shouldn't have done this for free. But the time I spent here 
 
 Some other accounts (not non-profits) have taken credit for my work, directly reposting competitions from CSRC. Well, since my goal is to share competitions as widely as possible, help competitors join more easily, and expose underexposed competitions, doesn't that technically align with my goal? Though it's annoying, we should've collaborated instead of you just profiting off my hard work. Oh well.
 
-Day by day, the follower count grew. Now, competitions, both locally and internationally, reach out to CS-related Competitions for collaborations. Even though our growth wasn't that fast, I feel that our followers are the real people who drive the ecosystem while I get to run the account on my own terms and timeline. Isn't this an achievement in itself that money can't buy?
+Day by day, the follower count grew. Now, competitions, both locally and internationally, reach out to CS-related Competitions for collaborations. Even though our growth wasn't that fast, I feel that our followers are the real people who drive the ecosystem while I get to run the account on my own terms and timeline. Somehow, even the IOI 2026 followed and tagged us in their stories! Isn't this an achievement in itself that money can't buy?
+
+![IOI 2026 Instagram tagging csrelatedcompetitions](ioi_2026.png#50)
 
 I ran giveaways to clear out duplicate merch I received from competitions (books, bags, tumblers), framed as "milestone celebrations." I keep what I'll actually use and give the rest away. Hopefully, the merch inspires people and promotes the competitions. Plus, I get to declutter. Isn't it lovely to see their smiles (and give these items a second life)?
 
