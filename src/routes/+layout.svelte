@@ -8,7 +8,8 @@
 
 
 	import type { LayoutData } from './$types';
-	import { goto, onNavigate } from '$app/navigation';
+	import { goto, onNavigate, afterNavigate } from '$app/navigation';
+	import { PUBLIC_GA_ID } from '$env/static/public';
 
 	function handleSubscribeHover(e: MouseEvent) {
 		const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
@@ -59,9 +60,29 @@
 			fontSize = parseInt(storedSize, 10);
 		}
 
+		// Initialize Google Analytics if configured
+		if (PUBLIC_GA_ID) {
+			window.dataLayer = window.dataLayer || [];
+			function gtag(...args: any[]) {
+				window.dataLayer?.push(args);
+			}
+			window.gtag = gtag;
+			gtag('js', new Date());
+			gtag('config', PUBLIC_GA_ID, { send_page_view: false });
+		}
+
 		return () => {
 			document.removeEventListener('click', handleGlobalClick);
 		};
+	});
+
+	afterNavigate(() => {
+		if (PUBLIC_GA_ID && typeof window !== 'undefined' && typeof window.gtag === 'function') {
+			window.gtag('event', 'page_view', {
+				page_path: window.location.pathname + window.location.search,
+				page_title: document.title
+			});
+		}
 	});
 
 	// Synchronize font size base property on mount as well to ensure correctness
@@ -92,6 +113,9 @@
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
+	{#if PUBLIC_GA_ID}
+		<script async src="https://www.googletagmanager.com/gtag/js?id={PUBLIC_GA_ID}"></script>
+	{/if}
 </svelte:head>
 
 <div class="container">

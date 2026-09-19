@@ -5,8 +5,10 @@ declare global {
 		// interface Error {}
 		// interface Locals {}
 		// interface PageData {}
-		// interface PageState {}
-		// interface Platform {}
+	}
+	interface Window {
+		dataLayer?: any[];
+		gtag?: (...args: any[]) => void;
 	}
 }
 
