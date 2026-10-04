@@ -2,6 +2,7 @@
 title: "Unreal Estate (2): Dragged into a Mess of Bad Internal Communication"
 description: "Behind the scenes of why I actually lost my apartment."
 tags: ["life"]
+previous: ["unreal-estate"]
 ---
 
 On [Unreal Estate: Losing my Stable Foundation (Apartment)](https://felicialimanta.fyi/articles/unreal-estate), I wrote about skyrocketing apartment rents and my landlord suddenly kicking me out. 
