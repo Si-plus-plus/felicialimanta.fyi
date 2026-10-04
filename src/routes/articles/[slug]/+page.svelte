@@ -35,11 +35,75 @@
 					{/each}
 				</div>
 			{/if}
+
+			{#if (data.navigation?.previous?.length ?? 0) > 0 || (data.navigation?.next?.length ?? 0) > 0}
+				<div class="series-top-nav">
+					{#if data.navigation.previous.length > 0}
+						<div class="series-nav-group previous-group">
+							{#each data.navigation.previous as prev}
+								<a href="/articles/{prev.slug}" class="series-nav-box prev-box">
+									<span class="box-arrow" aria-hidden="true">←</span>
+									<div class="box-content">
+										<span class="box-label">Previous</span>
+										<span class="box-title">{prev.title}</span>
+									</div>
+								</a>
+							{/each}
+						</div>
+					{/if}
+
+					{#if data.navigation.next.length > 0}
+						<div class="series-nav-group next-group">
+							{#each data.navigation.next as nextArt}
+								<a href="/articles/{nextArt.slug}" class="series-nav-box next-box">
+									<div class="box-content">
+										<span class="box-label">Next</span>
+										<span class="box-title">{nextArt.title}</span>
+									</div>
+									<span class="box-arrow" aria-hidden="true">→</span>
+								</a>
+							{/each}
+						</div>
+					{/if}
+				</div>
+			{/if}
 		</header>
 
 		<div class="article-content">
 			{@html data.article.html}
 		</div>
+
+		{#if (data.navigation?.previous?.length ?? 0) > 0 || (data.navigation?.next?.length ?? 0) > 0}
+			<nav class="series-bottom-nav" aria-label="Article series navigation">
+				{#if data.navigation.previous.length > 0}
+					<div class="series-nav-group previous-group">
+						{#each data.navigation.previous as prev}
+							<a href="/articles/{prev.slug}" class="series-nav-box prev-box">
+								<span class="box-arrow" aria-hidden="true">←</span>
+								<div class="box-content">
+									<span class="box-label">Previous</span>
+									<span class="box-title">{prev.title}</span>
+								</div>
+							</a>
+						{/each}
+					</div>
+				{/if}
+
+				{#if data.navigation.next.length > 0}
+					<div class="series-nav-group next-group">
+						{#each data.navigation.next as nextArt}
+							<a href="/articles/{nextArt.slug}" class="series-nav-box next-box">
+								<div class="box-content">
+									<span class="box-label">Next</span>
+									<span class="box-title">{nextArt.title}</span>
+								</div>
+								<span class="box-arrow" aria-hidden="true">→</span>
+							</a>
+						{/each}
+					</div>
+				{/if}
+			</nav>
+		{/if}
 	</article>
 </div>
 
@@ -189,5 +253,95 @@
 		border: 0;
 		border-top: 1px solid var(--lines);
 		margin: 48px 0;
+	}
+
+	/* Series Navigation (Top & Bottom) */
+	.series-top-nav {
+		margin-top: 28px;
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+	}
+
+	/* Series Bottom Navigation */
+	.series-bottom-nav {
+		margin-top: 56px;
+		padding-top: 32px;
+		border-top: 1px solid var(--lines);
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+	}
+
+	.series-nav-group {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	.series-nav-box {
+		display: flex;
+		align-items: center;
+		padding: 16px 20px;
+		background: transparent;
+		border: 1px solid var(--lines) !important;
+		border-radius: 8px;
+		text-decoration: none;
+		color: var(--text-primary) !important;
+		gap: 16px;
+		transition: all var(--transition-speed) ease;
+	}
+
+	.series-nav-box:hover {
+		border-color: var(--accent) !important;
+		background: color-mix(in srgb, var(--accent) 4%, transparent);
+		transform: translateY(-2px);
+		box-shadow: 0 4px 12px rgba(79, 59, 120, 0.08);
+	}
+
+	:global([data-theme='dark']) .series-nav-box:hover {
+		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+	}
+
+	.series-nav-box.next-box {
+		justify-content: space-between;
+		text-align: right;
+	}
+
+	.box-content {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		flex: 1;
+		min-width: 0;
+	}
+
+	.box-label {
+		font-size: 0.8rem;
+		font-weight: 500;
+		color: var(--accent);
+	}
+
+	.box-title {
+		font-size: 1rem;
+		font-weight: 500;
+		line-height: 1.45;
+		color: var(--text-primary);
+		word-break: break-word;
+	}
+
+	.box-arrow {
+		font-size: 1.25rem;
+		color: var(--accent);
+		flex-shrink: 0;
+		transition: transform var(--transition-speed) ease;
+	}
+
+	.prev-box:hover .box-arrow {
+		transform: translateX(-4px);
+	}
+
+	.next-box:hover .box-arrow {
+		transform: translateX(4px);
 	}
 </style>
