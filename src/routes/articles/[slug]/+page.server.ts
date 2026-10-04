@@ -1,4 +1,4 @@
-import { getArticleBySlug, getArticles } from '$lib/server/parser';
+import { getArticleBySlug, getArticles, getArticleNavigation } from '$lib/server/parser';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad, EntryGenerator } from './$types';
 
@@ -9,8 +9,10 @@ export const load: PageServerLoad = ({ params }) => {
 			message: 'Article not found'
 		});
 	}
+	const navigation = getArticleNavigation(params.slug);
 	return {
-		article
+		article,
+		navigation
 	};
 };
 
