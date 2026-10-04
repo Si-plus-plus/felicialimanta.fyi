@@ -14,8 +14,26 @@ export interface Article {
 	title: string;
 	description: string;
 	tags: string[];
+	previous: string[];
 	html: string;
 	searchText: string;
+}
+
+/**
+ * Summary link for an article in a series.
+ */
+export interface ArticleLink {
+	slug: string;
+	title: string;
+	date: string;
+}
+
+/**
+ * Series navigation links for an article.
+ */
+export interface ArticleNavigation {
+	previous: ArticleLink[];
+	next: ArticleLink[];
 }
 
 /**
@@ -144,6 +162,20 @@ export function parseArticleFile(dirName: string): Article {
 			.filter(Boolean);
 	}
 
+	let previous: string[] = [];
+	const prevArrayMatch = yamlStr.match(/^previous:\s*\[(.*?)\]/m);
+	if (prevArrayMatch && prevArrayMatch[1]) {
+		previous = prevArrayMatch[1]
+			.split(',')
+			.map(p => p.trim().replace(/^['"]|['"]$/g, ''))
+			.filter(Boolean);
+	} else {
+		const prevSingleMatch = yamlStr.match(/^previous:\s*["']?([^"\r\n]+)["']?/m);
+		if (prevSingleMatch && prevSingleMatch[1].trim()) {
+			previous = [prevSingleMatch[1].trim().replace(/^['"]|['"]$/g, '')];
+		}
+	}
+
 	if (!title) {
 		throw new Error(`Missing "title" in frontmatter of: "${dirName}/article.md".`);
 	}
@@ -192,6 +224,7 @@ export function parseArticleFile(dirName: string): Article {
 		title,
 		description,
 		tags,
+		previous,
 		html,
 		searchText
 	};
@@ -244,6 +277,17 @@ export function validateArticles(): Article[] {
 		articles.push(article);
 	}
 
+	// Validate that all referenced previous article slugs exist
+	for (const article of articles) {
+		for (const prevSlug of article.previous) {
+			if (!slugsMap.has(prevSlug)) {
+				throw new Error(
+					`[Article Validation Error] In directory "${article.directoryName}": referenced previous article slug "${prevSlug}" was not found.`
+				);
+			}
+		}
+	}
+
 	return articles;
 }
 
@@ -263,6 +307,44 @@ export function getArticleBySlug(slug: string): Article | undefined {
 	const articles = validateArticles();
 	return articles.find((article) => article.slug === slug);
 }
+
+/**
+ * Gets previous and next (referencing) article links for series navigation.
+ */
+export function getArticleNavigation(slug: string): ArticleNavigation {
+	const articles = validateArticles();
+	const current = articles.find((article) => article.slug === slug);
+	if (!current) {
+		return { previous: [], next: [] };
+	}
+
+	// 1. Previous articles explicitly listed in the frontmatter, preserving order
+	const previous: ArticleLink[] = [];
+	for (const prevSlug of current.previous) {
+		const target = articles.find((article) => article.slug === prevSlug);
+		if (target) {
+			previous.push({
+				slug: target.slug,
+				title: target.title,
+				date: target.date
+			});
+		}
+	}
+
+	// 2. Newer articles that reference this article in their "previous" list
+	// Sorted by publication date ascending so follow-ups appear in chronological order
+	const next: ArticleLink[] = articles
+		.filter((article) => article.previous.includes(slug))
+		.sort((a, b) => a.date.localeCompare(b.date))
+		.map((article) => ({
+			slug: article.slug,
+			title: article.title,
+			date: article.date
+		}));
+
+	return { previous, next };
+}
+
 
 
 
