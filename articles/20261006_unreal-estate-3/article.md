@@ -88,6 +88,7 @@ So I wrote down what I actually prioritize in a place to live:
 4. Maintenance quality
 5. Convenience
 6. Aesthetics
+
 I guess this makes sense.
 
 I entered an agreement where the owner is responsible for maintaining the premises. Why am I suddenly being asked to absorb the operational consequences of the owner's infrastructure failure?
