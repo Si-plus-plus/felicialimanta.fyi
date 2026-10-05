@@ -17,8 +17,6 @@ I had researched on the perfect apartment since 3 months before moving here. Sur
 
 To maximize my experience, I had drawn a floor plan and designed the place the way an interior designer without any experience or budget would. But at least I would know how my standing desk would fit the unit. Or what are the things provided here and how much expected spendings would I need to spend after renting here.
 
-![Floorplan to plan out the interior layout.](floorplan.png)
-
 Months before the lease ends, as written on the contract, I contacted my agent. I plan to extend my lease here. I had kept the place clean and maintained and I was planning to extend it by 6 months as there's a high chance I will move out soon, depending on where I plan to go next. But the agent said that landlord does not accept 6 months leases. Okay. Another year it is. No worries. I was expecting a price increase. I had saved enough to have a buffer cushion for this.
 
 ## My Landlord Rejected My Rent Renewal

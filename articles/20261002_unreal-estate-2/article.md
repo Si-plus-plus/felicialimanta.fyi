@@ -1,11 +1,11 @@
 ---
-title: "Unreal Estate (2): Dragged into a Mess of Bad Internal Communication"
+title: "Unreal Estate (2): Being the Collateral Damage of Internal Agency Drama"
 description: "Behind the scenes of why I actually lost my apartment."
 tags: ["life"]
 previous: ["unreal-estate"]
 ---
 
-On [Unreal Estate: Losing my Stable Foundation (Apartment)](https://felicialimanta.fyi/articles/unreal-estate), I wrote about skyrocketing apartment rents and my landlord suddenly kicking me out. 
+On [Unreal Estate: Losing my Stable Foundation (Apartment)](/articles/unreal-estate), I wrote about skyrocketing apartment rents and my landlord suddenly kicking me out. 
 
 At that point, I had accepted my fate. I looked at places outside my comfort zone, and nada. The hidden costs far outweighed the cheaper rent: I refuse to sleep in a place infested with roaches, I don't want to camp out by the door every time I order a package, and I don't want to live so far from friends that nobody can check in on me if I need help. In the end, I decided to stay in my current area.
 
