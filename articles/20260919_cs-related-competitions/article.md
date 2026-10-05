@@ -107,7 +107,9 @@ I ran giveaways to clear out duplicate merch I received from competitions (books
 
 I've also watched competitions grow from their baby steps to successful now. I've watched people start from scratch who are now representing Indonesia on the global stage. Reading their messages, interacting with them, and hearing their stories, isn't that rewarding?
 
-Being shared across communities internally and externally. Seeing the CSRC profile presented during a session at Apple Academy Indonesia. Being their go-to place whenever they're looking for a competition. Isn't that fulfilling?
+Being shared across communities internally and externally. Seeing the CSRC profile presented in the classes. Being their go-to place whenever they're looking for a competition. Isn't that fulfilling?
+
+![csrelatedcompetitions being presented](class.png#50)
 
 And the opportunities I got from CSRC too: from being noticed by a Indonesian tech community giant and ending up collaborating with them to organize our own competition (with HRT and Google Cloud as sponsors for our first edition), to getting opportunities to volunteer in other regions because of the exposure and track record from CSRC. Isn't that satisfying?
 
