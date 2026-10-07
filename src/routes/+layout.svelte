@@ -63,8 +63,8 @@
 		// Initialize Google Analytics if configured
 		if (PUBLIC_GA_ID) {
 			window.dataLayer = window.dataLayer || [];
-			function gtag(...args: any[]) {
-				window.dataLayer?.push(args);
+			function gtag(..._args: any[]) {
+				window.dataLayer?.push(arguments);
 			}
 			window.gtag = gtag;
 			gtag('js', new Date());
