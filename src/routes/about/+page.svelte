@@ -9,6 +9,7 @@
 </svelte:head>
 
 <div class="fade-in about-container">
+	<img class="about-logo" src="/about-logo.png" alt="Stylized SI monogram" width="80" height="80" />
 	<h1 class="page-title">About</h1>
 	
 	<section class="about-section">
@@ -110,6 +111,14 @@
 <style>
 	.about-container {
 		max-width: 680px;
+	}
+
+	.about-logo {
+		display: block;
+		width: 80px;
+		height: 80px;
+		margin-top: 16px;
+		margin-bottom: 32px;
 	}
 
 	.about-section {
