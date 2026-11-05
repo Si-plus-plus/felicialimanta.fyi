@@ -95,9 +95,9 @@ Yep, it's real.
 
 Some people said I shouldn't have done this for free. But the time I spent here is equivalent to the time I'd spend doomscrolling—which is not productive anyway. And having been in the ICPC community since my university days until now, I'm still keeping up with competition trends regardless.
 
-![Some of the appreciation messages that I got over the years](thanks.png)
+![Some of the appreciation messages that I got over the years, from the participants](thanks.png)
 
-Some other accounts (not non-profits) have taken credit for my work, directly reposting competitions from CSRC. Well, since my goal is to share competitions as widely as possible, help competitors join more easily, and expose underexposed competitions, doesn't that technically align with my goal? Though it's annoying, we should've collaborated instead of you just profiting off my hard work. Oh well.
+Some other accounts (not non-profits) have taken credit for my work, directly reposting competitions from CSRC. Well, since my goal is to share competitions as widely as possible, help competitors join more easily, and expose underexposed competitions, doesn't that technically align with my goal? Though it's annoying, we should've collaborated to reach the wider influence rather than targetting my hard-earned followers. Oh well.
 
 Day by day, the follower count grew. Now, competitions, both locally and internationally, reach out to CS-related Competitions for collaborations. Even though our growth wasn't that fast, I feel that our followers are the real people who drive the ecosystem while I get to run the account on my own terms and timeline. Somehow, even the IOI 2026 followed and tagged us in their stories! Isn't this an achievement in itself that money can't buy?
 
@@ -105,11 +105,13 @@ Day by day, the follower count grew. Now, competitions, both locally and interna
 
 I ran giveaways to clear out duplicate merch I received from competitions (books, bags, tumblers), framed as "milestone celebrations." I keep what I'll actually use and give the rest away. Hopefully, the merch inspires people and promotes the competitions. Plus, I get to declutter. Isn't it lovely to see their smiles (and give these items a second life)?
 
+![Example of the appreciation message that I got from the competition organizer](thanks_competition.png#50)
+
 I've also watched competitions grow from their baby steps to successful now. I've watched people start from scratch who are now representing Indonesia on the global stage. Reading their messages, interacting with them, and hearing their stories, isn't that rewarding?
 
 Being shared across communities internally and externally. Seeing the CSRC profile presented in the classes. Being their go-to place whenever they're looking for a competition. Isn't that fulfilling?
 
-![csrelatedcompetitions being presented](class.png#50)
+![Someone notified me that csrelatedcompetitions got presented](class.png#50)
 
 And the opportunities I got from CSRC too: from being noticed by a Indonesian tech community giant and ending up collaborating with them to organize our own competition (with HRT and Google Cloud as sponsors for our first edition), to getting opportunities to volunteer in other regions because of the exposure and track record from CSRC. Isn't that satisfying?
 
@@ -126,3 +128,9 @@ And the opportunities I got from CSRC too: from being noticed by a Indonesian te
   </iframe>
   <figcaption>The start of CS-related Competitions, told during CAT 2026 Final Round Live Commentary</figcaption>
 </figure>
+
+## Bonus
+
+See our website [csrelatedcompetitions.id](https://csrelatedcompetitions.id). I had fun making this website.
+![https://csrelatedcompetitions.id](web_shitpost.png)
+
