@@ -11,7 +11,7 @@ Yea, I resigned with several back up plans in mind. I have planned out what to d
 
 Living on my own in an apartment has always been on my bucket list. 
 
-Currently, and not for long, I am living in a superb apartment. A 1+1 BR with size 37m2. Near the malls. Near the public transportation. A homey place. An environment that I liked. And, the best part was, it was cheap. FYI, I live alone without any flatmates.
+Currently, and not for long, I am living in a superb apartment. A spacious unit with balcony, approx ~40m2. Near the malls. Near the public transportation. A homey place. An environment that I liked. And, the best part was, it was cheap. FYI, I live alone without any flatmates.
 
 I had researched on the perfect apartment since 3 months before moving here. Surveyed a ton of places. Contacted tons of agents. Made a spreadsheet tracker on the size, layout, IPL, wifi, and all possible recurring costs. Before finally landing my choice here, in this apartment. The moment I surveyed the place, I fell in love, and I immediately paid the Down Payment to secure the place so it wouldn't go to anyone else.
 
