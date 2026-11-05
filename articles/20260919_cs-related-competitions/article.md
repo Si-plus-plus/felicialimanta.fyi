@@ -2,6 +2,7 @@
 title: "CSRC: A Solution to Doom Scrolling, Achievement Monopoly, and Ecosystem Continuation"
 description: "CS-related competitions, a solution no one asked for to a problem no one noticed. But it works, and now I've accidentally made a lot of people's competition careers depend on it."
 tags: ["side-project", "community"]
+pinned: true
 ---
 
 ![CS-related Competitions logo](logo.png)

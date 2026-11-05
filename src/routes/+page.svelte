@@ -124,8 +124,16 @@
 		{:else}
 			<ul class="article-list">
 				{#each filteredArticles as article}
-					<li class="article-item" class:read={readSlugs.includes(article.slug)}>
+					<li class="article-item" class:read={readSlugs.includes(article.slug)} class:pinned={article.pinned}>
 						<a href="/articles/{article.slug}" class="article-link">
+							{#if article.pinned}
+								<span class="pinned-badge">
+									<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+										<path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/>
+									</svg>
+									Pinned
+								</span>
+							{/if}
 							<span class="article-date">{article.date}</span>
 							<h2 class="article-title">
 								{#each getSegments(article.title, searchQuery) as segment}
@@ -186,7 +194,39 @@
 		border-bottom: none;
 	}
 
+	.pinned-badge {
+		position: absolute;
+		top: 32px;
+		right: 0;
+		display: inline-flex;
+		align-items: center;
+		gap: 4px;
+		padding: 2px 8px;
+		border-radius: 99px;
+		font-size: 0.58rem;
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		color: var(--accent);
+		background: color-mix(in srgb, var(--accent) 10%, transparent);
+		line-height: 1;
+		pointer-events: none;
+		opacity: 0.85;
+	}
+
+	.pinned-badge svg {
+		flex-shrink: 0;
+		width: 8px;
+		height: 8px;
+		opacity: 0.8;
+	}
+
+	.article-item.pinned .article-link {
+		padding-right: 4.25rem;
+	}
+
 	.article-link {
+		position: relative;
 		display: block;
 		padding: 32px 0;
 		text-decoration: none;

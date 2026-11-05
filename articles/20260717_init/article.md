@@ -2,6 +2,7 @@
 title: "How `felicialimanta.fyi` came to be"
 description: "Welcoming you to my personal digital garden."
 tags: ["life"]
+pinned: true
 ---
 
 ## Hey there, I'm ~~using Whatsapp~~ Felicia

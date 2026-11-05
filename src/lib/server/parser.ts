@@ -14,6 +14,7 @@ export interface Article {
 	title: string;
 	description: string;
 	tags: string[];
+	pinned: boolean;
 	previous: string[];
 	html: string;
 	searchText: string;
@@ -150,10 +151,13 @@ export function parseArticleFile(dirName: string): Article {
 	const titleMatch = yamlStr.match(/^title:\s*"([^"]+)"/m) || yamlStr.match(/^title:\s*'([^']+)'/m) || yamlStr.match(/^title:\s*([^\r\n]+)/m);
 	const descMatch = yamlStr.match(/^description:\s*"([^"]+)"/m) || yamlStr.match(/^description:\s*'([^']+)'/m) || yamlStr.match(/^description:\s*([^\r\n]+)/m);
 	const tagsMatch = yamlStr.match(/^tags:\s*\[(.*?)\]/m);
+	const pinnedMatch = yamlStr.match(/^pinned:\s*(true|false)/m);
 
 	const title = titleMatch ? titleMatch[1].trim() : '';
 	const description = descMatch ? descMatch[1].trim() : '';
 	
+	const pinned = pinnedMatch ? pinnedMatch[1] === 'true' : false;
+
 	let tags: string[] = [];
 	if (tagsMatch && tagsMatch[1]) {
 		tags = tagsMatch[1]
@@ -224,6 +228,7 @@ export function parseArticleFile(dirName: string): Article {
 		title,
 		description,
 		tags,
+		pinned,
 		previous,
 		html,
 		searchText
@@ -292,11 +297,17 @@ export function validateArticles(): Article[] {
 }
 
 /**
- * Gets all validated articles, sorted by date in descending order.
+ * Gets all validated articles. Pinned articles stay at the top (newest pinned first);
+ * unpinned articles follow, sorted by date descending.
  */
 export function getArticles(): Article[] {
 	const articles = validateArticles();
-	return articles.sort((a, b) => b.date.localeCompare(a.date));
+	return articles.sort((a, b) => {
+		if (a.pinned !== b.pinned) {
+			return a.pinned ? -1 : 1;
+		}
+		return b.date.localeCompare(a.date);
+	});
 }
 
 /**
