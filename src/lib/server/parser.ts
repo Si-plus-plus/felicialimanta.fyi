@@ -1,6 +1,24 @@
 import fs from 'fs';
 import path from 'path';
-import { marked } from 'marked';
+import { marked, Renderer, type Tokens } from 'marked';
+
+const articleRenderer = new Renderer();
+const renderImage = articleRenderer.image;
+articleRenderer.image = function (token: Tokens.Image) {
+	const link = token.tokens?.length === 1 && token.tokens[0].type === 'link' ? token.tokens[0] : null;
+	if (!link) return renderImage.call(this, token);
+
+	const html = renderImage.call(this, {
+		...token,
+		text: link.text,
+		tokens: [{ type: 'text', raw: link.text, text: link.text }]
+	});
+	const href = link.href
+		.replace(/&/g, '&amp;')
+		.replace(/"/g, '&quot;')
+		.replace(/</g, '&lt;');
+	return html.replace(/>$/, ` data-caption-href="${href}">`);
+};
 
 const ARTICLES_DIR = path.resolve('articles');
 
@@ -188,7 +206,7 @@ export function parseArticleFile(dirName: string): Article {
 	}
 
 	// Render Markdown to HTML
-	let html = marked.parse(markdownBody) as string;
+	let html = marked.parse(markdownBody, { renderer: articleRenderer }) as string;
 
 	// Fix relative image paths and wrap all images in figures with captions
 	html = html.replace(
@@ -208,13 +226,20 @@ export function parseArticleFile(dirName: string): Article {
 				finalSrc = finalSrc.replace(/#\d+$/, '');
 			}
 			
-			// Extract alt text for caption
+			// Extract alt text for caption. A linked alt (`![ [label](href) ](image)`)
+			// is carried on data-caption-href because image alt text cannot hold a link.
 			const altMatch = match.match(/alt=["']([^"']*)["']/i);
 			const altText = altMatch && altMatch[1] ? altMatch[1] : '';
+			const captionHrefMatch = match.match(/data-caption-href=["']([^"']*)["']/i);
+			const captionHref = captionHrefMatch ? captionHrefMatch[1] : '';
+			const stripCaptionHref = (value: string) => value.replace(/\s*data-caption-href=["'][^"']*["']/gi, '');
+			const cleanedBefore = stripCaptionHref(beforeSrc);
+			const cleanedAfter = stripCaptionHref(afterSrc);
+			const caption = captionHref ? `<a href="${captionHref}">${altText}</a>` : altText;
 			
 			return `<figure class="article-image">
-				<img ${beforeSrc}src="${finalSrc}"${afterSrc}${customStyle}>
-				${altText ? `<figcaption>${altText}</figcaption>` : ''}
+				<img ${cleanedBefore}src="${finalSrc}"${cleanedAfter}${customStyle}>
+				${caption ? `<figcaption>${caption}</figcaption>` : ''}
 			</figure>`;
 		}
 	);
