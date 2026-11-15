@@ -23,6 +23,31 @@ articleRenderer.image = function (token: Tokens.Image) {
 const ARTICLES_DIR = path.resolve('articles');
 
 /**
+ * A quote line that carries text. A bare `>` still separates paragraphs.
+ */
+function isQuoteContentLine(line: string): boolean {
+	return /^[ \t]*>[ \t]*\S/.test(line);
+}
+
+/**
+ * Markdown turns a single newline inside a paragraph into a space.
+ * Quote lines are one line of the quote each, so keep that break.
+ * A blank quote line still starts a new paragraph.
+ */
+function preserveBlockquoteLineBreaks(markdown: string): string {
+	const lines = markdown.split('\n');
+	return lines
+		.map((line, index) => {
+			if (!isQuoteContentLine(line)) return line;
+			const next = lines[index + 1];
+			if (!next || !isQuoteContentLine(next)) return line;
+			if (/\\$/.test(line) || / {2}$/.test(line)) return line;
+			return line.replace(/[ \t]+$/, '') + '  ';
+		})
+		.join('\n');
+}
+
+/**
  * Full parsed article model.
  */
 export interface Article {
@@ -206,7 +231,7 @@ export function parseArticleFile(dirName: string): Article {
 	}
 
 	// Render Markdown to HTML
-	let html = marked.parse(markdownBody, { renderer: articleRenderer }) as string;
+	let html = marked.parse(preserveBlockquoteLineBreaks(markdownBody), { renderer: articleRenderer }) as string;
 
 	// Fix relative image paths and wrap all images in figures with captions
 	html = html.replace(
