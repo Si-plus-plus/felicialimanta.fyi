@@ -1,0 +1,13 @@
+#!/bin/sh
+# Strips metadata (EXIF, GPS, camera info, text chunks) from images before they are committed.
+command -v mogrify >/dev/null 2>&1 || { echo "pre-commit: ImageMagick (mogrify) not found, cannot strip image metadata" >&2; exit 1; }
+
+git diff --cached --name-only --diff-filter=ACM -z | while IFS= read -r -d '' f; do
+  case "$(printf '%s' "$f" | tr '[:upper:]' '[:lower:]')" in
+    *.jpg|*.jpeg|*.png|*.webp|*.tif|*.tiff)
+      # auto-orient first so photos don't turn sideways once the orientation tag is gone
+      mogrify -auto-orient -strip "$f" && git add -- "$f"
+      echo "pre-commit: stripped metadata from $f"
+      ;;
+  esac
+done
