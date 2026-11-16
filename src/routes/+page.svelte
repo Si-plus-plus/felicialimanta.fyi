@@ -62,6 +62,23 @@
 		return listHref(selectedTags, selectedLength === length ? 'All' : length);
 	}
 
+	function getUnavailableLengthTooltip(length: string): string {
+		if (selectedTags.length === 1) {
+			return `No ${length} reads in #${selectedTags[0]}`;
+		}
+		if (selectedTags.length > 1) {
+			return `No ${length} reads for selected tags`;
+		}
+		return `No ${length} reads available`;
+	}
+
+	function getUnavailableTagTooltip(tag: string): string {
+		if (selectedLength !== 'All') {
+			return `No ${selectedLength} reads in #${tag}`;
+		}
+		return `No articles in #${tag}`;
+	}
+
 	function escapeRegExp(str: string): string {
 		return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 	}
@@ -159,7 +176,15 @@
 						{/if}
 						{@const lengthUnavailable = selectedLength !== length && !availableLengths.has(length)}
 						{#if lengthUnavailable}
-							<span class="length-btn unavailable" aria-disabled="true">{length}</span>
+							{@const lengthTooltip = getUnavailableLengthTooltip(length)}
+							<span
+								class="length-btn unavailable"
+								aria-disabled="true"
+								aria-label="{length} ({lengthTooltip})"
+								data-tooltip={lengthTooltip}
+							>
+								{length}
+							</span>
 						{:else}
 							<a
 								href={toggleLength(length)}
@@ -176,7 +201,15 @@
 				{#each allTags as tag}
 					{@const tagUnavailable = !selectedTags.includes(tag) && !availableTags.has(tag)}
 					{#if tagUnavailable}
-						<span class="tag-button unavailable" aria-disabled="true">#{tag}</span>
+						{@const tagTooltip = getUnavailableTagTooltip(tag)}
+						<span
+							class="tag-button unavailable"
+							aria-disabled="true"
+							aria-label="#{tag} ({tagTooltip})"
+							data-tooltip={tagTooltip}
+						>
+							#{tag}
+						</span>
 					{:else}
 						<a
 							href={toggleTag(tag)}
@@ -575,7 +608,7 @@
 		transition: all var(--transition-speed) ease;
 	}
 
-	.length-btn:hover {
+	.length-btn:not(.unavailable):hover {
 		color: var(--accent);
 		opacity: 1;
 	}
@@ -587,9 +620,11 @@
 	}
 
 	.length-btn.unavailable {
-		opacity: 0.25;
-		cursor: default;
-		pointer-events: none;
+		position: relative;
+		opacity: 1;
+		color: color-mix(in srgb, var(--text-primary) 25%, transparent);
+		cursor: not-allowed;
+		user-select: none;
 	}
 
 	.length-divider {
@@ -629,7 +664,7 @@
 		transition: all var(--transition-speed) ease;
 	}
 
-	.tag-button:hover {
+	.tag-button:not(.unavailable):hover {
 		border-color: var(--accent);
 		color: var(--accent);
 		opacity: 1;
@@ -643,9 +678,75 @@
 	}
 
 	.tag-button.unavailable {
-		opacity: 0.28;
-		cursor: default;
+		position: relative;
+		opacity: 1;
+		color: color-mix(in srgb, var(--text-primary) 28%, transparent);
+		border-color: color-mix(in srgb, var(--lines) 55%, transparent);
+		cursor: not-allowed;
+		user-select: none;
+	}
+
+	.length-btn.unavailable::after,
+	.tag-button.unavailable::after {
+		content: attr(data-tooltip);
+		position: absolute;
+		bottom: calc(100% + 8px);
+		left: 50%;
+		transform: translateX(-50%) translateY(4px);
+		background-color: var(--text-primary);
+		color: var(--bg-primary);
+		padding: 5px 10px;
+		border-radius: 6px;
+		font-size: 0.72rem;
+		font-weight: 400;
+		line-height: 1.3;
+		white-space: nowrap;
 		pointer-events: none;
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+		border: 1px solid var(--lines);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+		z-index: 40;
+	}
+
+	.length-btn.unavailable:hover::after,
+	.tag-button.unavailable:hover::after {
+		opacity: 1;
+		visibility: visible;
+		transform: translateX(-50%) translateY(0);
+	}
+
+	.length-control .length-btn.unavailable:first-child::after,
+	.tag-filter .tag-button.unavailable:first-child::after {
+		left: 0;
+		transform: translateY(4px);
+	}
+
+	.length-control .length-btn.unavailable:first-child:hover::after,
+	.tag-filter .tag-button.unavailable:first-child:hover::after {
+		transform: translateY(0);
+	}
+
+	@media (min-width: 560px) {
+		.length-control .length-btn.unavailable:first-child::after {
+			left: 50%;
+			transform: translateX(-50%) translateY(4px);
+		}
+
+		.length-control .length-btn.unavailable:first-child:hover::after {
+			transform: translateX(-50%) translateY(0);
+		}
+
+		.length-control .length-btn.unavailable:last-child::after {
+			left: auto;
+			right: 0;
+			transform: translateY(4px);
+		}
+
+		.length-control .length-btn.unavailable:last-child:hover::after {
+			transform: translateY(0);
+		}
 	}
 
 	.reset-btn {
