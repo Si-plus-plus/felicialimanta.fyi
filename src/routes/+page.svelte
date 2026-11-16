@@ -124,6 +124,12 @@
 		{:else}
 			<ul class="article-list">
 				{#each filteredArticles as article}
+					{@const snippet = searchQuery.trim() ? getMatchingSnippet(article, searchQuery) : null}
+					{@const snippetCoversDescription = !!(
+						snippet &&
+						searchQuery.trim() &&
+						article.description.toLowerCase().includes(searchQuery.trim().toLowerCase())
+					)}
 					<li class="article-item" class:read={readSlugs.includes(article.slug)} class:pinned={article.pinned}>
 						<a href="/articles/{article.slug}" class="article-link">
 							{#if article.pinned}
@@ -144,9 +150,9 @@
 									{/if}
 								{/each}
 							</h2>
-							{#if searchQuery.trim() && getMatchingSnippet(article, searchQuery)}
+							{#if snippet}
 								<p class="article-snippet">
-									{#each getSegments(getMatchingSnippet(article, searchQuery)!, searchQuery) as segment}
+									{#each getSegments(snippet, searchQuery) as segment}
 										{#if segment.isMatch}
 											<mark class="highlight">{segment.text}</mark>
 										{:else}
@@ -154,6 +160,11 @@
 										{/if}
 									{/each}
 								</p>
+							{/if}
+							{#if article.description && !snippetCoversDescription}
+								<div class="article-description">
+									<p>{article.description}</p>
+								</div>
 							{/if}
 							{#if article.tags && article.tags.length > 0}
 								<div class="article-tags">
@@ -268,6 +279,40 @@
 		opacity: 0.75;
 		margin: 8px 0 0 0;
 		line-height: 1.5;
+	}
+
+	.article-description {
+		display: grid;
+		grid-template-rows: 0fr;
+		margin-top: 0;
+		opacity: 0;
+		transition:
+			grid-template-rows var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1),
+			margin-top var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1),
+			opacity var(--transition-speed) ease;
+	}
+
+	.article-description p {
+		overflow: hidden;
+		min-height: 0;
+		margin: 0;
+		font-size: 0.95rem;
+		line-height: 1.5;
+		opacity: 0.7;
+	}
+
+	.article-link:focus-visible .article-description {
+		grid-template-rows: 1fr;
+		margin-top: 8px;
+		opacity: 1;
+	}
+
+	@media (hover: hover) {
+		.article-link:hover .article-description {
+			grid-template-rows: 1fr;
+			margin-top: 8px;
+			opacity: 1;
+		}
 	}
 
 	.article-link:hover {
