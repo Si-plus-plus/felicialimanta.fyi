@@ -23,23 +23,22 @@
 
 	<article>
 		<header class="article-header">
-			<div class="article-meta">
-				<span class="article-date">{data.article.date}</span>
-				<a href="/?length={encodeURIComponent(data.article.readingLength)}" class="reading-length">
-					{data.article.readingLength}
-				</a>
-			</div>
+			<span class="article-date">{data.article.date}</span>
 			<h1>{data.article.title}</h1>
 			{#if data.article.description}
 				<p class="article-description">{data.article.description}</p>
 			{/if}
-			{#if data.article.tags && data.article.tags.length > 0}
-				<div class="article-tags">
+			<div class="article-tags">
+				{#if data.article.tags && data.article.tags.length > 0}
 					{#each data.article.tags as tag}
 						<a href="/?tag={encodeURIComponent(tag)}" class="article-tag">#{tag}</a>
 					{/each}
-				</div>
-			{/if}
+					<span class="tags-separator" aria-hidden="true">·</span>
+				{/if}
+				<a href="/?length={encodeURIComponent(data.article.readingLength)}" class="reading-length">
+					{data.article.readingMinutes} min read
+				</a>
+			</div>
 
 			{#if (data.navigation?.previous?.length ?? 0) > 0 || (data.navigation?.next?.length ?? 0) > 0}
 				<div class="series-top-nav">
@@ -117,40 +116,13 @@
 		margin-bottom: 48px;
 	}
 
-	.article-meta {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		gap: 12px;
-		margin-bottom: 12px;
-	}
-
 	.article-date {
 		display: block;
 		font-size: 0.9rem;
 		opacity: 0.5;
+		margin-bottom: 12px;
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
-	}
-
-	.reading-length {
-		font-size: 0.75rem;
-		letter-spacing: 0.04em;
-		text-transform: uppercase;
-		text-decoration: none;
-		color: var(--text-primary);
-		opacity: 0.7;
-		border: 1px dashed var(--lines);
-		border-radius: 99px;
-		padding: 3px 10px;
-		transition: opacity var(--transition-speed) ease, border-color var(--transition-speed) ease, color var(--transition-speed) ease;
-	}
-
-	.reading-length:hover {
-		opacity: 1;
-		border-style: solid;
-		border-color: var(--accent);
-		color: var(--accent);
 	}
 
 	.article-header h1 {
@@ -171,6 +143,7 @@
 	.article-tags {
 		display: flex;
 		flex-wrap: wrap;
+		align-items: center;
 		gap: 8px;
 		margin-top: 24px;
 	}
@@ -185,6 +158,25 @@
 
 	.article-tag:hover {
 		opacity: 1;
+		text-decoration: underline;
+	}
+
+	.tags-separator {
+		font-size: 0.85rem;
+		opacity: 0.45;
+	}
+
+	.reading-length {
+		font-size: 0.85rem;
+		color: var(--text-primary);
+		opacity: 0.5;
+		text-decoration: none;
+		transition: opacity var(--transition-speed) ease, color var(--transition-speed) ease;
+	}
+
+	.reading-length:hover {
+		opacity: 1;
+		color: var(--accent);
 		text-decoration: underline;
 	}
 

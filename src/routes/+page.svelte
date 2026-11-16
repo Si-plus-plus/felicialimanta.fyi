@@ -254,10 +254,7 @@
 									Pinned
 								</span>
 							{/if}
-							<div class="article-meta">
-								<span class="article-date">{article.date}</span>
-								<span class="reading-length">{article.readingLength}</span>
-							</div>
+							<span class="article-date">{article.date}</span>
 							<h2 class="article-title">
 								{#each getSegments(article.title, searchQuery) as segment}
 									{#if segment.isMatch}
@@ -278,22 +275,22 @@
 									{/each}
 								</p>
 							{/if}
-							{#if showDescription || hasTags}
-								<div class="article-footer" class:has-description={showDescription}>
+							<div class="article-footer" class:has-description={showDescription}>
+								<div class="article-tags">
 									{#if hasTags}
-										<div class="article-tags">
-											{#each article.tags as tag}
-												<span class="article-tag">#{tag}</span>
-											{/each}
-										</div>
+										{#each article.tags as tag}
+											<span class="article-tag">#{tag}</span>
+										{/each}
+										<span class="tags-separator" aria-hidden="true">·</span>
 									{/if}
-									{#if showDescription}
-										<div class="article-description">
-											<p>{article.description}</p>
-										</div>
-									{/if}
+									<span class="reading-length">{article.readingMinutes} min read</span>
 								</div>
-							{/if}
+								{#if showDescription}
+									<div class="article-description">
+										<p>{article.description}</p>
+									</div>
+								{/if}
+							</div>
 						</a>
 					</li>
 				{/each}
@@ -366,27 +363,13 @@
 		transition: transform var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
-	.article-meta {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: baseline;
-		gap: 10px;
-		margin-bottom: 8px;
-	}
-
 	.article-date {
 		display: block;
 		font-size: 0.85rem;
 		opacity: 0.5;
+		margin-bottom: 8px;
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
-	}
-
-	.reading-length {
-		font-size: 0.72rem;
-		letter-spacing: 0.06em;
-		text-transform: uppercase;
-		opacity: 0.45;
 	}
 
 	.article-title {
@@ -768,6 +751,7 @@
 	.article-tags {
 		display: flex;
 		flex-wrap: wrap;
+		align-items: center;
 		gap: 8px;
 		transition: opacity var(--transition-speed) ease;
 	}
@@ -776,5 +760,11 @@
 		font-size: 0.85rem;
 		color: var(--accent);
 		opacity: 0.8;
+	}
+
+	.tags-separator,
+	.reading-length {
+		font-size: 0.85rem;
+		opacity: 0.45;
 	}
 </style>

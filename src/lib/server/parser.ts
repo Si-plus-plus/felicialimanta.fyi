@@ -56,6 +56,7 @@ export interface Article {
 	title: string;
 	description: string;
 	tags: string[];
+	readingMinutes: number;
 	readingLength: ReadingLengthTag;
 	pinned: boolean;
 	previous: string[];
@@ -212,7 +213,8 @@ export function parseArticleFile(dirName: string): Article {
 	// Length is estimated from the body and kept off the category tags.
 	// A hand-written length label is dropped so the estimate always wins.
 	tags = tags.filter((tag) => !isReadingLengthTag(tag));
-	const readingLength = readingLengthTag(estimateReadingMinutes(markdownBody));
+	const readingMinutes = estimateReadingMinutes(markdownBody);
+	const readingLength = readingLengthTag(readingMinutes);
 
 	let previous: string[] = [];
 	const prevArrayMatch = yamlStr.match(/^previous:\s*\[(.*?)\]/m);
@@ -280,6 +282,7 @@ export function parseArticleFile(dirName: string): Article {
 		title,
 		description,
 		tags,
+		readingMinutes,
 		readingLength,
 		pinned,
 		previous,
