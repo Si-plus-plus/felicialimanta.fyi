@@ -10,6 +10,7 @@ export const load: LayoutServerLoad = () => {
 			title: art.title,
 			description: art.description,
 			tags: art.tags,
+			readingLength: art.readingLength,
 			pinned: art.pinned,
 			searchText: art.searchText
 		}))

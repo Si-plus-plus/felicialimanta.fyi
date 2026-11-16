@@ -2,6 +2,7 @@
 	import type { PageData } from './$types';
 	import { SITE_NAME, SITE_DESCRIPTION } from '$lib/constants';
 	import { getReadArticles } from '$lib/readHistory';
+	import { READING_LENGTH_TAGS } from '$lib/readingLength';
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 
@@ -12,25 +13,54 @@
 		readSlugs = getReadArticles();
 	});
 
-	let selectedTag = $state('All');
+	let selectedTags = $derived($page.url.searchParams.getAll('tag').filter(Boolean));
+	let selectedLength = $derived($page.url.searchParams.get('length') || 'All');
 	let searchQuery = $state('');
-	let allTags = $derived(['All', ...new Set(data.articles.flatMap(a => a.tags || []))]);
+	let allTags = $derived([...new Set(data.articles.flatMap((a) => a.tags || []))]);
+	let filtersApplied = $derived(selectedTags.length > 0 || selectedLength !== 'All');
+	let articlesForTags = $derived(
+		selectedTags.length === 0
+			? data.articles
+			: data.articles.filter((article) => article.tags?.some((tag) => selectedTags.includes(tag)))
+	);
+	let availableLengths = $derived(new Set(articlesForTags.map((article) => article.readingLength)));
+	let articlesForLength = $derived(
+		selectedLength === 'All'
+			? data.articles
+			: data.articles.filter((article) => article.readingLength === selectedLength)
+	);
+	let availableTags = $derived(new Set(articlesForLength.flatMap((article) => article.tags || [])));
 	let filteredArticles = $derived(
 		data.articles.filter(a => {
-			const tagMatch = selectedTag === 'All' || (a.tags && a.tags.includes(selectedTag));
+			const tagMatch = selectedTags.length === 0 || (a.tags && selectedTags.some((tag) => a.tags.includes(tag)));
+			const lengthMatch = selectedLength === 'All' || a.readingLength === selectedLength;
 			const query = searchQuery.trim().toLowerCase();
 			const queryMatch = !query || 
 				[a.title, a.description, a.date, a.searchText]
 					.filter(Boolean)
 					.some(text => text!.toLowerCase().includes(query));
-			return tagMatch && queryMatch;
+			return tagMatch && lengthMatch && queryMatch;
 		})
 	);
 
-	$effect(() => {
-		const tag = $page.url.searchParams.get('tag');
-		selectedTag = tag || 'All';
-	});
+	function listHref(tags: string[], length: string): string {
+		const params = new URLSearchParams();
+		for (const tag of tags) params.append('tag', tag);
+		if (length !== 'All') params.set('length', length);
+		const query = params.toString();
+		return query ? `/?${query}` : '/';
+	}
+
+	function toggleTag(tag: string): string {
+		const next = selectedTags.includes(tag)
+			? selectedTags.filter((selected) => selected !== tag)
+			: [...selectedTags, tag];
+		return listHref(next, selectedLength);
+	}
+
+	function toggleLength(length: string): string {
+		return listHref(selectedTags, selectedLength === length ? 'All' : length);
+	}
 
 	function escapeRegExp(str: string): string {
 		return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -87,19 +117,27 @@
 		<p class="empty-state">No articles published yet.</p>
 	{:else}
 		<div class="controls-container">
-			<div class="tag-filter">
-				{#each allTags as tag}
-					<a 
-						href={tag === 'All' ? '/' : `/?tag=${encodeURIComponent(tag)}`}
-						class="tag-button" 
-						class:active={selectedTag === tag}
-					>
-						{tag === 'All' ? 'All' : `#${tag}`}
-					</a>
-				{/each}
-			</div>
-
-			<div class="search-container">
+			<div class="controls-top">
+				<div class="tag-filter">
+					{#if filtersApplied}
+						<a href="/" class="tag-button">Reset</a>
+					{/if}
+					{#each allTags as tag}
+						{@const tagUnavailable = !selectedTags.includes(tag) && !availableTags.has(tag)}
+						{#if tagUnavailable}
+							<span class="tag-button unavailable" aria-disabled="true">#{tag}</span>
+						{:else}
+							<a 
+								href={toggleTag(tag)}
+								class="tag-button" 
+								class:active={selectedTags.includes(tag)}
+							>
+								#{tag}
+							</a>
+						{/if}
+					{/each}
+				</div>
+				<div class="search-container">
 				<input 
 					type="search" 
 					bind:value={searchQuery} 
@@ -116,11 +154,34 @@
 						&times;
 					</button>
 				{/if}
+				</div>
+			</div>
+			<div class="tag-filter" aria-label="Article length">
+				<span class="length-label">Length</span>
+				{#each READING_LENGTH_TAGS as length}
+					{@const lengthUnavailable = selectedLength !== length && !availableLengths.has(length)}
+					{#if lengthUnavailable}
+						<span class="tag-button unavailable" aria-disabled="true">{length}</span>
+					{:else}
+						<a
+							href={toggleLength(length)}
+							class="tag-button"
+							class:active={selectedLength === length}
+						>
+							{length}
+						</a>
+					{/if}
+				{/each}
 			</div>
 		</div>
 
 		{#if filteredArticles.length === 0}
-			<p class="empty-state">No articles found{selectedTag !== 'All' ? ` for #${selectedTag}` : ''}{searchQuery ? ` matching "${searchQuery}"` : ''}</p>
+			{@const filters = [
+				selectedTags.length ? selectedTags.map((tag) => `#${tag}`).join(' ') : '',
+				selectedLength !== 'All' ? selectedLength : '',
+				searchQuery ? `"${searchQuery}"` : ''
+			].filter(Boolean)}
+			<p class="empty-state">No articles found{filters.length ? ` for ${filters.join(', ')}` : ''}</p>
 		{:else}
 			<ul class="article-list">
 				{#each filteredArticles as article}
@@ -140,7 +201,10 @@
 									Pinned
 								</span>
 							{/if}
-							<span class="article-date">{article.date}</span>
+							<div class="article-meta">
+								<span class="article-date">{article.date}</span>
+								<span class="reading-length">{article.readingLength}</span>
+							</div>
 							<h2 class="article-title">
 								{#each getSegments(article.title, searchQuery) as segment}
 									{#if segment.isMatch}
@@ -245,13 +309,27 @@
 		transition: transform var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
+	.article-meta {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 10px;
+		margin-bottom: 8px;
+	}
+
 	.article-date {
 		display: block;
 		font-size: 0.85rem;
 		opacity: 0.5;
-		margin-bottom: 8px;
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
+	}
+
+	.reading-length {
+		font-size: 0.72rem;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		opacity: 0.45;
 	}
 
 	.article-title {
@@ -330,13 +408,19 @@
 
 	.controls-container {
 		display: flex;
-		flex-direction: column-reverse;
-		gap: 16px;
+		flex-direction: column;
+		gap: 12px;
 		margin-bottom: 32px;
 	}
 
+	.controls-top {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+	}
+
 	@media (min-width: 640px) {
-		.controls-container {
+		.controls-top {
 			flex-direction: row;
 			justify-content: space-between;
 			align-items: flex-start;
@@ -412,8 +496,18 @@
 	.tag-filter {
 		display: flex;
 		flex-wrap: wrap;
+		align-items: center;
 		gap: 8px;
 		flex: 1;
+		min-width: 0;
+	}
+
+	.length-label {
+		margin-right: 4px;
+		font-size: 0.68rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		opacity: 0.45;
 	}
 
 	.tag-button {
@@ -424,6 +518,8 @@
 		padding: 6px 14px;
 		border-radius: 99px;
 		font-size: 0.85rem;
+		line-height: 1.4;
+		white-space: nowrap;
 		text-decoration: none;
 		display: inline-block;
 		cursor: pointer;
@@ -440,6 +536,12 @@
 		color: var(--bg-primary);
 		border-color: var(--text-primary);
 		opacity: 1;
+	}
+
+	.tag-button.unavailable {
+		opacity: 0.28;
+		cursor: default;
+		pointer-events: none;
 	}
 
 	.article-tags {

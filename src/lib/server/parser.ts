@@ -1,6 +1,12 @@
 import fs from 'fs';
 import path from 'path';
 import { marked, Renderer, type Tokens } from 'marked';
+import {
+	estimateReadingMinutes,
+	isReadingLengthTag,
+	readingLengthTag,
+	type ReadingLengthTag
+} from '../readingLength';
 
 const articleRenderer = new Renderer();
 const renderImage = articleRenderer.image;
@@ -50,6 +56,7 @@ export interface Article {
 	title: string;
 	description: string;
 	tags: string[];
+	readingLength: ReadingLengthTag;
 	pinned: boolean;
 	previous: string[];
 	html: string;
@@ -202,6 +209,11 @@ export function parseArticleFile(dirName: string): Article {
 			.filter(Boolean);
 	}
 
+	// Length is estimated from the body and kept off the category tags.
+	// A hand-written length label is dropped so the estimate always wins.
+	tags = tags.filter((tag) => !isReadingLengthTag(tag));
+	const readingLength = readingLengthTag(estimateReadingMinutes(markdownBody));
+
 	let previous: string[] = [];
 	const prevArrayMatch = yamlStr.match(/^previous:\s*\[(.*?)\]/m);
 	if (prevArrayMatch && prevArrayMatch[1]) {
@@ -268,6 +280,7 @@ export function parseArticleFile(dirName: string): Article {
 		title,
 		description,
 		tags,
+		readingLength,
 		pinned,
 		previous,
 		html,
