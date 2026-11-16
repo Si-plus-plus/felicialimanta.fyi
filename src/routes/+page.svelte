@@ -209,6 +209,8 @@
 						searchQuery.trim() &&
 						article.description.toLowerCase().includes(searchQuery.trim().toLowerCase())
 					)}
+					{@const showDescription = !!(article.description && !snippetCoversDescription)}
+					{@const hasTags = !!(article.tags && article.tags.length > 0)}
 					<li class="article-item" class:read={readSlugs.includes(article.slug)} class:pinned={article.pinned}>
 						<a href="/articles/{article.slug}" class="article-link">
 							{#if article.pinned}
@@ -243,16 +245,20 @@
 									{/each}
 								</p>
 							{/if}
-							{#if article.description && !snippetCoversDescription}
-								<div class="article-description">
-									<p>{article.description}</p>
-								</div>
-							{/if}
-							{#if article.tags && article.tags.length > 0}
-								<div class="article-tags">
-									{#each article.tags as tag}
-										<span class="article-tag">#{tag}</span>
-									{/each}
+							{#if showDescription || hasTags}
+								<div class="article-footer" class:has-description={showDescription}>
+									{#if hasTags}
+										<div class="article-tags">
+											{#each article.tags as tag}
+												<span class="article-tag">#{tag}</span>
+											{/each}
+										</div>
+									{/if}
+									{#if showDescription}
+										<div class="article-description">
+											<p>{article.description}</p>
+										</div>
+									{/if}
 								</div>
 							{/if}
 						</a>
@@ -321,7 +327,7 @@
 	.article-link {
 		position: relative;
 		display: block;
-		padding: 32px 0;
+		padding: 32px 0 18px;
 		text-decoration: none;
 		color: var(--text-primary);
 		transition: transform var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
@@ -377,20 +383,31 @@
 		line-height: 1.5;
 	}
 
-	.article-description {
+	.article-footer {
 		display: grid;
-		grid-template-rows: 0fr;
-		margin-top: 0;
+		align-items: start;
+		margin-top: 12px;
+		min-height: calc(2 * 0.95rem * 1.5);
+		min-width: 0;
+	}
+
+	.article-footer > * {
+		grid-area: 1 / 1;
+		min-width: 0;
+	}
+
+	.article-description {
 		opacity: 0;
-		transition:
-			grid-template-rows var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1),
-			margin-top var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1),
-			opacity var(--transition-speed) ease;
+		pointer-events: none;
+		transition: opacity var(--transition-speed) ease;
 	}
 
 	.article-description p {
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+		line-clamp: 2;
 		overflow: hidden;
-		min-height: 0;
 		margin: 0;
 		font-size: 0.95rem;
 		line-height: 1.5;
@@ -398,16 +415,20 @@
 	}
 
 	.article-link:focus-visible .article-description {
-		grid-template-rows: 1fr;
-		margin-top: 8px;
 		opacity: 1;
+	}
+
+	.article-link:focus-visible .article-footer.has-description .article-tags {
+		opacity: 0;
 	}
 
 	@media (hover: hover) {
 		.article-link:hover .article-description {
-			grid-template-rows: 1fr;
-			margin-top: 8px;
 			opacity: 1;
+		}
+
+		.article-link:hover .article-footer.has-description .article-tags {
+			opacity: 0;
 		}
 	}
 
@@ -647,7 +668,7 @@
 		display: flex;
 		flex-wrap: wrap;
 		gap: 8px;
-		margin-top: 12px;
+		transition: opacity var(--transition-speed) ease;
 	}
 
 	.article-tag {
