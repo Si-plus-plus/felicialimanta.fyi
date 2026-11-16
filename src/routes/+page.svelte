@@ -355,7 +355,7 @@
 		opacity: 0.8;
 	}
 
-	.article-item.pinned .article-link {
+	.article-item.pinned .article-date {
 		padding-right: 4.25rem;
 	}
 
