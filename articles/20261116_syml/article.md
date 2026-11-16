@@ -231,9 +231,9 @@ And years later, I found myself casually speaking in front of CTOs, foreign repr
   <figcaption>"Oblivion" by SYML [Official Audio]</figcaption>
 </figure>
 
-There was one time that I got betrayed. My work credit got taken. My reputation got slandered. All by the same person I used to help during his lows, before he got power.
+There was one time that I felt betrayed. My work credit got taken. My reputation got slandered. All by the same person I used to help during his lows, before the person got power.
 
-As I was getting disappointed, not angry, but disappointed, Oblivion came out.
+As I was getting disappointed, not angry, but disappointed, Oblivion came to me.
 
 > And lo, watch as I will rise
 > Lo, watch me come alive
@@ -288,7 +288,7 @@ In a book I read recently, ["The Prophet" by Kahlil Gibran](https://www.kahlilgi
 
 Was it that I felt at home because I chose to reside here? Because this was the place I decorated from emptiness? Was it that I felt at home because I left so many little things -- little pieces of me and my memories -- here, scattered around the corners of the room?
 
-I stayed at a friend's place for three whole weeks to escape the haze in Indonesia, and I felt empty. I missed the scent of the slightly humid room. I missed my home so much that I missed scrubbing my toilet. I missed the pieces of me I left behind. I felt that there was no way I could just leave those pieces behind and act like they don't exist.
+I stayed at a friend's place for three whole weeks to escape the haze in Indonesia, and I felt empty. I missed the scent of my slightly humid bedroom. I missed my home so much that I missed my chores at home. I missed the pieces of me I left behind. I felt that there was no way I could just leave those pieces behind and act like they don't exist.
 
 > Welcome home, you are home
 > No nothing tastes like sweet
@@ -351,7 +351,7 @@ A week after receiving the visa, it clicked. Wait, this means I can watch SYML l
 
 ![Concert poster of SYML with the Metropole Orkest, image source: [nettwerk](https://nettwerk.com/news/platinum-selling-artist-syml-shares-new-piano-single-listless-with-evgeny-grinko)](metropole_orkest.png#50)
 
-When I checked for the SYML tour dates, I was expecting him to do another solo. But,... SYML was collaborating with the Netherlands' top-tier orchestra team: [Metropole Orkest](https://www.mo.nl/en/)!!! The orchestra was even supported by the Ministry of Culture too!
+When I checked for the SYML tour dates, I was expecting him to do another solo show. But,... SYML was collaborating with the Netherlands' top-tier orchestra team: [Metropole Orkest](https://www.mo.nl/en/)!!! Dating back to 1945, they've won multiple Grammys and are even supported by the Dutch Ministry of Culture!
 
 When I thought the price would be expensive, nope. The concert tickets to Novo Amor in Jakarta were.. priced similarly(?) Like how???? 
 
