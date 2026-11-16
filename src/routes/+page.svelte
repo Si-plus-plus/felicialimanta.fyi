@@ -17,7 +17,11 @@
 	let selectedTags = $derived(browser ? page.url.searchParams.getAll('tag').filter(Boolean) : []);
 	let selectedLength = $derived(browser ? (page.url.searchParams.get('length') || 'All') : 'All');
 	let searchQuery = $state('');
-	let allTags = $derived([...new Set(data.articles.flatMap((a) => a.tags || []))]);
+	let allTags = $derived(
+		[...new Set(data.articles.flatMap((a) => a.tags || []))].sort((a, b) =>
+			a.toLowerCase().localeCompare(b.toLowerCase())
+		)
+	);
 	let filtersApplied = $derived(selectedTags.length > 0 || selectedLength !== 'All');
 	let articlesForTags = $derived(
 		selectedTags.length === 0
