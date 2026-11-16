@@ -1,11 +1,11 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { SITE_NAME, SITE_DESCRIPTION } from '$lib/constants';
-	import { getReadArticles } from '$lib/readHistory';
-	import { READING_LENGTH_TAGS } from '$lib/readingLength';
-	import { browser } from '$app/environment';
+	import { SITE_NAME, SITE_DESCRIPTION } from '#lib/constants.ts';
+	import { getReadArticles } from '#lib/readHistory.ts';
+	import { READING_LENGTH_TAGS } from '#lib/readingLength.ts';
+	import { browser } from '$app/env';
 	import { onMount } from 'svelte';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 
 	let { data }: { data: PageData } = $props();
 
@@ -14,8 +14,8 @@
 		readSlugs = getReadArticles();
 	});
 
-	let selectedTags = $derived(browser ? $page.url.searchParams.getAll('tag').filter(Boolean) : []);
-	let selectedLength = $derived(browser ? ($page.url.searchParams.get('length') || 'All') : 'All');
+	let selectedTags = $derived(browser ? page.url.searchParams.getAll('tag').filter(Boolean) : []);
+	let selectedLength = $derived(browser ? (page.url.searchParams.get('length') || 'All') : 'All');
 	let searchQuery = $state('');
 	let allTags = $derived([...new Set(data.articles.flatMap((a) => a.tags || []))]);
 	let filtersApplied = $derived(selectedTags.length > 0 || selectedLength !== 'All');

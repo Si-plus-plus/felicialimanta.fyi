@@ -4,7 +4,7 @@
     import { zoom as d3zoom, zoomIdentity } from 'd3-zoom';
     import { select } from 'd3-selection';
     import * as topojson from 'topojson-client';
-    import worldData from '$lib/data/world.json';
+    import worldData from '#lib/data/world.json';
 
     let { trips = [] } = $props<{ trips: any[] }>();
     

@@ -6,7 +6,7 @@ import {
 	isReadingLengthTag,
 	readingLengthTag,
 	type ReadingLengthTag
-} from '../readingLength';
+} from '../readingLength.ts';
 
 const articleRenderer = new Renderer();
 const renderImage = articleRenderer.image;

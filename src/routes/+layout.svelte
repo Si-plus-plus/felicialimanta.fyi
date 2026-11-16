@@ -1,14 +1,14 @@
 <script lang="ts">
 	import '../app.css';
-	import { triggerClickBurst } from '$lib/clickBurst';
-	import { page } from '$app/stores';
+	import { triggerClickBurst } from '#lib/clickBurst.ts';
+	import { page } from '$app/state';
 	import { onMount } from 'svelte';
-	import { SITE_NAME, SITE_BIO, SITE_FOOTER, SUBSCRIBE_FORM_URL } from '$lib/constants';
+	import { SITE_NAME, SITE_BIO, SITE_FOOTER, SUBSCRIBE_FORM_URL } from '#lib/constants.ts';
 
 
 	import type { LayoutData } from './$types';
 	import { goto, onNavigate, afterNavigate } from '$app/navigation';
-	import { PUBLIC_GA_ID } from '$env/static/public';
+	import { PUBLIC_GA_ID } from '$app/env/public';
 
 	function handleSubscribeHover(e: MouseEvent) {
 		const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
@@ -122,12 +122,12 @@
 </svelte:head>
 
 <div class="container">
-	{#if $page.url.pathname === '/'}
+	{#if page.url.pathname === '/'}
 		<header class="site-header home-header">
 			<h1 class="site-title"><a href="/">{SITE_NAME}</a></h1>
 			<p class="site-bio">{SITE_BIO}</p>
 			<nav class="site-nav">
-				<a href="/about" class:active={$page.url.pathname === '/about'}>About</a>
+				<a href="/about" class:active={page.url.pathname === '/about'}>About</a>
 				<a href="/" class="random-article-btn" onclick={goToRandomArticle}>Random Article</a>
 			</nav>
 		</header>
@@ -135,8 +135,8 @@
 		<header class="site-header inner-header">
 			<h1 class="site-title"><a href="/">{SITE_NAME}</a></h1>
 			<nav class="site-nav">
-				<a href="/" class:active={$page.url.pathname === '/'}>Home</a>
-				<a href="/about" class:active={$page.url.pathname === '/about'}>About</a>
+				<a href="/" class:active={page.url.pathname === '/'}>Home</a>
+				<a href="/about" class:active={page.url.pathname === '/about'}>About</a>
 				<a href="/" class="random-article-btn" onclick={goToRandomArticle}>Random Article</a>
 			</nav>
 		</header>

@@ -1,4 +1,4 @@
-import { getArticleBySlug, getArticles, getArticleNavigation } from '$lib/server/parser';
+import { getArticleBySlug, getArticles, getArticleNavigation } from '#lib/server/parser.ts';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad, EntryGenerator } from './$types';
 

@@ -3,7 +3,7 @@
     import TravelStats from './components/TravelStats.svelte';
     import TimelineControls from './components/TimelineControls.svelte';
     import HistoryTable from './components/HistoryTable.svelte';
-    import travelData from '$lib/data/travelData.json';
+    import travelData from '#lib/data/travelData.json';
 
     let allTrips = travelData;
     let uniquePeriods = [...new Set(allTrips.map(t => t.period))].sort();

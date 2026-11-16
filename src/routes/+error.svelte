@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { SITE_NAME } from '$lib/constants';
+	import { page } from '$app/state';
+	import { SITE_NAME } from '#lib/constants.ts';
 </script>
 
 <svelte:head>
@@ -12,7 +12,7 @@
 		<span class="status">404</span>
 		<h2 class="message">Page not found</h2>
 		<p class="description">
-			{$page.error?.message || "The page you are looking for doesn't exist or has been moved."}
+			{page.error?.message || "The page you are looking for doesn't exist or has been moved."}
 		</p>
 		<a href="/" class="back-link">Go back home</a>
 	</section>

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { SITE_NAME } from '$lib/constants';
-	import { markAsRead } from '$lib/readHistory';
+	import { SITE_NAME } from '#lib/constants.ts';
+	import { markAsRead } from '#lib/readHistory.ts';
 	import { onMount } from 'svelte';
 
 	let { data }: { data: PageData } = $props();

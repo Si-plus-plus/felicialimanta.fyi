@@ -1,4 +1,4 @@
-import { getArticles } from '$lib/server/parser';
+import { getArticles } from '#lib/server/parser.ts';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = () => {

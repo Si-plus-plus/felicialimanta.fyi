@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { SITE_NAME } from '$lib/constants';
-	import SkillsMatrix from '$lib/components/SkillsMatrix.svelte';
+	import { SITE_NAME } from '#lib/constants.ts';
+	import SkillsMatrix from '#lib/components/SkillsMatrix.svelte';
 </script>
 
 <svelte:head>
