@@ -260,14 +260,14 @@ blockquote cite {
 }
 
 /* Content Links */
-main a:not(.article-link):not(.tag-button):not(.site-title a) {
+main a:not(.article-link):not(.tag-button):not(.length-btn):not(.reset-btn):not(.site-title a) {
 	color: var(--accent);
 	text-decoration: none;
 	border-bottom: 1px solid transparent;
 	transition: border-color var(--transition-speed) ease, color var(--transition-speed) ease;
 }
 
-main a:not(.article-link):not(.tag-button):not(.site-title a):hover {
+main a:not(.article-link):not(.tag-button):not(.length-btn):not(.reset-btn):not(.site-title a):hover {
 	border-bottom-color: var(--accent);
 }
 

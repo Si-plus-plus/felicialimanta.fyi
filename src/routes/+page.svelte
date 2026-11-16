@@ -118,60 +118,78 @@
 	{:else}
 		<div class="controls-container">
 			<div class="controls-top">
-				<div class="tag-filter">
-					{#if filtersApplied}
-						<a href="/" class="tag-button">Reset</a>
+				<div class="search-container">
+					<svg
+						class="search-icon"
+						xmlns="http://www.w3.org/2000/svg"
+						width="14"
+						height="14"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						aria-hidden="true"
+					>
+						<circle cx="11" cy="11" r="8" />
+						<path d="m21 21-4.3-4.3" />
+					</svg>
+					<input
+						type="search"
+						bind:value={searchQuery}
+						placeholder="Search articles..."
+						class="search-input"
+					/>
+					{#if searchQuery}
+						<button
+							type="button"
+							class="clear-btn"
+							aria-label="Clear search"
+							onclick={() => (searchQuery = '')}
+						>
+							&times;
+						</button>
 					{/if}
-					{#each allTags as tag}
-						{@const tagUnavailable = !selectedTags.includes(tag) && !availableTags.has(tag)}
-						{#if tagUnavailable}
-							<span class="tag-button unavailable" aria-disabled="true">#{tag}</span>
+				</div>
+				<div class="length-control" role="group" aria-label="Article length">
+					{#each READING_LENGTH_TAGS as length, i}
+						{#if i > 0}
+							<div class="length-divider" aria-hidden="true"></div>
+						{/if}
+						{@const lengthUnavailable = selectedLength !== length && !availableLengths.has(length)}
+						{#if lengthUnavailable}
+							<span class="length-btn unavailable" aria-disabled="true">{length}</span>
 						{:else}
-							<a 
-								href={toggleTag(tag)}
-								class="tag-button" 
-								class:active={selectedTags.includes(tag)}
+							<a
+								href={toggleLength(length)}
+								class="length-btn"
+								class:active={selectedLength === length}
 							>
-								#{tag}
+								{length}
 							</a>
 						{/if}
 					{/each}
 				</div>
-				<div class="search-container">
-				<input 
-					type="search" 
-					bind:value={searchQuery} 
-					placeholder="Search articles..." 
-					class="search-input"
-				/>
-				{#if searchQuery}
-					<button 
-						type="button" 
-						class="clear-btn" 
-						aria-label="Clear search"
-						onclick={() => searchQuery = ''}
-					>
-						&times;
-					</button>
-				{/if}
-				</div>
 			</div>
-			<div class="tag-filter" aria-label="Article length">
-				<span class="length-label">Length</span>
-				{#each READING_LENGTH_TAGS as length}
-					{@const lengthUnavailable = selectedLength !== length && !availableLengths.has(length)}
-					{#if lengthUnavailable}
-						<span class="tag-button unavailable" aria-disabled="true">{length}</span>
+			<div class="tag-filter" aria-label="Filter by topic">
+				{#each allTags as tag}
+					{@const tagUnavailable = !selectedTags.includes(tag) && !availableTags.has(tag)}
+					{#if tagUnavailable}
+						<span class="tag-button unavailable" aria-disabled="true">#{tag}</span>
 					{:else}
 						<a
-							href={toggleLength(length)}
+							href={toggleTag(tag)}
 							class="tag-button"
-							class:active={selectedLength === length}
+							class:active={selectedTags.includes(tag)}
 						>
-							{length}
+							#{tag}
 						</a>
 					{/if}
 				{/each}
+				{#if filtersApplied}
+					<a href="/" class="reset-btn">Reset</a>
+				{/if}
 			</div>
 		</div>
 
@@ -416,40 +434,52 @@
 	.controls-top {
 		display: flex;
 		flex-direction: column;
-		gap: 16px;
+		gap: 10px;
 	}
 
-	@media (min-width: 640px) {
+	@media (min-width: 560px) {
 		.controls-top {
 			flex-direction: row;
 			justify-content: space-between;
-			align-items: flex-start;
+			align-items: center;
+			gap: 12px;
 		}
 	}
 
 	.search-container {
 		position: relative;
 		width: 100%;
+		flex: 1;
+		min-width: 0;
 	}
 
-	@media (min-width: 640px) {
-		.search-container {
-			width: 240px;
-			flex-shrink: 0;
-		}
+	.search-icon {
+		position: absolute;
+		left: 13px;
+		top: 50%;
+		transform: translateY(-50%);
+		color: var(--text-primary);
+		opacity: 0.4;
+		pointer-events: none;
+		transition: color var(--transition-speed) ease, opacity var(--transition-speed) ease;
+	}
+
+	.search-container:focus-within .search-icon {
+		color: var(--accent);
+		opacity: 0.85;
 	}
 
 	.search-input {
 		width: 100%;
-		padding: 6px 30px 6px 14px;
+		padding: 6px 30px 6px 34px;
 		font-family: inherit;
 		font-size: 0.85rem;
-		line-height: 1.6;
+		line-height: 1.5;
 		border: 1px solid var(--lines);
 		border-radius: 99px;
 		background: transparent;
 		color: var(--text-primary);
-		opacity: 0.6;
+		opacity: 0.65;
 		transition: all var(--transition-speed) ease;
 	}
 
@@ -493,21 +523,73 @@
 		opacity: 0.5;
 	}
 
+	.length-control {
+		display: inline-flex;
+		align-items: center;
+		align-self: flex-start;
+		border: 1px solid var(--lines);
+		border-radius: 99px;
+		padding: 3px;
+		background: transparent;
+		flex-shrink: 0;
+		transition: border-color var(--transition-speed) ease;
+	}
+
+	@media (min-width: 560px) {
+		.length-control {
+			align-self: center;
+		}
+	}
+
+	.length-btn {
+		padding: 4px 12px;
+		border-radius: 99px;
+		font-size: 0.78rem;
+		font-weight: 500;
+		line-height: 1.4;
+		color: var(--text-primary);
+		opacity: 0.55;
+		text-decoration: none;
+		white-space: nowrap;
+		transition: all var(--transition-speed) ease;
+	}
+
+	.length-btn:hover {
+		color: var(--accent);
+		opacity: 1;
+	}
+
+	.length-btn.active {
+		background: var(--text-primary);
+		color: var(--bg-primary);
+		opacity: 1;
+	}
+
+	.length-btn.unavailable {
+		opacity: 0.25;
+		cursor: default;
+		pointer-events: none;
+	}
+
+	.length-divider {
+		width: 1px;
+		height: 12px;
+		background-color: var(--lines);
+		flex-shrink: 0;
+		transition: opacity var(--transition-speed) ease;
+	}
+
+	.length-btn.active + .length-divider,
+	.length-divider:has(+ .length-btn.active) {
+		opacity: 0;
+	}
+
 	.tag-filter {
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
 		gap: 8px;
-		flex: 1;
 		min-width: 0;
-	}
-
-	.length-label {
-		margin-right: 4px;
-		font-size: 0.68rem;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		opacity: 0.45;
 	}
 
 	.tag-button {
@@ -515,9 +597,9 @@
 		border: 1px solid var(--lines);
 		color: var(--text-primary);
 		opacity: 0.6;
-		padding: 6px 14px;
+		padding: 5px 13px;
 		border-radius: 99px;
-		font-size: 0.85rem;
+		font-size: 0.82rem;
 		line-height: 1.4;
 		white-space: nowrap;
 		text-decoration: none;
@@ -528,6 +610,7 @@
 
 	.tag-button:hover {
 		border-color: var(--accent);
+		color: var(--accent);
 		opacity: 1;
 	}
 
@@ -542,6 +625,22 @@
 		opacity: 0.28;
 		cursor: default;
 		pointer-events: none;
+	}
+
+	.reset-btn {
+		margin-left: auto;
+		font-size: 0.78rem;
+		font-weight: 500;
+		color: var(--accent);
+		opacity: 0.75;
+		text-decoration: none;
+		padding: 4px 6px;
+		transition: opacity var(--transition-speed) ease;
+	}
+
+	.reset-btn:hover {
+		opacity: 1;
+		text-decoration: underline;
 	}
 
 	.article-tags {
