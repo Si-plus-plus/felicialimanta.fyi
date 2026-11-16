@@ -281,6 +281,11 @@
 								</p>
 							{/if}
 							<div class="article-footer" class:has-description={showDescription}>
+								{#if showDescription}
+									<div class="article-description">
+										<p>{article.description}</p>
+									</div>
+								{/if}
 								<div class="article-tags">
 									{#if hasTags}
 										{#each article.tags as tag}
@@ -290,11 +295,6 @@
 									{/if}
 									<span class="reading-length">{article.readingMinutes} min read</span>
 								</div>
-								{#if showDescription}
-									<div class="article-description">
-										<p>{article.description}</p>
-									</div>
-								{/if}
 							</div>
 						</a>
 					</li>
@@ -362,7 +362,7 @@
 	.article-link {
 		position: relative;
 		display: block;
-		padding: 32px 0 18px;
+		padding: 32px 0;
 		text-decoration: none;
 		color: var(--text-primary);
 		transition: transform var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
@@ -405,22 +405,11 @@
 	}
 
 	.article-footer {
-		display: grid;
-		align-items: start;
-		margin-top: 12px;
-		min-height: calc(2 * 0.95rem * 1.5);
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		margin-top: 8px;
 		min-width: 0;
-	}
-
-	.article-footer > * {
-		grid-area: 1 / 1;
-		min-width: 0;
-	}
-
-	.article-description {
-		opacity: 0;
-		pointer-events: none;
-		transition: opacity var(--transition-speed) ease;
 	}
 
 	.article-description p {
@@ -435,30 +424,47 @@
 		opacity: 0.7;
 	}
 
-	.article-link:focus-visible .article-description {
-		opacity: 1;
-	}
-
-	.article-link:focus-visible .article-footer.has-description .article-tags {
-		opacity: 0;
-	}
-
 	@media (hover: hover) {
-		.article-link:hover .article-description {
+		.article-link {
+			padding: 32px 0 18px;
+		}
+
+		.article-footer {
+			display: grid;
+			align-items: start;
+			gap: 0;
+			margin-top: 12px;
+			min-height: calc(2 * 0.95rem * 1.5);
+		}
+
+		.article-footer > * {
+			grid-area: 1 / 1;
+			min-width: 0;
+		}
+
+		.article-description {
+			opacity: 0;
+			pointer-events: none;
+			transition: opacity var(--transition-speed) ease;
+		}
+
+		.article-link:hover .article-description,
+		.article-link:focus-visible .article-description {
 			opacity: 1;
 		}
 
-		.article-link:hover .article-footer.has-description .article-tags {
+		.article-link:hover .article-footer.has-description .article-tags,
+		.article-link:focus-visible .article-footer.has-description .article-tags {
 			opacity: 0;
 		}
-	}
 
-	.article-link:hover {
-		transform: translateX(12px);
-	}
+		.article-link:hover {
+			transform: translateX(12px);
+		}
 
-	.article-link:hover .article-title {
-		color: var(--accent);
+		.article-link:hover .article-title {
+			color: var(--accent);
+		}
 	}
 
 	.empty-state {
