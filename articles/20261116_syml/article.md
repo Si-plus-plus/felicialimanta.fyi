@@ -210,12 +210,18 @@ Until the moment I felt I was better suited to managerial positions. Until the m
 
 Until the moment I first led a competition and had to stand in front of hundreds of people. I tried to stay standing, legs trembling, heartbeat spiking, slightly sweating.
 
-> Walk on with your burden
-> (I will walk with you)
+> Walk on in the middle of a dark day fighting through hell
+> I will walk with you
 
 Even though I had practiced giving the talk several times, I made mistakes on stage. But I was truly grateful that the audience was not as angry as I had imagined them to be. They notified me when my screen was outdated. When I was done, people were clapping for me.
 
+> Walk on at the edge of the world where you find yourself
+> I will walk with you
+
 At that time, I didn't have the courage to talk in front of people. The last time I did that was in high school, and it failed miserably.
+
+> Walk on with your burden (up), walk on with your burden (down)
+> I will walk with you
 
 And years later, I found myself casually speaking in front of CTOs, foreign representatives, parents, and bystanders, all at one event, in a stage, and livestreamed (1.9k views as of this article writing).
 
