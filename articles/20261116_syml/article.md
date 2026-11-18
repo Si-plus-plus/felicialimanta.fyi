@@ -294,13 +294,13 @@ In a book I read recently, ["The Prophet" by Kahlil Gibran](https://www.kahlilgi
 
 Was it that I felt at home because I chose to reside here? Because this was the place I decorated from emptiness? Was it that I felt at home because I left so many little things -- little pieces of me and my memories -- here, scattered around the corners of the room?
 
-I stayed at a friend's place for three whole weeks to escape the haze in Indonesia, and I felt empty. I missed the scent of my slightly humid bedroom. I missed my home so much that I missed my chores at home. I missed the pieces of me I left behind. I felt that there was no way I could just leave those pieces behind and act like they don't exist.
+I stayed at a friend's place for three whole weeks to escape the haze in Indonesia, and I felt empty. I missed the scent of my slightly humid bedroom. I missed my home so much that I missed doing my chores at home. I missed the pieces of me I left behind. I felt that there was no way I could just leave those pieces behind with no reason and act like they don't exist. If I had to move one day, I will bring the things that mattered to me the most and peacefully part ways with the other things needing to be left behind. Those things are the extensions of me, those things are my home.
 
 > Welcome home, you are home
 > No nothing tastes like sweet
 > Sweet home
 
-And this song was what came to me when I finally got home.
+And this song was what came to me when I finally got home again.
 
 ### ["DIM"](https://youtu.be/jufDF-ZOd8s?si=j79nFnBUpO18cxBH)
 
